@@ -196,7 +196,6 @@ window.onload = function(){
   start = function() {
     var container = window.document.getElementById('container');
     container.innerHTML = "Starting OS...";
-    Processes.listOfProcesses[2].main();
     //These are some samples of how to call the functions
     //please only use OS.FS functions and nothing else
 
