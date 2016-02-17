@@ -60,7 +60,7 @@ var OS = {
         content = oFilePointer.accessContent().substring(position, endIndex);
         oFilePointer.mutatePositon(endIndex);
       }else {
-        content = oFilePointer.accessContent().substring(postion);
+        content = oFilePointer.accessContent().substring(position);
         oFilePointer.mutatePositon(length);
       }
       return content;
@@ -83,7 +83,7 @@ var OS = {
       var currentPosition = oFilePointer.accessPosition();
       var newPosition = currentPosition + nOffset;
       var length = oFilePointer.accessLength();
-      if(newPosition > 0 && newPosition < length){
+      if(newPosition >= 0 && newPosition < length){
         oFilePointer.mutatePositon(newPosition);
       }
     }
@@ -111,7 +111,7 @@ var Processes = {
 		//Sorry for this:
 		//Contacts from https://www.briandunning.com/sample-data/
 		OS.FS.create("ContactManager.csv",
-		+ "James,Butt,6649 N Blue Gum St,New Orleans,LA,70116,504-621-8927,jbutt@gmail.com\n"
+		  "James,Butt,6649 N Blue Gum St,New Orleans,LA,70116,504-621-8927,jbutt@gmail.com\n"
 		+ "Josephine,Darakjy,4 B Blue Ridge Blvd,Brighton,MI,48116,810-292-9388,josephine_darakjy@darakjy.org\n"
 		+ "Art,Venere,8 W Cerritos Ave #54,Bridgeport,NJ,8014,856-636-8749,art@venere.org\n"
 		+ "Lenna,Paprocki,639 Main St,Anchorage,AK,99501,907-385-4412,lpaprocki@hotmail.com\n"
@@ -162,6 +162,46 @@ var Processes = {
 		+ "Emerson,Bowley,762 S Main St,Madison,WI,53711,608-336-7444,emerson.bowley@bowley.org\n"
 		+ "Blair,Malet,209 Decker Dr,Philadelphia,PA,19132,215-907-9111,bmalet@yahoo.com");
 
+		var oContactManagerFile = OS.FS.open("ContactManager.csv");
+        var length = OS.FS.length(oContactManagerFile);
+        var content = "";
+		
+		//Dump the content into rows variable
+		while(OS.FS.position(oContactManagerFile) < length){
+          var content = content + OS.FS.read(oContactManagerFile);
+        }
+		
+        var rows = content.split("\n").map(function(row){
+          return row.split(",");
+        });
+		
+		OS.FS.close("ContactManager Results.csv");
+		
+		//Hardcoded search person
+		console.log("Searching info for Fletcher,Flosi");
+		var searchFirstName = "Fletcher";
+		var searchLastName = "Flosi";
+		var output = "";
+		//Search through all the entries
+		for (i = 0; i < rows.length; i++){
+			if (rows[i][0] == searchFirstName && rows[i][1] == searchLastName){
+				//Write the entry to output variable
+				for (j = 0; j <rows[i].length; j++){
+					output += rows[i][j];
+					//Add a comma except for at the end
+					if (j < (rows[i].length - 1))
+						output += ",";
+				}
+				output += "\n";
+			}
+		}
+		console.log("To be written: "+ output);
+		
+		//Open and write to the resultant file
+		OS.FS.create("ContactManager Results.csv","");
+		var oContactManagerResultFile = OS.FS.open("ContactManager Results.csv");
+		OS.FS.write(oContactManagerResultFile,output);
+		OS.FS.close("ContactManager Results.csv");
       }
     },
     {
