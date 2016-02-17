@@ -96,7 +96,7 @@ var Processes = {
       name: "Bank Book Calculator",
       state: "Ready",
       main: function(){
-        //0
+
         //Miles place your code here
         //Please use OS.FS functions to access files
       }
@@ -105,7 +105,7 @@ var Processes = {
       name: "Contact Manager",
       state: "Ready",
       main: function(){
-        //1
+
         //Alex place your code here
         //Please use OS.FS functions to access files
       }
@@ -114,7 +114,7 @@ var Processes = {
       name: "Update Security File",
       state: "Ready",
       main: function(){
-        //2
+
         //Iain place your code here
         //Please use OS.FS functions to access files
       }
@@ -241,39 +241,18 @@ var Processes = {
 
         var result = "";
 
-
-        var test = false;
-        var i = 0;
-        while(test == false ){
-          if(rows[i][0] == "CHI" && rows[i][1] == "OAK"){
-            result = rows[i][0] + " " + rows[i][1] + " " + rows[i][2];
-            test = true; //basically return true;
-          }
-          i++;
-        }
-
-
-        /*
         rows.forEach(function (element,index,array){
-          if(rows[index][0] == "POR" && rows[index][1] == "ORL"){
+          if(rows[index][0] == "CHI" && rows[index][1] == "OAK"){
             result = rows[index][0] + " " + rows[index][1] + " " + rows[index][2];
           }
-          else{
-            result = "Starting to destination city's route were not found.";
-          }
         });
-        */
 
+        console.log(result);
 
         OS.FS.create("result.csv", result);
         OS.FS.close("route.csv");
         OS.FS.close("result.csv");
 
-        console.log(result);
-
-        //3
-        //Alvin place your code here
-        //Please use OS.FS functions to access files
       },
       findRoute: function(szFileName){
 
@@ -284,7 +263,7 @@ var Processes = {
       name: "Calculate Vectors",
       state: "Ready",
       main: function(){
-        //4
+
         //Matt place your code here
         //Please use OS.FS functions to access files
       }
@@ -293,7 +272,7 @@ var Processes = {
       name: "Calculate Stats",
       state: "Ready",
       main: function(){
-        //5
+
         //Harry place your code here
         //Please use OS.FS functions to access files
       }
@@ -302,7 +281,7 @@ var Processes = {
       name: "Custon Process",
       state: "Ready",
       main: function(){
-        //6
+
         //Lets do some thing fun here
         //Please use OS.FS functions to access files
       }
@@ -318,8 +297,6 @@ window.onload = function(){
   start = function() {
     var container = window.document.getElementById('container');
     container.innerHTML = "Starting OS...";
-
-    Processes.listOfProcesses[3].main(); //starts the find route process
 
     //These are some samples of how to call the functions
     //please only use OS.FS functions and nothing else
