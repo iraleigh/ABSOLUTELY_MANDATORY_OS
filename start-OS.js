@@ -60,7 +60,7 @@ var OS = {
         content = oFilePointer.accessContent().substring(position, endIndex);
         oFilePointer.mutatePositon(endIndex);
       }else {
-        content = oFilePointer.accessContent().substring(postion);
+        content = oFilePointer.accessContent().substring(position);
         oFilePointer.mutatePositon(length);
       }
       return content;
@@ -96,6 +96,7 @@ var Processes = {
       name: "Bank Book Calculator",
       state: "Ready",
       main: function(){
+        //0
         //Miles place your code here
         //Please use OS.FS functions to access files
       }
@@ -104,6 +105,7 @@ var Processes = {
       name: "Contact Manager",
       state: "Ready",
       main: function(){
+        //1
         //Alex place your code here
         //Please use OS.FS functions to access files
       }
@@ -112,6 +114,7 @@ var Processes = {
       name: "Update Security File",
       state: "Ready",
       main: function(){
+        //2
         //Iain place your code here
         //Please use OS.FS functions to access files
       }
@@ -120,6 +123,48 @@ var Processes = {
       name: "Find Routes",
       state: "Ready",
       main: function(){
+
+        OS.FS.create("route.csv", "SFO,DEN,100\n" +
+        "DEN,NYC,100\n" +
+        "NYC,ATL,100\n" +
+        "ATL,LAS,100\n" +
+        "LAS,SEA,100\n" +
+        "SEA,POR,100\n" +
+        "POR,SFO,100"
+        );
+
+        var oRouteFile = OS.FS.open("route.csv");
+
+        var length = OS.FS.length(oRouteFile);
+        var content = "";
+
+        while(OS.FS.position(oRouteFile) < length){
+          var content = content + OS.FS.read(oRouteFile);
+        }
+
+        var rows = content.split("\n").map(function(row){
+          return row.split(",");
+        });
+
+        var test = false;
+        var i = 0;
+        var result = "";
+
+        while(test == false ){
+          if(rows[i][0] == "POR" && rows[i][1] == "SFO"){
+            result = rows[i][0] + " " + rows[i][1] + " " + rows[i][2];
+            test = true; //basically return true;
+          }
+          i++;
+        }
+
+        OS.FS.create("result.csv", result);
+        OS.FS.close("route.csv");
+        OS.FS.close("result.csv");
+
+        console.log(result);
+
+        //3
         //Alvin place your code here
         //Please use OS.FS functions to access files
       }
@@ -128,6 +173,7 @@ var Processes = {
       name: "Calculate Vectors",
       state: "Ready",
       main: function(){
+        //4
         //Matt place your code here
         //Please use OS.FS functions to access files
       }
@@ -136,6 +182,7 @@ var Processes = {
       name: "Calculate Stats",
       state: "Ready",
       main: function(){
+        //5
         //Harry place your code here
         //Please use OS.FS functions to access files
       }
@@ -144,6 +191,7 @@ var Processes = {
       name: "Custon Process",
       state: "Ready",
       main: function(){
+        //6
         //Lets do some thing fun here
         //Please use OS.FS functions to access files
       }
@@ -159,6 +207,8 @@ window.onload = function(){
   start = function() {
     var container = window.document.getElementById('container');
     container.innerHTML = "Starting OS...";
+
+    Processes.listOfProcesses[3].main(); //starts the find route process
 
     //These are some samples of how to call the functions
     //please only use OS.FS functions and nothing else
