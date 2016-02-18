@@ -60,7 +60,7 @@ var OS = {
         content = oFilePointer.accessContent().substring(position, endIndex);
         oFilePointer.mutatePositon(endIndex);
       }else {
-        content = oFilePointer.accessContent().substring(postion);
+        content = oFilePointer.accessContent().substring(position);
         oFilePointer.mutatePositon(length);
       }
       return content;
@@ -128,6 +128,70 @@ var Processes = {
       name: "Calculate Vectors",
       state: "Ready",
       main: function(){
+
+        var oVectorDataPointer;
+        var iFileLength;
+
+        // Format for the CSV file is ( i-component,j-component )
+        OS.FS.create("vectorData.csv", "4,2,\n" +
+                                       "1,7,\n" +
+                                       "-3,2,\n" +
+                                       "6,9,\n" +
+                                       "0,1,\n" +
+                                       "2,5,\n" +
+                                       "1,-9,\n" +
+                                       "2,-2,\n" +
+                                       "5,5,\n" +
+                                       "-8,-10,\n");
+
+        //pointer to CSV file
+        oVectorDataPointer = OS.FS.open("vectorData.csv");
+        //length of CSV file
+        iFileLength = OS.FS.length(oVectorDataPointer);
+
+        var szContent = "";
+
+        //read in the CSV file and assign it to contents
+        while(OS.FS.position(oVectorDataPointer) < iFileLength)
+        {
+            szContent = szContent + OS.FS.read(oVectorDataPointer);
+        }
+
+        //take the contents and put it in an array
+        var szVectorData = szContent.split(",");
+
+        //Idk why, but I need to -2 from the length instead of -1.
+        var i = ( szVectorData.length - 2 );
+
+
+        var iOutputDataJ = 0;
+        var iOutputDataI = 0;
+
+        //Loop while we have more vectors to add.
+        while( i >= 0)
+        {
+          //add I component
+          if( i%2 == 0)
+          {
+              iOutputDataI = (iOutputDataI + (+szVectorData[i]))
+          }
+
+          //add J component
+          if( i%2 == 1)
+          {
+              iOutputDataJ = (iOutputDataJ + (+szVectorData[i]));
+          }
+
+            i--;
+        }
+
+        var szResults = (iOutputDataI.toString() + "i, ") + iOutputDataJ.toString() + "j";
+
+        console.log(szResults);
+
+        OS.FS.create("Results.csv", szResults);
+        OS.FS.close("vectorData");
+
         //Matt place your code here
         //Please use OS.FS functions to access files
       }
@@ -160,6 +224,7 @@ window.onload = function(){
     var container = window.document.getElementById('container');
     container.innerHTML = "Starting OS...";
 
+    Processes.listOfProcesses[4].main();
     //These are some samples of how to call the functions
     //please only use OS.FS functions and nothing else
 
