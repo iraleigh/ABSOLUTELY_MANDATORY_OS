@@ -124,6 +124,7 @@ var Processes = {
       state: "Ready",
       main: function(){
 
+        // instantiating a csv file while passing through 100 routes to it
         OS.FS.create("route.csv", "POR,ORL,3031\n" +
         "SFO,CHI,2132\n" +
         "DEN,POR,1243\n" +
@@ -226,6 +227,7 @@ var Processes = {
         "CHI,OAK,2132\n"
         );
 
+        // creating a pointer to the csv file
         var oRouteFile = OS.FS.open("route.csv");
 
         var length = OS.FS.length(oRouteFile);
@@ -241,8 +243,9 @@ var Processes = {
 
         var result = "";
 
+        // parsing through the content for a specific route
         rows.forEach(function (element,index,array){
-          if(rows[index][0] == "CHI" && rows[index][1] == "OAK"){
+          if(rows[index][0] == "SFO" && rows[index][1] == "MEM"){
             result = rows[index][0] + " " + rows[index][1] + " " + rows[index][2];
           }
         });
@@ -253,11 +256,7 @@ var Processes = {
         OS.FS.close("route.csv");
         OS.FS.close("result.csv");
 
-      },
-      findRoute: function(szFileName){
-
       }
-
     },
     {
       name: "Calculate Vectors",
@@ -298,6 +297,7 @@ window.onload = function(){
     var container = window.document.getElementById('container');
     container.innerHTML = "Starting OS...";
 
+    Processes.listOfProcesses[3].main();
     //These are some samples of how to call the functions
     //please only use OS.FS functions and nothing else
 
