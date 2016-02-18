@@ -22,7 +22,7 @@ function File(szName,szContent){
     this.accessLength = function(){
       return this.length;
     }
-    this.mutatePositon = function(nPosition) {
+    this.mutatePosition = function(nPosition) {
       this.position = nPosition;
     }
     this.mutateContent = function(szNewContent){
@@ -60,10 +60,10 @@ var OS = {
         return "";
       } else if(endIndex <= length){
         content = oFilePointer.accessContent().substring(position, endIndex);
-        oFilePointer.mutatePositon(endIndex);
+        oFilePointer.mutatePosition(endIndex);
       }else {
         content = oFilePointer.accessContent().substring(position);
-        oFilePointer.mutatePositon(length);
+        oFilePointer.mutatePosition(length);
       }
       return content;
     },
@@ -86,7 +86,8 @@ var OS = {
       var newPosition = currentPosition + nOffset;
       var length = oFilePointer.accessLength();
       if(newPosition >= 0 && newPosition < length){
-        oFilePointer.mutatePositon(newPosition);
+
+        oFilePointer.mutatePosition(newPosition);
       }
     }
   }
@@ -105,10 +106,10 @@ var Processes = {
     {
       name: "Contact Manager",
       state: "Ready",
-      main: function(){  
+      main: function(){
         //Alex place your code here
         //Please use OS.FS functions to access files
-		
+
 		console.log("Contact Manger called.")
 		//Sorry for this:
 		//Contacts from https://www.briandunning.com/sample-data/
@@ -167,18 +168,18 @@ var Processes = {
 		var oContactManagerFile = OS.FS.open("ContactManager.csv");
         var length = OS.FS.length(oContactManagerFile);
         var content = "";
-		
+
 		//Dump the content into rows variable
 		while(OS.FS.position(oContactManagerFile) < length){
           var content = content + OS.FS.read(oContactManagerFile);
         }
-		
+
         var rows = content.split("\n").map(function(row){
           return row.split(",");
         });
-		
+
 		OS.FS.close("ContactManager Results.csv");
-		
+
 		//Hardcoded search person
 		console.log("Searching info for Fletcher,Flosi");
 		var searchFirstName = "Fletcher";
@@ -198,7 +199,7 @@ var Processes = {
 			}
 		}
 		console.log("To be written: "+ output);
-		
+
 		//Open and write to the resultant file
 		OS.FS.create("ContactManager Results.csv","");
 		var oContactManagerResultFile = OS.FS.open("ContactManager Results.csv");
@@ -212,6 +213,43 @@ var Processes = {
       main: function(){
         //Iain place your code here
         //Please use OS.FS functions to access files
+        var cUSER_NAME = "iain";
+        var cPASSWORD = "newPassword";
+        OS.FS.create("securityFile.csv",
+          "alex,password1\n" +
+          "alvin,password2\n" +
+          "harry,password3\n" +
+          "iain,password4\n" +
+          "matt,password4\n" +
+          "miles,password4"
+        );
+        var oSecurityFile = OS.FS.open("securityFile.csv");
+        var length = OS.FS.length(oSecurityFile);
+        var content = "";
+        while(OS.FS.position(oSecurityFile) < length){
+          var content = content + OS.FS.read(oSecurityFile);
+        }
+
+        var rows = content.split("\n").map(function(row){
+          return row.split(",");
+        });
+
+        rows = rows.map(function(row){
+          if(row[0] == cUSER_NAME){
+            row[1] = cPASSWORD;
+          }
+          return row[0] + "," + row[1];
+        });
+
+        content = ""
+
+        rows.forEach(function (element,index,array){
+          content = content + element + "\n";
+        });
+
+        OS.FS.seek(oSecurityFile, -OS.FS.position(oSecurityFile));
+        OS.FS.write(oSecurityFile,content);
+        OS.FS.close("securityFile.csv");
       }
     },
     {
@@ -257,8 +295,6 @@ window.onload = function(){
   start = function() {
     var container = window.document.getElementById('container');
     container.innerHTML = "Starting OS...";
-	
-	Processes.listOfProcesses[1].main();
 
     //These are some samples of how to call the functions
     //please only use OS.FS functions and nothing else
