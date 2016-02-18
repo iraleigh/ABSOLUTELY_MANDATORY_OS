@@ -471,6 +471,131 @@ var Processes = {
 
         //Harry place your code here
         //Please use OS.FS functions to access files
+		console.log("Calculating Stats.");  
+      OS.FS.create("statsFile.csv", 
+                   "1.10\n" + "5.09\n" + "0.97\n" + "1.59\n" + "4.60\n" + "0.32\n" +
+                   "0.55\n" + "1.45\n" + "0.14\n" + "4.47\n" + "1.20\n" + "3.50\n" +
+                   "5.02\n" + "4.67\n" + "5.22\n" + "2.69\n" + "3.98\n" + "3.17\n" +
+                   "3.03\n" + "2.21\n" + "0.69\n" + "4.47\n" + "3.31\n" + "1.17\n" + 
+                   "0.76\n" + "1.17\n" + "1.57\n" + "2.62\n" + "1.66\n" + "2.05\n");
+      
+      var oStatsFile = OS.FS.open("statsFile.csv");
+      var length = OS.FS.length(oSStatsFile);
+      var content = "";
+      while (OS.FS.position(oStatsFile) < length)
+      {
+        var content = content + OS.FS.read(oStatsFile);
+      }
+      
+      var rows = content.split("\n").map(function(row)
+        {
+          return row.split(",");
+        });
+        //uhhnhn
+      OS.FS.close("statsFile.csv");
+
+	       // Sort data in ascending order and display on console
+      var sortData = function(file)
+      {
+          file.sort();
+          document.write("<br>Sorted data (ascending order): " + file);
+          document.write("<br>Number of data: " + file.length);
+      };
+      sortData(iData);
+
+      	// Find the smallest value of the data 
+	      // After sorting data, first index of the array is the smallest value
+      var minValue = function(file)
+      {
+          minValue = file[0];
+          document.write("<br>Minimum value: " + minValue);
+      };
+      minValue(iData);
+
+	      // Find the biggest value
+	      // Rearrange the array in reverse order,
+	      // the biggest value is in the first index of the array
+      var maxValue = function(file)
+      {
+	        file.sort();		// this makes sure the array is sorted first
+          file.reverse();
+          maxValue = file[0];
+          document.write("<br>Maximum value: " + maxValue);
+      };
+      maxValue(iData);
+
+	       // Find the range which are also minimum value and maximum value
+      var dataRange = function(file)
+      {
+          document.write("<br>Data range: ( " + minValue + ", " + maxValue + " )");
+      };
+      dataRange(iData);
+
+	       // Find the total sum of the data by using for-loop
+      var totalSum = function(file)
+      {
+          var total = 0;
+          for (var i = 0; i < file.length; i++)
+          {
+              total = total + file[i];
+          }
+          totalSum = total;
+          document.write("<br>Total sum: " + totalSum);
+      };
+      totalSum(iData);
+
+	       // Find the average value of the data
+      var meanValue = function(file)
+      {
+          meanValue = totalSum/file.length;
+          document.write("<br>Mean value: " + meanValue);
+      };
+      meanValue(iData);
+
+	       // Find the median value of the data
+      var medianValue = function(file)
+      {
+	       // Array need to be sorted first in order to find the median
+	        file.sort();
+	
+	       // Check if the array's size is even or odd
+          if ( file.length % 2 === 1)
+          {
+              medianValue = file[(file.length / 2) - .5];
+          }
+          else if ( file.length % 2 === 0)
+          {
+              var position1 = (file.length / 2);
+              var position2 = (file.length / 2) - 1;
+              medianValue = (file[position1] +file[position2]) / 2;
+          }
+          document.write( "<br>Median Value: " + medianValue);
+      };
+      medianValue(iData);
+
+	       // Find sample variance
+      var sampleVariance = function(file)
+      {
+          var sum = 0;
+          for (var i = 0; i < file.length; i++)
+          {
+              var temp = file[i] - meanValue;
+              var temp1 = Math.pow(temp,2);
+              sum = sum + temp1;
+          }
+          sampleVariance = sum/(file.length - 1);
+          document.write("<br>Sample Variance: " + sampleVariance);
+      };
+      sampleVariance(iData);
+      
+        // Find standard deviation
+      var standardDeviation = function(file)
+      {
+        // Standard deviation is the square root of sample variance
+          standardDeviation = Math.sqrt(sampleVariance);
+          document.write("<br>Standard Deviation: " + standardDeviation);
+      };
+      standardDeviation(iData);
       }
     },
     {
