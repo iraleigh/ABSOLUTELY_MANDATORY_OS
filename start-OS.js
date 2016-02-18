@@ -37,12 +37,14 @@ var OS = {
       Directory.Files.push(new File(szFileName,szContent));
     },
     delete: function(szFileName){
-      for(var file of Directory.Files){
+      var file;
+      for each(file in Directory.Files){
         if(file.isName(szFileName)) delete file;
       }
     },
     open: function(szFileName){
-      for(var file of Directory.Files){
+      var file;
+      for each(file in Directory.Files){
         if(file.isName(szFileName)) return file;
       }
     },
