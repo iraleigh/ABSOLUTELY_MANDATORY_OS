@@ -3,31 +3,31 @@ var Directory = {
 }
 
 function File(szName,szContent){
-    this.name = szName;
-    this.content = szContent;
-    this.position = 0;
-    this.length = szContent.length;
-    this.isName = function (szName) {
-      return this.name === szName;
-    }
-    this.accessName = function(){
-      return this.name;
-    }
-    this.accessContent = function(){
-      return this.content;
-    }
-    this.accessPosition = function(){
-      return this.position;
-    }
-    this.accessLength = function(){
-      return this.length;
-    }
-    this.mutatePositon = function(nPosition) {
-      this.position = nPosition;
-    }
-    this.mutateContent = function(szNewContent){
-      this.content = szNewContent;
-    }
+  this.name = szName;
+  this.content = szContent;
+  this.position = 0;
+  this.length = szContent.length;
+  this.isName = function (szName) {
+    return this.name === szName;
+  }
+  this.accessName = function(){
+    return this.name;
+  }
+  this.accessContent = function(){
+    return this.content;
+  }
+  this.accessPosition = function(){
+    return this.position;
+  }
+  this.accessLength = function(){
+    return this.length;
+  }
+  this.mutatePositon = function(nPosition) {
+    this.position = nPosition;
+  }
+  this.mutateContent = function(szNewContent){
+    this.content = szNewContent;
+  }
 }
 
 
@@ -99,7 +99,9 @@ var Processes = {
       state: "Ready",
       main: function(){
 
-        var aryBankBook = new Array;
+        //var aryBankBook = new Array;
+        var aryTransactionName = new Array;
+        var aryTransactionAmount = new Array;
         var nBankBookTotal = 0.0;
         var container = window.document.getElementById('container');
 
@@ -107,185 +109,216 @@ var Processes = {
         var szFileName = "bankBook.csv";
         var nBankBookSize = 25;
 
-          for (i = 0; i < nBankBookSize; i++){
-            //Create a bank book with net positive values
+        for (i = 0; i < nBankBookSize; i++){
+          //Create a bank book with net positive values
 
-            var szTransactionType = getTransactionType();
-            var nTransactionAmount = getTransactionAmount(szTransactionType);
+          var szTransactionType = getTransactionType();
+          var nTransactionAmount = getTransactionAmount(szTransactionType);
 
-            if(i == 0){
-              aryBankBook[i,0] = szTransactionType;
-              aryBankBook[i,1] = nTransactionAmount;
+          if(i == 0){
+            aryTransactionName[i] = szTransactionType;
+            aryTransactionAmount[i] = nTransactionAmount;
+          }
+          else{
+            //console.log(i);
+            var j = i - 1;
+            var nPreviousAmount = aryTransactionAmount[j];
+            var szPreviousType = aryTransactionName[j];
+            while(nPreviousAmount == nTransactionAmount){
+              szTransactionType = getTransactionType();
+              nTransactionAmount = getTransactionAmount(szTransactionType);
             }
-            else{
-              //console.log(i);
-              var j = i - 1;
-              var nPreviousAmount = aryBankBook[j,1];
-              var szPreviousType = aryBankBook[j,0];
-              while(nPreviousAmount == nTransactionAmount){
-                szTransactionType = getTransactionType();
-                nTransactionAmount = getTransactionAmount(szTransactionType);
-              }
-              aryBankBook[i,0] = szTransactionType;
-              aryBankBook[i,1] = nTransactionAmount;
-
-            }
-            console.log(aryBankBook[i,0]);
-            console.log(aryBankBook[i,1]);
+            aryTransactionName[i] = szTransactionType;
+            aryTransactionAmount[i] = nTransactionAmount;
 
           }
+          console.log(aryTransactionName[i]);
+          console.log(aryTransactionAmount[i]);
 
-          //Create file
-          var szFileContents;
-          for(k = 0; k < nBankBookSize; k++){
-            console.log(k);
-            console.log(aryBankBook[k,0]);
-            console.log(aryBankBook[k,1]);
-            szFileContents = szFileContents + aryBankBook[k,0] + ",";
-            szFileContents = szFileContents + aryBankBook[k,1] + ",";
+        }
 
-          }
-          OS.FS.create(szFileName,szFileContents);
+        //Create file
+        var szFileContents;
+        for(k = 0; k < nBankBookSize; k++){
+          console.log(k);
+          console.log(aryTransactionName[k]);
+          console.log(aryTransactionAmount[k]);
+          szFileContents = szFileContents + aryTransactionName[k] + ",";
+          szFileContents = szFileContents + aryTransactionAmount[k] + ",";
+
+        }
+        OS.FS.create(szFileName,szFileContents);
 
 
 
         //open file
         console.log(szFileName);
         var oBankBookFile = OS.FS.open(szFileName);
+        //console.log(oBankBookFile.accessContent());
         //var szBankBookFile = Directory.Files[0];
-        var szBankBook= OS.FS.read(oBankBookFile);
-        console.log(szBankBook);
-
-
-        //loop to parse CSV
-        var aryBankBook = new Array;
-        var aryTempBook = szBankBook.split(",");
-        for (i = 0; i < aryTempBook.length; i++){
-          var nRowFloat = i / 2;
-          var nBankBookRow = Math.floor(nRowFloat);
-          if(i % 2 == 0){
-            aryBankBook[nBankBookRow,0] = aryTempBook[i];
-          }
-          else{
-            aryBankBook[nBankBookRow,1] = aryTempBook[i];
-          }
+        var szBankBook;
+        while(OS.FS.position(oBankBookFile) < OS.FS.length(oBankBookFile)){
+          szBankBook = szBankBook + OS.FS.read(oBankBookFile);
         }
+        //console.log(OS.FS.position(oBankBookFile));
+        //console.log(OS.FS.length(oBankBookFile));
+        /*while(OS.FS.position(oBankBookFile) < (OS.FS.length(oBankBookFile) - 1)){
+        console.log(OS.FS.position(oBankBookFile));
+        szBankBook = szBankBook + OS.FS.read(oBankBookFile);
+      }*/
+      console.log(szBankBook);
 
-        //add running total
-        for (i = 0; i < aryBankBook.length; i++){
-          nBankBookTotal = (nBankBookTotal + Number(aryBankBook[i,1]))
-          console.log(nBankBookTotal);
+
+      //loop to parse CSV
+      //var aryBankBook = new Array;
+      var aryBankFileTType = new Array;
+      var aryBankFileTAmount = new Array;
+      var aryTempBook = szBankBook.split(",");
+      for (i = 0; i < aryTempBook.length; i++){
+        var nRowFloat = i / 2;
+        var nBankBookRow = Math.floor(nRowFloat);
+        if(i % 2 == 0){
+          aryBankFileTType[nBankBookRow] = aryTempBook[i];
         }
+        else{
+          aryBankFileTAmount[nBankBookRow] = aryTempBook[i];
+        }
+      }
 
-        //display results
-        var szFormattedResults = "Bank Book<br>";
-        szFormattedResults = "<table>";
-        for (i = 0; i < aryBankBook.length; i++){
+      //add running total
+
+      console.log(aryBankFileTType.length);
+      for (i = 0; i < (aryBankFileTType.length -1); i++){
+        if(aryBankFileTType[i] != "undefined")
+        nBankBookTotal = (nBankBookTotal + Number(aryBankFileTAmount[i]));
+        console.log(nBankBookTotal);
+      }
+
+      //Fix precision errors
+      nBankBookTotal = Number(nBankBookTotal).toFixed(2);
+
+      //display results
+      var szFormattedResults = "Bank Book<br>";
+      szFormattedResults = "<table>";
+      for (i = 0; i < (aryBankFileTType.length -1); i++){
+        if(aryBankFileTType != "undefined"){
           szFormattedResults = szFormattedResults + "<tr><td>";
-          szFormattedResults = szFormattedResults + aryBankBook[i,0];
+          szFormattedResults = szFormattedResults + aryBankFileTType[i];
           szFormattedResults = szFormattedResults + "</td>"
-          szFormattedResults = szFormattedResults + "<td style=\"text-align:right\">"
-          szFormattedResults = szFormattedResults + aryBankBook[i,1];
+          szFormattedResults = szFormattedResults + "<td style=\"text-align:right\">$"
+          szFormattedResults = szFormattedResults + aryBankFileTAmount[i];
           szFormattedResults = szFormattedResults + "</td></tr>"
         }
-        szFormattedResults = szFormattedResults + "<tr><td>"
-        szFormattedResults = szFormattedResults + "Total: </td>"
-        szFormattedResults = szFormattedResults + "<td style=\"text-align:right\">"
-        szFormattedResults = szFormattedResults + nBankBookTotal;
-        szFormattedResults = szFormattedResults + "</td></tr></table>"
 
-        //container.innerHTML = szFormattedResults;
-        //log(szFormattedResults);
-        //create new file
-        //save results to new file
 
-        function getTransactionType(){
-          var nTransactionType = Math.floor(Math.random() * 4.0);
-          var szTransactionName;
+    }
+    szFormattedResults = szFormattedResults + "<tr><td>"
+    szFormattedResults = szFormattedResults + "Total: </td>"
+    szFormattedResults = szFormattedResults + "<td style=\"text-align:right\">$"
+    szFormattedResults = szFormattedResults + nBankBookTotal;
+    szFormattedResults = szFormattedResults + "</td></tr></table>"
 
-          if (nTransactionType == 0)
-            szTransactionName = "Deposit";
-          else if (nTransactionType == 1)
-            szTransactionName = "Withdrawal";
-          else if (nTransactionType == 2)
-            szTransactionName = "Check";
-          else if (nTransactionType == 3)
-            szTransactionName = "Debit";
+    container.innerHTML = szFormattedResults;
 
-            //console.log(szTransactionName);
+    //create new file
+    var szTotaledName = "totaledBankBook";
+    var szTotaledContents;
+    for (i = 0; i < aryBankFileTType.length; i++){
+      szTotaledContents = szTotaledContents + aryBankFileTType[i] + ",";
+      szTotaledContents = szTotaledContents + aryBankFileTAmount[i] + ",";
 
-          return szTransactionName;
-          }
+    }
+    szTotaledContents = szTotaledContents + "Total," + nBankBookTotal;
+    OS.FS.create(szTotaledName,szTotaledContents)
 
-          function getTransactionAmount(szTransactionType){
-            var nTransactionAmount;
-            var nFormattedResult;
-            if (szTransactionType == "Deposit")
-              nTransactionAmount = 500.0 * Math.random();
-            else if (szTransactionType == "Withdrawal")
-              nTransactionAmount = -100.0 * Math.random();
-            else if (szTransactionType == "Check")
-              nTransactionAmount = -250.0 * Math.random();
-            else
-              nTransactionAmount = -160.0 * Math.random();
 
-              nFormattedResult = Number(nTransactionAmount).toFixed(2);
-              //console.log(nFormattedResult);
+    function getTransactionType(){
+      var nTransactionType = Math.floor(Math.random() * 4.0);
+      var szTransactionName;
 
-            return nFormattedResult;
-          }
-      }
+      if (nTransactionType == 0)
+      szTransactionName = "Deposit";
+      else if (nTransactionType == 1)
+      szTransactionName = "Withdrawal";
+      else if (nTransactionType == 2)
+      szTransactionName = "Check";
+      else if (nTransactionType == 3)
+      szTransactionName = "Debit";
 
-    },
-    {
-      name: "Contact Manager",
-      state: "Ready",
-      main: function(){
-        //Alex place your code here
-        //Please use OS.FS functions to access files
-      }
-    },
-    {
-      name: "Update Security File",
-      state: "Ready",
-      main: function(){
-        //Iain place your code here
-        //Please use OS.FS functions to access files
-      }
-    },
-    {
-      name: "Find Routes",
-      state: "Ready",
-      main: function(){
-        //Alvin place your code here
-        //Please use OS.FS functions to access files
-      }
-    },
-    {
-      name: "Calculate Vectors",
-      state: "Ready",
-      main: function(){
-        //Matt place your code here
-        //Please use OS.FS functions to access files
-      }
-    },
-    {
-      name: "Calculate Stats",
-      state: "Ready",
-      main: function(){
-        //Harry place your code here
-        //Please use OS.FS functions to access files
-      }
-    },
-    {
-      name: "Custon Process",
-      state: "Ready",
-      main: function(){
-        //Lets do some thing fun here
-        //Please use OS.FS functions to access files
-      }
-    },
-  ]
+      //console.log(szTransactionName);
+
+      return szTransactionName;
+    }
+
+    function getTransactionAmount(szTransactionType){
+      var nTransactionAmount;
+      var nFormattedResult;
+      if (szTransactionType == "Deposit")
+      nTransactionAmount = 1000.0 * Math.random();
+      else if (szTransactionType == "Withdrawal")
+      nTransactionAmount = -100.0 * Math.random();
+      else if (szTransactionType == "Check")
+      nTransactionAmount = -250.0 * Math.random();
+      else
+      nTransactionAmount = -160.0 * Math.random();
+
+      nFormattedResult = Number(nTransactionAmount).toFixed(2);
+      //console.log(nFormattedResult);
+
+      return nFormattedResult;
+    }
+  }
+
+},
+{
+  name: "Contact Manager",
+  state: "Ready",
+  main: function(){
+    //Alex place your code here
+    //Please use OS.FS functions to access files
+  }
+},
+{
+  name: "Update Security File",
+  state: "Ready",
+  main: function(){
+    //Iain place your code here
+    //Please use OS.FS functions to access files
+  }
+},
+{
+  name: "Find Routes",
+  state: "Ready",
+  main: function(){
+    //Alvin place your code here
+    //Please use OS.FS functions to access files
+  }
+},
+{
+  name: "Calculate Vectors",
+  state: "Ready",
+  main: function(){
+    //Matt place your code here
+    //Please use OS.FS functions to access files
+  }
+},
+{
+  name: "Calculate Stats",
+  state: "Ready",
+  main: function(){
+    //Harry place your code here
+    //Please use OS.FS functions to access files
+  }
+},
+{
+  name: "Custon Process",
+  state: "Ready",
+  main: function(){
+    //Lets do some thing fun here
+    //Please use OS.FS functions to access files
+  }
+},
+]
 }
 
 
