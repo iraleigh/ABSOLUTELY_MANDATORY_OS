@@ -160,19 +160,13 @@ var Processes = {
         while(OS.FS.position(oBankBookFile) < OS.FS.length(oBankBookFile)){
           szBankBook = szBankBook + OS.FS.read(oBankBookFile);
         }
-        //console.log(OS.FS.position(oBankBookFile));
-        //console.log(OS.FS.length(oBankBookFile));
-        /*while(OS.FS.position(oBankBookFile) < (OS.FS.length(oBankBookFile) - 1)){
-        console.log(OS.FS.position(oBankBookFile));
-        szBankBook = szBankBook + OS.FS.read(oBankBookFile);
-      }*/
+        
       console.log(szBankBook);
       OS.FS.close(oBankBookFile);
 
       //loop to parse CSV
-      //var aryBankBook = new Array;
-      var aryBankFileTType = new Array;
-      var aryBankFileTAmount = new Array;
+      var aryBankFileTType = new Array; //Transaction types
+      var aryBankFileTAmount = new Array; //Transaction amounts
       var aryTempBook = szBankBook.split(",");
       for (i = 0; i < aryTempBook.length; i++){
         var nRowFloat = i / 2;
