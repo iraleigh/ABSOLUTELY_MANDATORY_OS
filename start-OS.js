@@ -167,7 +167,7 @@ var Processes = {
         szBankBook = szBankBook + OS.FS.read(oBankBookFile);
       }*/
       console.log(szBankBook);
-
+      OS.FS.close(oBankBookFile);
 
       //loop to parse CSV
       //var aryBankBook = new Array;
@@ -178,9 +178,11 @@ var Processes = {
         var nRowFloat = i / 2;
         var nBankBookRow = Math.floor(nRowFloat);
         if(i % 2 == 0){
+          console.log(aryTempBook[i]);
           aryBankFileTType[nBankBookRow] = aryTempBook[i];
         }
         else{
+          console.log(aryTempBook[i]);
           aryBankFileTAmount[nBankBookRow] = aryTempBook[i];
         }
       }
@@ -201,14 +203,14 @@ var Processes = {
       var szFormattedResults = "Bank Book<br>";
       szFormattedResults = "<table>";
       for (i = 0; i < (aryBankFileTType.length -1); i++){
-        if(aryBankFileTType != "undefined"){
+
           szFormattedResults = szFormattedResults + "<tr><td>";
           szFormattedResults = szFormattedResults + aryBankFileTType[i];
           szFormattedResults = szFormattedResults + "</td>"
           szFormattedResults = szFormattedResults + "<td style=\"text-align:right\">$"
           szFormattedResults = szFormattedResults + aryBankFileTAmount[i];
           szFormattedResults = szFormattedResults + "</td></tr>"
-        }
+
 
 
     }
