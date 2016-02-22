@@ -156,6 +156,7 @@ var OS = {
   },
   Scheduler: {
     runNextProcess: function (){
+      //Here be dragons
         var oNextProcess = Processes.listOfProcesses.find(function(element,index,array){
           if (element.state == "Ready") {
             console.log(element.name + " is Ready");
