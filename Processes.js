@@ -713,7 +713,7 @@ var Processes = {
               OS.FS.create("ContactManager_Sorted.csv", "");
               var oContactManagerResultFile = OS.FS.open("ContactManager_Sorted.csv");
               OS.FS.write(oContactManagerResultFile, output);
-              OS.FS.close("ContactManager Results.csv");
+              OS.FS.close("ContactManager_Sorted.csv");
           }
       },
     ]
