@@ -1,0 +1,177 @@
+var OS = {
+  FS: {
+    create: function(szFileName,szContent){
+      //Processes.listOfDevices[0].create(szFileName,szContent);
+      console.log("In Create");
+      Processes.findProcessByName(OS.FS.create.caller.displayName).state =
+      "Waiting";
+      OS.ProcessQueue.enqueue(
+        OS.ProcessQueue.wrapFunction(
+          Processes.listOfDevices[0].create,
+          OS.FS.create.caller,
+          [OS.FS.create.caller.displayName,szFileName,szContent]
+        )
+      );
+      OS.Scheduler.runNextProcess() ;
+      //OS.ProcessQueue.dequeue();
+      //Processes.listOfDevices[0].main();
+    },
+    delete: function(szFileName){
+      //Processes.listOfDevices[0].delete(szFileName);
+      console.log("In Delete");
+      Processes.findProcessByName(OS.FS.delete.caller.displayName).state =
+      "Waiting";
+      OS.ProcessQueue.enqueue(
+        OS.ProcessQueue.wrapFunction(
+          Processes.listOfDevices[0].delete,
+          OS.FS.delete.caller,
+          [OS.FS.delete.caller.displayName,szFileName]
+        )
+      );
+      OS.Scheduler.runNextProcess() ;
+      //Processes.listOfDevices[0].main();
+    },
+    open: function(szFileName){
+      //return Processes.listOfDevices[0].open(szFileName);
+      console.log("In Open");
+      Processes.findProcessByName(OS.FS.open.caller.displayName).state =
+      "Waiting";
+      OS.ProcessQueue.enqueue(
+        OS.ProcessQueue.wrapFunction(
+          Processes.listOfDevices[0].open,
+          OS.FS.open.caller,
+          [OS.FS.open.caller.displayName,szFileName]
+        )
+      );
+      return OS.Scheduler.runNextProcess() ;
+      //return Processes.listOfDevices[0].main();
+    },
+    close: function(szFileName){
+      //Processes.listOfDevices[0].close(szFileName);
+      console.log("In Close");
+      Processes.findProcessByName(OS.FS.close.caller.displayName).state =
+      "Waiting";
+      OS.ProcessQueue.enqueue(
+        OS.ProcessQueue.wrapFunction(
+          Processes.listOfDevices[0].close,
+          OS.FS.close.caller,
+          [OS.FS.close.caller.displayName,szFileName]
+        )
+      );
+      OS.Scheduler.runNextProcess() ;
+      //Processes.listOfDevices[0].main();
+    },
+    read: function(oFilePointer){
+      //return Processes.listOfDevices[0].read(oFilePointer);
+      console.log("In Read");
+      Processes.findProcessByName(OS.FS.read.caller.displayName).state =
+      "Waiting";
+      OS.ProcessQueue.enqueue(
+        OS.ProcessQueue.wrapFunction(
+          Processes.listOfDevices[0].read,
+          OS.FS.read.caller,
+          [OS.FS.read.caller.displayName,oFilePointer]
+        )
+      );
+      return OS.Scheduler.runNextProcess() ;
+      //return Processes.listOfDevices[0].main();
+    },
+    write: function(oFilePointer,szInput){
+      //Processes.listOfDevices[0].write(oFilePointer,szInput);
+      console.log("In Write");
+      Processes.findProcessByName(OS.FS.write.caller.displayName).state =
+      "Waiting";
+      OS.ProcessQueue.enqueue(
+        OS.ProcessQueue.wrapFunction(
+          Processes.listOfDevices[0].write,
+          OS.FS.write.caller,
+          [OS.FS.write.caller.displayName,oFilePointer,szInput]
+        )
+      );
+      OS.Scheduler.runNextProcess() ;
+      //Processes.listOfDevices[0].main();
+    },
+    position: function(oFilePointer){
+      //return Processes.listOfDevices[0].position(oFilePointer);
+      console.log("In Position");
+      Processes.findProcessByName(OS.FS.position.caller.displayName).state =
+      "Waiting";
+      OS.ProcessQueue.enqueue(
+        OS.ProcessQueue.wrapFunction(
+          Processes.listOfDevices[0].position,
+          OS.FS.position.caller,
+          [OS.FS.position.caller.displayName,oFilePointer]
+        )
+      );
+      return OS.Scheduler.runNextProcess() ;
+      //return Processes.listOfDevices[0].main();
+    },
+    length: function(oFilePointer){
+      //return Processes.listOfDevices[0].length(oFilePointer);
+      console.log("In length");
+      console.log(oFilePointer);
+      Processes.findProcessByName(OS.FS.length.caller.displayName).state =
+      "Waiting";
+      OS.ProcessQueue.enqueue(
+        OS.ProcessQueue.wrapFunction(
+          Processes.listOfDevices[0].lengthOfFile,
+          OS.FS.length.caller,
+          [OS.FS.length.caller.displayName,oFilePointer]
+        )
+      );
+      return OS.Scheduler.runNextProcess() ;
+      //return Processes.listOfDevices[0].main();
+    },
+    seek: function(oFilePointer,nOffset){
+      //Processes.listOfDevices[0].seek(oFilePointer,nOffset);
+      console.log("In seek");
+      Processes.findProcessByName(OS.FS.seek.caller.displayName).state =
+      "Waiting";
+      OS.ProcessQueue.enqueue(
+        OS.ProcessQueue.wrapFunction(
+          Processes.listOfDevices[0].seek,
+          OS.FS.seek.caller,
+          [OS.FS.seek.caller.displayName,oFilePointer,nOffset]
+        )
+      );
+      OS.Scheduler.runNextProcess() ;
+      //Processes.listOfDevices[0].main();
+    }
+  },
+  ProcessQueue: {
+    queue: [],
+    wrapFunction: function(fn, context, params) {
+      return function() {
+        return fn.apply(context,params);
+      }
+    },
+    enqueue: function(func){
+      OS.ProcessQueue.queue.push(func);
+    },
+    dequeue: function(){
+      //var fn = OS.ProcessQueue.queue.shift();
+      //return fn();
+      return OS.ProcessQueue.queue.shift()();
+    }
+  },
+  Scheduler: {
+    runNextProcess: function (){
+        var oNextProcess = Processes.listOfProcesses.find(function(element,index,array){
+          if (element.state == "Ready") {
+            console.log(element.name + " is Ready");
+            return true;
+          } else {
+            return false;
+          }
+        });
+        if(oNextProcess != undefined){
+          oNextProcess.main().next();
+        } else {
+          return OS.Scheduler.runDevice();
+        }
+    },
+    runDevice: function(){
+      return Processes.listOfDevices[0].main();
+    }
+  }
+}
