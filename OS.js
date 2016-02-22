@@ -165,7 +165,7 @@ var OS = {
           }
         });
         if(oNextProcess != undefined){
-          oNextProcess.main().next();
+          oNextProcess.main();
         } else {
           return OS.Scheduler.runDevice();
         }
