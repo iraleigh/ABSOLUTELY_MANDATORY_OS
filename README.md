@@ -5,8 +5,9 @@ http://tinyurl.com/sfsucsc415
 
 ## Members and Progress
 ### Alex Brown 
-- Contact Manager process. 
-- Host website.
+- Contact Manager process.
+- Custom process.
+
 
 ### Iain Raleigh 
 - Update Security File process, 
