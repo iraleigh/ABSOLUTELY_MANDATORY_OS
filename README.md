@@ -1,7 +1,5 @@
 # ABSOLUTELY_MANDATORY_OS
-
-## Link to our project
-http://tinyurl.com/sfsucsc415
+Because coming up with a name for our group was ABSOLUTELY MANDATORY.
 
 ## Members and Progress
 ###Miles Bainbridge
