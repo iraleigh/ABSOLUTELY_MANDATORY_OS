@@ -314,7 +314,7 @@ var Processes = {
             }
           );
 
-          OS.FS.close("ContactManager Results.csv");
+          OS.FS.close("ContactManager.csv");
           break;
 
           case 8:
