@@ -1,6 +1,6 @@
 var charCount = 0;
 var currentInput = "";
-var oldInput = "AMOS:<br /> \\> ";
+var oldInput = "AMOS<br /> \\> ";
 
 window.onload = function () {
     //ABSOLUTELY MADATORY OS -- AMOS
@@ -41,9 +41,9 @@ document.onkeydown = function (evt) {
 
 function doCommand(input) {  //Commands are sent here to be parsed
     console.log(input);
-    if (currentInput.toUpperCase() == "CLS") { //Clear Last Screen
+    if (currentInput.toUpperCase() == "CLEAR") { //Clears screen
         container.innerHTML = "";
         oldInput = "";
-        currentInput = "AMOS:";
+        currentInput = "AMOS";
     }
 }
