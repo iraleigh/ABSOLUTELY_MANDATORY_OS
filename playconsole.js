@@ -1,6 +1,6 @@
 var charCount = 0;
 var currentInput = "";
-var oldInput = "Starting AMOS...<br /> \\> ";
+var oldInput = "AMOS:<br /> \\> ";
 
 window.onload = function () {
     //ABSOLUTELY MADATORY OS -- AMOS
@@ -16,6 +16,7 @@ document.onkeypress = function (evt) {
         //Prep terminal for new line
         currentInput += "<br /> \\> ";
         container.innerHTML = oldInput + currentInput;
+        window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
         oldInput = oldInput + currentInput;
         currentInput = "";
 
@@ -30,9 +31,9 @@ document.onkeypress = function (evt) {
 document.onkeydown = function (evt) {
     evt = evt || window.event;
     if (evt.keyCode == 8) { // On backspace
-        evt.preventDefault();
+        evt.preventDefault(); //Don't go the previous webpage!!
         if (currentInput.length > 0) { //To be safe
-            currentInput = currentInput.slice(0, currentInput.length - 1);
+            currentInput = currentInput.slice(0, currentInput.length - 1); //Remove a character
             container.innerHTML = oldInput + currentInput;
         }
     }
@@ -40,4 +41,9 @@ document.onkeydown = function (evt) {
 
 function doCommand(input) {  //Commands are sent here to be parsed
     console.log(input);
+    if (currentInput.toUpperCase() == "CLS") { //Clear Last Screen
+        container.innerHTML = "";
+        oldInput = "";
+        currentInput = "AMOS:";
+    }
 }
