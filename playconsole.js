@@ -30,6 +30,7 @@ document.onkeypress = function (evt) {
 document.onkeydown = function (evt) {
     evt = evt || window.event;
     if (evt.keyCode == 8) { // On backspace
+        evt.preventDefault();
         if (currentInput.length > 0) { //To be safe
             currentInput = currentInput.slice(0, currentInput.length - 1);
             container.innerHTML = oldInput + currentInput;
