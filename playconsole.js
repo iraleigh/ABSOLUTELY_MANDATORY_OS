@@ -1,28 +1,36 @@
-var charCount = 0;
-var currentInput = "";
-var oldInput = "AMOS<br /> \\> ";
+var CLI = {
+    currentInput: "",
+    oldInput: "AMOS<br /> \\> ",
+    status: {
+        OK: 0,
+        BAD_COMMAND: 1
+    }
+}
+
 
 window.onload = function () {
     //ABSOLUTELY MADATORY OS -- AMOS
-    container.innerHTML = oldInput;
+    container.innerHTML = CLI.oldInput;
 }
 
 document.onkeypress = function (evt) {
     evt = evt || window.event;
     if (evt.charCode == 13) { // On enter
         //Grab the function here
-        doCommand(currentInput);
+        var cmdStatus = doCommand(CLI.currentInput);
 
         //Prep terminal for new line
-        currentInput += "<br /> \\> ";
-        container.innerHTML = oldInput + currentInput;
+        if (cmdStatus == CLI.status.BAD_COMMAND)
+            CLI.currentInput += "<br/>Unknown command";
+        CLI.currentInput += "<br /> \\> ";
+        container.innerHTML = CLI.oldInput + CLI.currentInput;
         window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
-        oldInput = oldInput + currentInput;
-        currentInput = "";
+        CLI.oldInput = CLI.oldInput + CLI.currentInput;
+        CLI.currentInput = "";
 
     } else { // A character is typed
-        currentInput += String.fromCharCode(evt.which);
-        container.innerHTML = oldInput + currentInput;
+        CLI.currentInput += String.fromCharCode(evt.which);
+        container.innerHTML = CLI.oldInput + CLI.currentInput;
 
     }
 }
@@ -32,18 +40,29 @@ document.onkeydown = function (evt) {
     evt = evt || window.event;
     if (evt.keyCode == 8) { // On backspace
         evt.preventDefault(); //Don't go the previous webpage!!
-        if (currentInput.length > 0) { //To be safe
-            currentInput = currentInput.slice(0, currentInput.length - 1); //Remove a character
-            container.innerHTML = oldInput + currentInput;
+        if (CLI.currentInput.length > 0) { //To be safe
+            CLI.currentInput = CLI.currentInput.slice(0, CLI.currentInput.length - 1); //Remove a character
+            container.innerHTML = CLI.oldInput + CLI.currentInput;
         }
     }
 }
 
 function doCommand(input) {  //Commands are sent here to be parsed
-    console.log(input);
-    if (currentInput.toUpperCase() == "CLEAR") { //Clears screen
+    var command = CLI.currentInput.toUpperCase().split(" ");
+
+    console.log(command);
+
+    if (command[0] == "CLEAR" || command[0] == "CLS") { //Clears screen
         container.innerHTML = "";
-        oldInput = "";
-        currentInput = "AMOS";
+        CLI.oldInput = "";
+        CLI.currentInput = "AMOS";
+        return CLI.status.OK;
     }
+    if (command[0] == "TEST") {  //Just to test command line
+        for (i = 1; i < command.length; i++) 
+            console.log("Arg " + i + ":" + command [i]);
+        return CLI.status.OK;
+    }
+
+    return CLI.status.BAD_COMMAND;
 }
