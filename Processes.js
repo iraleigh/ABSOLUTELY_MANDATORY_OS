@@ -1059,5 +1059,15 @@ var Processes = {
         }
       }
     },
+      {
+          name: "keyboard",
+          state: "Ready",
+          main: function(command){
+              // Matt & Alvin, put your code here to parse through the command and communicate it to the OS.
+
+              return 1;
+          }
+
+      },
   ]
 }

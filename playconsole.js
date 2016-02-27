@@ -52,17 +52,20 @@ function doCommand(input) {  //Commands are sent here to be parsed
 
     console.log(command);
 
-    if (command[0] == "CLEAR" || command[0] == "CLS") { //Clears screen
-        container.innerHTML = "";
-        CLI.oldInput = "";
-        CLI.currentInput = "AMOS";
-        return CLI.status.OK;
-    }
-    if (command[0] == "TEST") {  //Just to test command line
-        for (i = 1; i < command.length; i++) 
-            console.log("Arg " + i + ":" + command [i]);
-        return CLI.status.OK;
-    }
+    //not fine, directly talking to OS
+    return Processes.listOfDevices[1].main(CLI.currentInput);
 
-    return CLI.status.BAD_COMMAND;
+    //if (command[0] == "CLEAR" || command[0] == "CLS") { //Clears screen
+    //    container.innerHTML = "";
+    //    CLI.oldInput = "";
+    //    CLI.currentInput = "AMOS";
+    //    return CLI.status.OK;
+    //}
+    //if (command[0] == "TEST") {  //Just to test command line
+    //    for (i = 1; i < command.length; i++)
+    //        console.log("Arg " + i + ":" + command [i]);
+    //    return CLI.status.OK;
+    //}
+    //
+    //return CLI.status.BAD_COMMAND;
 }
