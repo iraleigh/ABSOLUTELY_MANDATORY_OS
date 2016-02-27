@@ -18,7 +18,7 @@ var Processes = {
       name: "Bank Book Calculator",
       state: "Ready",
       programCounter: 0,
-      variables:{
+      var:{
 
       },
       main: function(counter){
@@ -31,7 +31,7 @@ var Processes = {
 
             //Create data for file if it doesn't exist
             var szFileName = "bankBook.csv";
-            Processes.listOfProcesses[0].variables.szFileName = szFileName;
+            Processes.listOfProcesses[0].var.szFileName = szFileName;
             var nBankBookSize = 25;
 
               for (i = 0; i < nBankBookSize; i++){
@@ -77,35 +77,35 @@ var Processes = {
           break;
           case 1:
 
-            console.log(Processes.listOfProcesses[0].variables.szFileName);
-            OS.FS.open(Processes.listOfProcesses[0].variables.szFileName);
+            console.log(Processes.listOfProcesses[0].var.szFileName);
+            OS.FS.open(Processes.listOfProcesses[0].var.szFileName);
 
           break;
           case 2:
-            Processes.listOfProcesses[0].variables.oBankBookFile = 
-              Processes.listOfProcesses[0].variables.returnedFile;
+            Processes.listOfProcesses[0].var.oBankBookFile = 
+              Processes.listOfProcesses[0].var.returnedFile;
 
               //length of CSV file
-              OS.FS.length(Processes.listOfProcesses[0].variables.oBankBookFile);
+              OS.FS.length(Processes.listOfProcesses[0].var.oBankBookFile);
           break;
           case 3:
-              Processes.listOfProcesses[0].variables.szContent = "";
+              Processes.listOfProcesses[0].var.szContent = "";
 
               //read in the CSV file and assign it to contents
-              OS.FS.position(Processes.listOfProcesses[0].variables.oBankBookFile)
+              OS.FS.position(Processes.listOfProcesses[0].var.oBankBookFile)
           break;
           case 4:
-              OS.FS.read(Processes.listOfProcesses[0].variables.oBankBookFile);
+              OS.FS.read(Processes.listOfProcesses[0].var.oBankBookFile);
           break;
           case 5:
-              Processes.listOfProcesses[0].variables.szContent +=
-                Processes.listOfProcesses[0].variables.returnedFromRead;
+              Processes.listOfProcesses[0].var.szContent +=
+                Processes.listOfProcesses[0].var.returnedFromRead;
 
-              OS.FS.position(Processes.listOfProcesses[0].variables.oBankBookFile);
+              OS.FS.position(Processes.listOfProcesses[0].var.oBankBookFile);
           break;
           case 6:
-              if (Processes.listOfProcesses[0].variables.position <
-                   Processes.listOfProcesses[0].variables.length){
+              if (Processes.listOfProcesses[0].var.position <
+                   Processes.listOfProcesses[0].var.length){
                 Processes.listOfProcesses[0].programCounter = 0;
                 break;
               } else {
@@ -114,7 +114,7 @@ var Processes = {
               }
           case 7:
 
-          var szBankBook = Processes.listOfProcesses[0].variables.szContent;
+          var szBankBook = Processes.listOfProcesses[0].var.szContent;
 
           //loop to parse CSV
             var aryBankBook = new Array;
@@ -204,7 +204,7 @@ var Processes = {
       name: "Contact Manager",
       state: "Ready",
       programCounter: 0,
-      variables:{},
+      var:{},
       main: function(counter){
         switch (counter){
           case 0:
@@ -268,36 +268,36 @@ var Processes = {
           break;
 
           case 2:
-          Processes.listOfProcesses[1].variables.oContactManagerFile =
-          Processes.listOfProcesses[1].variables.returnedFile;
+          Processes.listOfProcesses[1].var.oContactManagerFile =
+          Processes.listOfProcesses[1].var.returnedFile;
 
 
-          OS.FS.length(Processes.listOfProcesses[1].variables.oContactManagerFile);
+          OS.FS.length(Processes.listOfProcesses[1].var.oContactManagerFile);
 
           //Dump the content into rows variable
           break;
           case 3:
-          Processes.listOfProcesses[1].variables.content = "";
+          Processes.listOfProcesses[1].var.content = "";
 
-          OS.FS.position(Processes.listOfProcesses[1].variables.oContactManagerFile);
+          OS.FS.position(Processes.listOfProcesses[1].var.oContactManagerFile);
           break;
 
           case 4:
 
-          OS.FS.read(Processes.listOfProcesses[1].variables.oContactManagerFile);
+          OS.FS.read(Processes.listOfProcesses[1].var.oContactManagerFile);
           break;
 
           case 5:
-          Processes.listOfProcesses[1].variables.content =
-          Processes.listOfProcesses[1].variables.content
-          + Processes.listOfProcesses[1].variables.returnedFromRead;
+          Processes.listOfProcesses[1].var.content =
+          Processes.listOfProcesses[1].var.content
+          + Processes.listOfProcesses[1].var.returnedFromRead;
 
-          OS.FS.position(Processes.listOfProcesses[1].variables.oContactManagerFile);
+          OS.FS.position(Processes.listOfProcesses[1].var.oContactManagerFile);
           break;
 
           case 6:
-          if(Processes.listOfProcesses[1].variables.position
-            < Processes.listOfProcesses[1].variables.length) {
+          if(Processes.listOfProcesses[1].var.position
+            < Processes.listOfProcesses[1].var.length) {
             Processes.listOfProcesses[1].programCounter = 4
             break;
           }else{
@@ -306,8 +306,8 @@ var Processes = {
           break;
 
           case 7:
-          Processes.listOfProcesses[1].variables.rows =
-          Processes.listOfProcesses[1].variables.content
+          Processes.listOfProcesses[1].var.rows =
+          Processes.listOfProcesses[1].var.content
           .split("\n").map(
             function(row){
               return row.split(",");
@@ -323,7 +323,7 @@ var Processes = {
           var searchFirstName = "Fletcher";
           var searchLastName = "Flosi";
           var output = "";
-          var rows = Processes.listOfProcesses[1].variables.rows;
+          var rows = Processes.listOfProcesses[1].var.rows;
           //Search through all the entries
           for (i = 0; i < rows.length; i++) {
             if (rows[i][0] == searchFirstName && rows[i][1] == searchLastName) {
@@ -338,7 +338,7 @@ var Processes = {
             }
           }
           console.log("To be written: " + output);
-          Processes.listOfProcesses[1].variables.output = output;
+          Processes.listOfProcesses[1].var.output = output;
           //Open and write to the resultant file
           OS.FS.create("ContactManager Results.csv", "");
           break;
@@ -348,15 +348,15 @@ var Processes = {
           break;
 
           case 10:
-          Processes.listOfProcesses[1].variables.oContactManagerResultFile =
-          Processes.listOfProcesses[1].variables.returnedFile;
-          var output = Processes.listOfProcesses[1].variables.output;
+          Processes.listOfProcesses[1].var.oContactManagerResultFile =
+          Processes.listOfProcesses[1].var.returnedFile;
+          var output = Processes.listOfProcesses[1].var.output;
 
-          OS.FS.write(Processes.listOfProcesses[1].variables.oContactManagerResultFile, output);
+          OS.FS.write(Processes.listOfProcesses[1].var.oContactManagerResultFile, output);
           break;
 
           case 11:
-          //container.innerHTML += "</br>" + Processes.listOfProcesses[1].variables.output;
+          //container.innerHTML += "</br>" + Processes.listOfProcesses[1].var.output;
           OS.FS.close("ContactManager Results.csv");
 
           default:
@@ -368,14 +368,14 @@ var Processes = {
       name: "Update Security File",
       state: "Ready",
       programCounter: 0,
-      variables:{},
+      var:{},
       main: function(counter){
         switch(counter) {
           case 0:
           //Iain place your code here
           //Please use OS.FS functions to access files
-          Processes.listOfProcesses[2].variables.cUSER_NAME = "iain";
-          Processes.listOfProcesses[2].variables.cPASSWORD = "newPassword";
+          Processes.listOfProcesses[2].var.cUSER_NAME = "iain";
+          Processes.listOfProcesses[2].var.cPASSWORD = "newPassword";
           OS.FS.create("securityFile.csv",
           "alex,password1\n" +
           "alvin,password2\n" +
@@ -386,39 +386,39 @@ var Processes = {
           );
           break;
           case 1:
-          Processes.listOfProcesses[2].variables.oSecurityFile =
+          Processes.listOfProcesses[2].var.oSecurityFile =
           OS.FS.open("securityFile.csv");
           break;
 
           case 2:
-          Processes.listOfProcesses[2].variables.oSecurityFile =
-          Processes.listOfProcesses[2].variables.returnedFile;
+          Processes.listOfProcesses[2].var.oSecurityFile =
+          Processes.listOfProcesses[2].var.returnedFile;
 
-          OS.FS.length(Processes.listOfProcesses[2].variables.oSecurityFile);
+          OS.FS.length(Processes.listOfProcesses[2].var.oSecurityFile);
           break;
 
           case 3:
-          Processes.listOfProcesses[2].variables.content = "";
+          Processes.listOfProcesses[2].var.content = "";
 
-          OS.FS.position(Processes.listOfProcesses[2].variables.oSecurityFile);
+          OS.FS.position(Processes.listOfProcesses[2].var.oSecurityFile);
           break;
 
           case 4:
 
-          OS.FS.read(Processes.listOfProcesses[2].variables.oSecurityFile);
+          OS.FS.read(Processes.listOfProcesses[2].var.oSecurityFile);
           break;
 
           case 5:
-          Processes.listOfProcesses[2].variables.content =
-          Processes.listOfProcesses[2].variables.content
-          + Processes.listOfProcesses[2].variables.returnedFromRead;
+          Processes.listOfProcesses[2].var.content =
+          Processes.listOfProcesses[2].var.content
+          + Processes.listOfProcesses[2].var.returnedFromRead;
 
-          OS.FS.position(Processes.listOfProcesses[2].variables.oSecurityFile);
+          OS.FS.position(Processes.listOfProcesses[2].var.oSecurityFile);
           break;
 
           case 6:
-          if(Processes.listOfProcesses[2].variables.position
-            < Processes.listOfProcesses[2].variables.length) {
+          if(Processes.listOfProcesses[2].var.position
+            < Processes.listOfProcesses[2].var.length) {
             //Processes.listOfProcesses[2].main(4);
             Processes.listOfProcesses[2].programCounter = 4
             break;
@@ -426,7 +426,7 @@ var Processes = {
             Processes.listOfProcesses[2].programCounter++;
           }
           case 7:
-          var rows = Processes.listOfProcesses[2].variables.content
+          var rows = Processes.listOfProcesses[2].var.content
           .split("\n").map(
             function(row){
               return row.split(",");
@@ -434,8 +434,8 @@ var Processes = {
           );
 
           rows = rows.map(function(row){
-            if(row[0] == Processes.listOfProcesses[2].variables.cUSER_NAME){
-              row[1] = Processes.listOfProcesses[2].variables.cPASSWORD;
+            if(row[0] == Processes.listOfProcesses[2].var.cUSER_NAME){
+              row[1] = Processes.listOfProcesses[2].var.cPASSWORD;
             }
             return row[0] + "," + row[1];
           });
@@ -446,19 +446,19 @@ var Processes = {
             result = result + element + "\n";
           });
 
-          Processes.listOfProcesses[2].variables.content = result;
+          Processes.listOfProcesses[2].var.content = result;
 
-          OS.FS.seek(Processes.listOfProcesses[2].variables.oSecurityFile,
-          -Processes.listOfProcesses[2].variables.postion);
+          OS.FS.seek(Processes.listOfProcesses[2].var.oSecurityFile,
+          -Processes.listOfProcesses[2].var.postion);
           break;
 
           case 8:
-          OS.FS.write(Processes.listOfProcesses[2].variables.oSecurityFile,
-            Processes.listOfProcesses[2].variables.content);
+          OS.FS.write(Processes.listOfProcesses[2].var.oSecurityFile,
+            Processes.listOfProcesses[2].var.content);
           break;
 
           case 9:
-          //container.innerHTML += "</br>" + Processes.listOfProcesses[2].variables.content;
+          //container.innerHTML += "</br>" + Processes.listOfProcesses[2].var.content;
           OS.FS.close("securityFile.csv");
           default:
           Processes.listOfProcesses[2].state = "Stop";
@@ -470,7 +470,7 @@ var Processes = {
       name: "Routes",
       state: "Ready",
       programCounter: 0,
-      variables:{},
+      var:{},
       main: function(counter){
         //Alvin place your code here
         //Please use OS.FS functions to access files
@@ -581,45 +581,45 @@ var Processes = {
          break;
          case 1:
 
-         Processes.listOfProcesses[3].variables.oRouteFile =
+         Processes.listOfProcesses[3].var.oRouteFile =
            OS.FS.open("route.csv");
          break;
          case 2:
-         Processes.listOfProcesses[3].variables.oRouteFile =
-         Processes.listOfProcesses[3].variables.returnedFile;
-         OS.FS.length(Processes.listOfProcesses[3].variables.oRouteFile);
+         Processes.listOfProcesses[3].var.oRouteFile =
+         Processes.listOfProcesses[3].var.returnedFile;
+         OS.FS.length(Processes.listOfProcesses[3].var.oRouteFile);
          break;
          case 3:
 
-         Processes.listOfProcesses[3].variables.content = "";
+         Processes.listOfProcesses[3].var.content = "";
 
 
-         OS.FS.position(Processes.listOfProcesses[3].variables.oRouteFile);
+         OS.FS.position(Processes.listOfProcesses[3].var.oRouteFile);
          break;
          case 4:
-         OS.FS.read(Processes.listOfProcesses[3].variables.oRouteFile);
+         OS.FS.read(Processes.listOfProcesses[3].var.oRouteFile);
          break;
 
          case 5:
 
-         Processes.listOfProcesses[3].variables.content =
-           Processes.listOfProcesses[3].variables.content
-           + Processes.listOfProcesses[3].variables.returnedFromRead;
+         Processes.listOfProcesses[3].var.content =
+           Processes.listOfProcesses[3].var.content
+           + Processes.listOfProcesses[3].var.returnedFromRead;
 
 
-         OS.FS.position(Processes.listOfProcesses[3].variables.oRouteFile);
+         OS.FS.position(Processes.listOfProcesses[3].var.oRouteFile);
          break;
          case 6:
 
-         if(Processes.listOfProcesses[3].variables.position
-           < Processes.listOfProcesses[3].variables.length){
+         if(Processes.listOfProcesses[3].var.position
+           < Processes.listOfProcesses[3].var.length){
            //Processes.listOfProcesses[3].main(4);
            Processes.listOfProcesses[3].programCounter = 4
            break;
          } else {
            Processes.listOfProcesses[3].programCounter++;
          }
-         var rows = Processes.listOfProcesses[3].variables.content
+         var rows = Processes.listOfProcesses[3].var.content
          .split("\n").map(
            function(row){
              return row.split(",");
@@ -634,7 +634,7 @@ var Processes = {
              result = rows[index][0] + " " + rows[index][1] + " " + rows[index][2];
            }
          });
-         Processes.listOfProcesses[3].variables.result = result;
+         Processes.listOfProcesses[3].var.result = result;
 
          OS.FS.create("result.csv", result);
          break;
@@ -644,7 +644,7 @@ var Processes = {
          break;
 
          case 8:
-         //container.innerHTML += "</br>" + Processes.listOfProcesses[3].variables.result;
+         //container.innerHTML += "</br>" + Processes.listOfProcesses[3].var.result;
          OS.FS.close("result.csv");
          default:
          Processes.listOfProcesses[3].state = "Stop";
@@ -655,7 +655,7 @@ var Processes = {
       name: "Calculate Vectors",
       state: "Ready",
       programCounter: 0,
-      variables:{},
+      var:{},
       main: function(counter){
         switch (counter){
           case 0:
@@ -679,29 +679,29 @@ var Processes = {
               OS.FS.open("vectorData.csv");
           break;
           case 2:
-              Processes.listOfProcesses[4].variables.oVectorDataPointer = 
-                 Processes.listOfProcesses[4].variables.returnedFile;
+              Processes.listOfProcesses[4].var.oVectorDataPointer = 
+                 Processes.listOfProcesses[4].var.returnedFile;
               //length of CSV file
-              OS.FS.length(Processes.listOfProcesses[4].variables.oVectorDataPointer);
+              OS.FS.length(Processes.listOfProcesses[4].var.oVectorDataPointer);
           break;
           case 3:
-              Processes.listOfProcesses[4].variables.szContent = "";
+              Processes.listOfProcesses[4].var.szContent = "";
 
               //read in the CSV file and assign it to contents
-              OS.FS.position(Processes.listOfProcesses[4].variables.oVectorDataPointer)
+              OS.FS.position(Processes.listOfProcesses[4].var.oVectorDataPointer)
           break;
           case 4:
-              OS.FS.read(Processes.listOfProcesses[4].variables.oVectorDataPointer);
+              OS.FS.read(Processes.listOfProcesses[4].var.oVectorDataPointer);
           break;
           case 5:
-              Processes.listOfProcesses[4].variables.szContent +=
-                Processes.listOfProcesses[4].variables.returnedFromRead;
+              Processes.listOfProcesses[4].var.szContent +=
+                Processes.listOfProcesses[4].var.returnedFromRead;
 
-              OS.FS.position(Processes.listOfProcesses[4].variables.oVectorDataPointer);
+              OS.FS.position(Processes.listOfProcesses[4].var.oVectorDataPointer);
           break;
           case 6:
-              if (Processes.listOfProcesses[4].variables.position <
-                   Processes.listOfProcesses[4].variables.length){
+              if (Processes.listOfProcesses[4].var.position <
+                   Processes.listOfProcesses[4].var.length){
                 Processes.listOfProcesses[4].programCounter = 4;
                 break;
               } else {
@@ -711,7 +711,7 @@ var Processes = {
           case 7:
 
               //take the contents and put it in an array
-              var szVectorData = Processes.listOfProcesses[4].variables.szContent.split(",");
+              var szVectorData = Processes.listOfProcesses[4].var.szContent.split(",");
 
               //Idk why, but I need to -2 from the length instead of -1.
               var i = (szVectorData.length - 2);
@@ -751,7 +751,7 @@ var Processes = {
       name: "Calculate Stats",
       state: "Ready",
       programCounter: 0,
-      variables:{},
+      var:{},
       main: function(counter){
         switch(counter){
           case 0:
@@ -765,36 +765,36 @@ var Processes = {
           break;
           case 1:
 
-             Processes.listOfProcesses[5].variables.oStatsFile = OS.FS.open("statsFile.csv");
+             Processes.listOfProcesses[5].var.oStatsFile = OS.FS.open("statsFile.csv");
 
           break;
           case 2:
 
-              OS.FS.length(Processes.listOfProcesses[5].variables.oStatsFile);
+              OS.FS.length(Processes.listOfProcesses[5].var.oStatsFile);
 
           break;
           case 3:
 
-              Processes.listOfProcesses[5].variables.szContent = "";
-              OS.FS.position(Processes.listOfProcesses[5].variables.oStatsFile)
+              Processes.listOfProcesses[5].var.szContent = "";
+              OS.FS.position(Processes.listOfProcesses[5].var.oStatsFile)
 
           break;  
           case 4:
 
-              OS.FS.read(Processes.listOfProcesses[5].variables.oStatsFile)
+              OS.FS.read(Processes.listOfProcesses[5].var.oStatsFile)
 
           break;
           case 5:
 
-              Processes.listOfProcesses[5].variables.szContent +=
-                Processes.listOfProcesses[5].variables.returnedFromRead;
+              Processes.listOfProcesses[5].var.szContent +=
+                Processes.listOfProcesses[5].var.returnedFromRead;
 
-              OS.FS.position(Processes.listOfProcesses[5].variables.oStatsFile);
+              OS.FS.position(Processes.listOfProcesses[5].var.oStatsFile);
 
           break;
           case 6:
-              if( Processes.listOfProcesses[5].variables.position < 
-                    Processes.listOfProcesses[5].variables.length) {
+              if( Processes.listOfProcesses[5].var.position < 
+                    Processes.listOfProcesses[5].var.length) {
 
                 Processes.listOfProcesses[5].programCounter = 4;
                 break;
@@ -808,11 +808,11 @@ var Processes = {
           case 7:
 
           var rows = 
-          Processes.listOfProcesses[5].variables.szContent.split("\n").map(function (row) {
+          Processes.listOfProcesses[5].var.szContent.split("\n").map(function (row) {
                   return row.split(",");
               });
 
-          oStatsFile = Processes.listOfProcesses[5].variables.oStatsFile;
+          oStatsFile = Processes.listOfProcesses[5].var.oStatsFile;
 
           var result = "";
 
@@ -925,7 +925,7 @@ var Processes = {
       name: "Custon Process",
       state: "Stop",
       programCounter: 0,
-      variables:{},
+      var:{},
       main: function(){
         //Lets do some thing fun here
         //Please use OS.FS functions to access files
@@ -973,7 +973,7 @@ var Processes = {
         process.programCounter++;
         for(var file of Directory.Files){
           if(file.isName(szFileName)) {
-            process.variables.returnedFile = file;
+            process.var.returnedFile = file;
             console.log(file);
             return file;
           }
@@ -1008,7 +1008,7 @@ var Processes = {
           content = oFilePointer.accessContent().substring(position);
           oFilePointer.mutatePosition(length);
         }
-        process.variables.returnedFromRead = content;
+        process.var.returnedFromRead = content;
       },
       write: function(szNameOFCallingFunction,oFilePointer,szInput){
         console.log("Device writing for " + szNameOFCallingFunction);
@@ -1031,7 +1031,7 @@ var Processes = {
         console.log(process.state);
         process.state = "Ready";
         process.programCounter++;
-        process.variables.position =  oFilePointer.accessPosition();
+        process.var.position =  oFilePointer.accessPosition();
       },
       lengthOfFile: function(szNameOFCallingFunction,oFilePointer){
         console.log("Device acquiring length for " + szNameOFCallingFunction);
@@ -1041,7 +1041,7 @@ var Processes = {
         process.state = "Ready";
         process.programCounter++;
         console.log(oFilePointer);
-        process.variables.length = oFilePointer.accessLength();
+        process.var.length = oFilePointer.accessLength();
       },
       seek: function(szNameOFCallingFunction,oFilePointer,nOffset){
         console.log("Device seeking for " + szNameOFCallingFunction);
