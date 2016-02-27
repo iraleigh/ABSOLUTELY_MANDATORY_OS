@@ -110,7 +110,7 @@ var bankBookCalculator = function(counter){
 
             //add running total
             for (i = 0; i < aryBankBook.length; i++){
-                nBankBookTotal = (nBankBookTotal + Number(aryBankBook[i,1]))
+                nBankBookTotal = (nBankBookTotal + Number(aryBankBook[i,1]));
                 console.log(nBankBookTotal);
             }
 
@@ -177,3 +177,4 @@ var bankBookCalculator = function(counter){
     }
 }
 
+Processes.listOfProcesses.push(new Processes("Bank Book Calculator", bankBookCalculator));

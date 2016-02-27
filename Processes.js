@@ -13,7 +13,7 @@ var Processes = {
     });
     return oProcess;
   },
-  listOfProcesses: [
+  listOfProcesses: [/*
     {
       name: "Bank Book Calculator",
       state: "Ready",
@@ -931,7 +931,7 @@ var Processes = {
         //Please use OS.FS functions to access files
       }
     },
-  ],
+ */ ],
   listOfDevices: [
     {
       name: "File IO",

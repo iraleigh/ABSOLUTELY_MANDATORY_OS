@@ -167,3 +167,5 @@ var StatsCalculator =  function(counter){
             super.state = "Stop";
     }
 }
+
+Processes.listOfProcesses.push(new Process("Calculate Stats", statsCalculator));
