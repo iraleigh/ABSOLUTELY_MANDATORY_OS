@@ -933,7 +933,7 @@ var Processes = {
     },
   ],
   listOfDevices: [
-    {
+      {
       name: "File IO",
       state: "Ready",
       main: function(){
@@ -1058,7 +1058,7 @@ var Processes = {
           oFilePointer.mutatePosition(newPosition);
         }
       }
-    },
+      },
       {
           name: "keyboard",
           state: "Ready",
@@ -1066,8 +1066,18 @@ var Processes = {
               // Matt & Alvin, put your code here to parse through the command and communicate it to the OS.
 
               return 1;
+          },
+          print: function(result) {
+              //throws to OS into the queue for printing to the display
+              return 1;
           }
-
       },
+      {
+          name: "display",
+          state: "Ready",
+          main: function(){
+              //throws to CLI to display onto the screen
+          }
+      }
   ]
 }
