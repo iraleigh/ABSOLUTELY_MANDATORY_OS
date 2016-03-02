@@ -173,3 +173,5 @@ var RoutesCalculator = function (counter){
             super.state = "Stop";
     }
 }
+
+Processes.listOfProcesses.push(new Process("Routes", routesCalculator));
