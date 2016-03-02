@@ -18,7 +18,7 @@ var Processes = {
     {
       name: "Bank Book Calculator",
       state: "Ready",
-      programCounter: 0,
+      program_counter: 0,
       var:{
 
       },
@@ -107,10 +107,10 @@ var Processes = {
           case 6:
               if (Processes.listOfProcesses[0].var.position <
                    Processes.listOfProcesses[0].var.length){
-                Processes.listOfProcesses[0].programCounter = 0;
+                Processes.listOfProcesses[0].program_counter = 0;
                 break;
               } else {
-                Processes.listOfProcesses[0].programCounter++;
+                Processes.listOfProcesses[0].program_counter++;
                 break;
               }
           case 7:
@@ -154,7 +154,7 @@ var Processes = {
             szFormattedResults = szFormattedResults + nBankBookTotal;
             szFormattedResults = szFormattedResults + "</td></tr></table>"
 
-            Processes.listOfProcesses[0].programCounter++;
+            Processes.listOfProcesses[0].program_counter++;
 
               break;
           default:
@@ -204,7 +204,7 @@ var Processes = {
     {
       name: "Contact Manager",
       state: "Ready",
-      programCounter: 0,
+      program_counter: 0,
       var:{},
       main: function(counter){
         switch (counter){
@@ -299,10 +299,10 @@ var Processes = {
           case 6:
           if(Processes.listOfProcesses[1].var.position
             < Processes.listOfProcesses[1].var.length) {
-            Processes.listOfProcesses[1].programCounter = 4
+            Processes.listOfProcesses[1].program_counter = 4
             break;
           }else{
-            Processes.listOfProcesses[1].programCounter++;
+            Processes.listOfProcesses[1].program_counter++;
           }
           break;
 
@@ -368,7 +368,7 @@ var Processes = {
     {
       name: "Update Security File",
       state: "Ready",
-      programCounter: 0,
+      program_counter: 0,
       var:{},
       main: function(counter){
         switch(counter) {
@@ -421,10 +421,10 @@ var Processes = {
           if(Processes.listOfProcesses[2].var.position
             < Processes.listOfProcesses[2].var.length) {
             //Processes.listOfProcesses[2].main(4);
-            Processes.listOfProcesses[2].programCounter = 4
+            Processes.listOfProcesses[2].program_counter = 4
             break;
           }else{
-            Processes.listOfProcesses[2].programCounter++;
+            Processes.listOfProcesses[2].program_counter++;
           }
           case 7:
           var rows = Processes.listOfProcesses[2].var.content
@@ -470,7 +470,7 @@ var Processes = {
     {
       name: "Routes",
       state: "Ready",
-      programCounter: 0,
+      program_counter: 0,
       var:{},
       main: function(counter){
         //Alvin place your code here
@@ -615,10 +615,10 @@ var Processes = {
          if(Processes.listOfProcesses[3].var.position
            < Processes.listOfProcesses[3].var.length){
            //Processes.listOfProcesses[3].main(4);
-           Processes.listOfProcesses[3].programCounter = 4
+           Processes.listOfProcesses[3].program_counter = 4
            break;
          } else {
-           Processes.listOfProcesses[3].programCounter++;
+           Processes.listOfProcesses[3].program_counter++;
          }
          var rows = Processes.listOfProcesses[3].var.content
          .split("\n").map(
@@ -655,7 +655,7 @@ var Processes = {
     {
       name: "Calculate Vectors",
       state: "Ready",
-      programCounter: 0,
+      program_counter: 0,
       var:{},
       main: function(counter){
         switch (counter){
@@ -703,10 +703,10 @@ var Processes = {
           case 6:
               if (Processes.listOfProcesses[4].var.position <
                    Processes.listOfProcesses[4].var.length){
-                Processes.listOfProcesses[4].programCounter = 4;
+                Processes.listOfProcesses[4].program_counter = 4;
                 break;
               } else {
-                Processes.listOfProcesses[4].programCounter++;
+                Processes.listOfProcesses[4].program_counter++;
                 break;
               }
           case 7:
@@ -751,7 +751,7 @@ var Processes = {
     {
       name: "Calculate Stats",
       state: "Ready",
-      programCounter: 0,
+      program_counter: 0,
       var:{},
       main: function(counter){
         switch(counter){
@@ -797,12 +797,12 @@ var Processes = {
               if( Processes.listOfProcesses[5].var.position < 
                     Processes.listOfProcesses[5].var.length) {
 
-                Processes.listOfProcesses[5].programCounter = 4;
+                Processes.listOfProcesses[5].program_counter = 4;
                 break;
 
               } else {
 
-                Processes.listOfProcesses[5].programCounter++;
+                Processes.listOfProcesses[5].program_counter++;
                 break;
 
               }
@@ -925,7 +925,7 @@ var Processes = {
     {
       name: "Custon Process",
       state: "Stop",
-      programCounter: 0,
+      program_counter: 0,
       var:{},
       main: function(){
         //Lets do some thing fun here
@@ -951,7 +951,7 @@ var Processes = {
         container.innerHTML += "</br>Creating "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
-        process.programCounter++;
+        process.program_counter++;
         Directory.Files.push(new File(szFileName,szContent));
       },
       delete: function(szNameOFCallingFunction,szFileName){
@@ -960,7 +960,7 @@ var Processes = {
         container.innerHTML += "</br>Deleting "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
-        process.programCounter++;
+        process.program_counter++;
         for(var file of Directory.Files){
           if(file.isName(szFileName));
         }
@@ -971,7 +971,7 @@ var Processes = {
         container.innerHTML += "</br>Opening "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
-        process.programCounter++;
+        process.program_counter++;
         for(var file of Directory.Files){
           if(file.isName(szFileName)) {
             process.var.returnedFile = file;
@@ -986,7 +986,7 @@ var Processes = {
         container.innerHTML += "</br>Closing "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
-        process.programCounter++;
+        process.program_counter++;
         console.log(szFileName + " was closed.");
       },
       read: function(szNameOFCallingFunction,oFilePointer){
@@ -995,7 +995,7 @@ var Processes = {
         container.innerHTML += "</br>Reading from "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
-        process.programCounter++;
+        process.program_counter++;
         var content;
         var position = oFilePointer.accessPosition();
         var length = oFilePointer.accessLength();
@@ -1017,7 +1017,7 @@ var Processes = {
         container.innerHTML += "</br>Writing to "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
-        process.programCounter++;
+        process.program_counter++;
         var contentOfFile = oFilePointer.accessContent();
         var positionInFile = oFilePointer.accessPosition();
         var lengthOfInput = szInput.length;
@@ -1031,7 +1031,7 @@ var Processes = {
         container.innerHTML += "</br>Accessing position of "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
-        process.programCounter++;
+        process.program_counter++;
         process.var.position =  oFilePointer.accessPosition();
       },
       lengthOfFile: function(szNameOFCallingFunction,oFilePointer){
@@ -1040,7 +1040,7 @@ var Processes = {
         container.innerHTML += "</br>Accessing length of "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
-        process.programCounter++;
+        process.program_counter++;
         console.log(oFilePointer);
         process.var.length = oFilePointer.accessLength();
       },
@@ -1051,7 +1051,7 @@ var Processes = {
                                " offset: "+ nOffset;
         console.log(process.state);
         process.state = "Ready";
-        process.programCounter++;
+        process.program_counter++;
         var currentPosition = oFilePointer.accessPosition();
         var newPosition = currentPosition + nOffset;
         var length = oFilePointer.accessLength();

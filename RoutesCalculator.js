@@ -108,41 +108,41 @@ var RoutesCalculator = function (counter){
             break;
         case 1:
 
-            super.var.oRouteFile = OS.FS.open("route.csv");
+            this.var.oRouteFile = OS.FS.open("route.csv");
             break;
         case 2:
-            super.var.oRouteFile = super.var.returnedFile;
-            OS.FS.length(super.var.oRouteFile);
+            this.var.oRouteFile = this.var.returnedFile;
+            OS.FS.length(this.var.oRouteFile);
             break;
         case 3:
 
-            super.var.content = "";
+            this.var.content = "";
 
 
-            OS.FS.position(super.var.oRouteFile);
+            OS.FS.position(this.var.oRouteFile);
             break;
         case 4:
-            OS.FS.read(super.var.oRouteFile);
+            OS.FS.read(this.var.oRouteFile);
             break;
 
         case 5:
 
-            super.var.content =
-                super.var.content + super.var.returnedFromRead;
+            this.var.content =
+                this.var.content + this.var.returnedFromRead;
 
 
-            OS.FS.position(super.var.oRouteFile);
+            OS.FS.position(this.var.oRouteFile);
             break;
         case 6:
 
-            if(super.var.position < super.var.length){
+            if(this.var.position < this.var.length){
                 //Processes.listOfProcesses[3].main(4);
-                super.programCounter = 4;
+                this.program_counter = 4;
                 break;
             } else {
-                super.programCounter++;
+                this.program_counter++;
             }
-            var rows = super.var.content
+            var rows = this.var.content
                 .split("\n").map(
                     function(row){
                         return row.split(",");
@@ -157,7 +157,7 @@ var RoutesCalculator = function (counter){
                     result = rows[index][0] + " " + rows[index][1] + " " + rows[index][2];
                 }
             });
-            super.var.result = result;
+            this.var.result = result;
 
             OS.FS.create("result.csv", result);
             break;
@@ -170,8 +170,9 @@ var RoutesCalculator = function (counter){
             //container.innerHTML += "</br>" + Processes.listOfProcesses[3].variables.result;
             OS.FS.close("result.csv");
         default:
-            super.state = "Stop";
+            this.state = "Stop";
     }
 }
 
-Processes.listOfProcesses.push(new Process("Routes", routesCalculator));
+Processes.listOfProcesses.push(new Process("Routes", RoutesCalculator));
+

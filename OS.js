@@ -174,7 +174,7 @@ var OS = {
           }
         });
         if(oNextProcess != undefined){
-          oNextProcess.main(oNextProcess.programCounter);
+          oNextProcess.main(oNextProcess.program_counter);
         } else {
           return OS.Scheduler.runDevice();
         }

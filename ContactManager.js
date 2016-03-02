@@ -61,43 +61,43 @@ var ContactManager = function(counter) {
           break;
 
           case 2:
-          super.var.oContactManagerFile =
-          super.var.var.returnedFile;
+          this.var.oContactManagerFile =
+          this.var.returnedFile;
 
 
-          OS.FS.length(super.var.oContactManagerFile);
+          OS.FS.length(this.var.oContactManagerFile);
 
           //Dump the content into rows variable
           break;
           case 3:
-          super.var.content = "";
+          this.var.content = "";
 
-          OS.FS.position(super.var.oContactManagerFile);
+          OS.FS.position(this.var.oContactManagerFile);
           break;
 
           case 4:
 
-          OS.FS.read(super.var.oContactManagerFile);
+          OS.FS.read(this.var.oContactManagerFile);
           break;
 
           case 5:
-          super.var.content = super.var.content + super.var.returnedFromRead;
+          this.var.content = this.var.content + this.var.returnedFromRead;
 
-          OS.FS.position(super.var.oContactManagerFile);
+          OS.FS.position(this.var.oContactManagerFile);
           break;
 
           case 6:
-          if(super.var.position < super.var.length) {
-            super.programCounter = 4
+          if(this.var.position < this.var.length) {
+            this.program_counter = 4
             break;
           }else{
-            super.programCounter++;
+            this.program_counter++;
           }
           break;
 
           case 7:
-          super.var.rows =
-          super.var.content.split("\n").map(
+          this.var.rows =
+          this.var.content.split("\n").map(
             function(row){
               return row.split(",");
             }
@@ -112,7 +112,7 @@ var ContactManager = function(counter) {
           var searchFirstName = "Fletcher";
           var searchLastName = "Flosi";
           var output = "";
-          var rows = super.var.rows;
+          var rows = this.var.rows;
           //Search through all the entries
           for (i = 0; i < rows.length; i++) {
             if (rows[i][0] == searchFirstName && rows[i][1] == searchLastName) {
@@ -127,7 +127,7 @@ var ContactManager = function(counter) {
             }
           }
           console.log("To be written: " + output);
-          super.var.output = output;
+          this.var.output = output;
           //Open and write to the resultant file
           OS.FS.create("ContactManager Results.csv", "");
           break;
@@ -137,17 +137,20 @@ var ContactManager = function(counter) {
           break;
 
           case 10:
-          super.var.oContactManagerResultFile =
-          super.var.returnedFile;
-          var output = super.var.output;
+          this.var.oContactManagerResultFile =
+          this.var.returnedFile;
+          var output = this.var.output;
 
-          OS.FS.write(super.var.oContactManagerResultFile, output);
+          OS.FS.write(this.var.oContactManagerResultFile, output);
           break;
 
           case 11:
-          //container.innerHTML += "</br>" + super.var.output;
+          //container.innerHTML += "</br>" + this.var.output;
           OS.FS.close("ContactManager Results.csv");
 
           default:
-          super.state = "Stop";
+          this.state = "Stop";
 }
+}
+Processes.listOfProcesses.push(new Process("Contact Manager",ContactManager));
+

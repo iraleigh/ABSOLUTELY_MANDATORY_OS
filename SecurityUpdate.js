@@ -6,8 +6,8 @@ var SecurityUpdate = function(counter){
         case 0:
             //Iain place your code here
             //Please use OS.FS functions to access files
-            super.var.cUSER_NAME = "iain";
-            super.var.cPASSWORD = "newPassword";
+            this.var.cUSER_NAME = "iain";
+            this.var.cPASSWORD = "newPassword";
             OS.FS.create("securityFile.csv",
                 "alex,password1\n" +
                 "alvin,password2\n" +
@@ -18,52 +18,54 @@ var SecurityUpdate = function(counter){
             );
             break;
         case 1:
-            super.var.oSecurityFile = OS.FS.open("securityFile.csv");
+            this.var.oSecurityFile = OS.FS.open("securityFile.csv");
             break;
 
         case 2:
-            super.var.oSecurityFile = super.var.returnedFile;
+            this.var.oSecurityFile = this.var.returnedFile;
 
-            OS.FS.length(super.var.oSecurityFile);
+            OS.FS.length(this.var.oSecurityFile);
             break;
 
         case 3:
-            super.var.content = "";
+            this.var.content = "";
 
-            OS.FS.position(super.var.oSecurityFile);
+            OS.FS.position(this.var.oSecurityFile);
             break;
 
         case 4:
 
-            OS.FS.read(super.var.oSecurityFile);
+            OS.FS.read(this.var.oSecurityFile);
             break;
 
         case 5:
-            super.var.content =
-                super.var.content + super.var.returnedFromRead;
+            this.var.content =
+                this.var.content + this.var.returnedFromRead;
 
-            OS.FS.position(super.var.oSecurityFile);
+            OS.FS.position(this.var.oSecurityFile);
             break;
 
         case 6:
-            if(super.var.position < super.var.length) {
+            if(this.var.position < this.var.length) {
                 //Processes.listOfProcesses[2].main(4);
-                super.programCounter = 4;
+                this.program_counter = 4;
                 break;
             }else{
-                super.programCounter++;
+                this.program_counter++;
             }
         case 7:
-            var rows = super.var.content
+            var rows = this.var.content
                 .split("\n").map(
                     function(row){
                         return row.split(",");
                     }
                 );
+            var cUSER_NAME = this.var.cUSER_NAME;
+            var cPASSWORD = this.var.cPASSWORD;
 
             rows = rows.map(function(row){
-                if(row[0] == super.var.cUSER_NAME){
-                    row[1] = super.var.cPASSWORD;
+                if(row[0] == cUSER_NAME){
+                    row[1] = cPASSWORD;
                 }
                 return row[0] + "," + row[1];
             });
@@ -74,20 +76,21 @@ var SecurityUpdate = function(counter){
                 result = result + element + "\n";
             });
 
-            super.var.content = result;
+            this.var.content = result;
 
-            OS.FS.seek(super.var.oSecurityFile, -super.var.postion);
+            OS.FS.seek(this.var.oSecurityFile, -this.var.postion);
             break;
 
         case 8:
-            OS.FS.write(super.var.oSecurityFile, super.var.content);
+            OS.FS.write(this.var.oSecurityFile, this.var.content);
             break;
 
         case 9:
             //container.innerHTML += "</br>" + Processes.listOfProcesses[2].variables.content;
             OS.FS.close("securityFile.csv");
         default:
-            super.state = "Stop";
+            this.state = "Stop";
 
     }
 }
+Processes.listOfProcesses.push(new Process("Security Update",SecurityUpdate));

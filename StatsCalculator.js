@@ -14,52 +14,52 @@ var StatsCalculator =  function(counter){
             break;
         case 1:
 
-            super.var.oStatsFile = OS.FS.open("statsFile.csv");
+            this.var.oStatsFile = OS.FS.open("statsFile.csv");
 
             break;
         case 2:
 
-            OS.FS.length(super.var.oStatsFile);
+            OS.FS.length(this.var.oStatsFile);
 
             break;
         case 3:
 
-            super.var.szContent = "";
-            OS.FS.position(super.var.oStatsFile);
+            this.var.szContent = "";
+            OS.FS.position(this.var.oStatsFile);
 
             break;
         case 4:
 
-            OS.FS.read(super.var.oStatsFile);
+            OS.FS.read(this.var.oStatsFile);
 
             break;
         case 5:
 
-            super.var.szContent += super.var.returnedFromRead;
+            this.var.szContent += this.var.returnedFromRead;
 
-            OS.FS.position(super.var.oStatsFile);
+            OS.FS.position(this.var.oStatsFile);
 
             break;
         case 6:
-            if( super.var.position < super.var.length) {
+            if( this.var.position < this.var.length) {
 
-                super.programCounter = 4;
+                this.program_counter = 4;
                 break;
 
             } else {
 
-                super.programCounter++;
+                this.program_counter++;
                 break;
 
             }
         case 7:
 
             var rows =
-                super.var.szContent.split("\n").map(function (row) {
+                this.var.szContent.split("\n").map(function (row) {
                     return row.split(",");
                 });
 
-            oStatsFile = super.var.oStatsFile;
+            oStatsFile = this.var.oStatsFile;
 
             var result = "";
 
@@ -164,8 +164,8 @@ var StatsCalculator =  function(counter){
             OS.FS.close("statsResult.csv");
 
         default:
-            super.state = "Stop";
+            this.state = "Stop";
     }
 }
 
-Processes.listOfProcesses.push(new Process("Calculate Stats", statsCalculator));
+Processes.listOfProcesses.push(new Process("Calculate Stats", StatsCalculator));

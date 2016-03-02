@@ -6,12 +6,12 @@ var bankBookCalculator = function(counter){
         case 0:
 
             var aryBankBook = new Array;
-            var nBankBookTotal = 0.0;
+            this.var.nBankBookTotal = 0.0;
             var container = window.document.getElementById('container');
 
             //Create data for file if it doesn't exist
             var szFileName = "bankBook.csv";
-            super.var.szFileName = szFileName;
+            this.var.szFileName = szFileName;
             var nBankBookSize = 25;
 
             for (i = 0; i < nBankBookSize; i++){
@@ -57,47 +57,47 @@ var bankBookCalculator = function(counter){
             break;
         case 1:
 
-            console.log(super.var.szFileName);
-            OS.FS.open(super.var.szFileName);
+            console.log(this.var.szFileName);
+            OS.FS.open(this.var.szFileName);
 
             break;
         case 2:
-            super.var.oBankBookFile =
-                super.var.returnedFile;
+            this.var.oBankBookFile =
+                this.var.returnedFile;
 
             //length of CSV file
-            OS.FS.length(super.var.oBankBookFile);
+            OS.FS.length(this.var.oBankBookFile);
             break;
         case 3:
-            super.var.szContent = "";
+            this.var.szContent = "";
 
             //read in the CSV file and assign it to contents
-            OS.FS.position(super.var.oBankBookFile);
+            OS.FS.position(this.var.oBankBookFile);
             break;
         case 4:
-            OS.FS.read(super.var.oBankBookFile);
+            OS.FS.read(this.var.oBankBookFile);
             break;
         case 5:
-            super.var.szContent += super.var.returnedFromRead;
+            this.var.szContent += this.var.returnedFromRead;
 
-            OS.FS.position(super.var.oBankBookFile);
+            OS.FS.position(this.var.oBankBookFile);
             break;
         case 6:
-            if (super.var.position < super.var.length){
-                super.programCounter = 0;
+            if (this.var.position < this.var.length){
+                this.program_counter = 0;
                 break;
             } else {
-                super.programCounter++;
+                this.program_counter++;
                 break;
             }
         case 7:
 
-            var szBankBook = super.var.szContent;
+            var szBankBook = this.var.szContent;
 
             //loop to parse CSV
             var aryBankBook = new Array;
             var aryTempBook = szBankBook.split(",");
-            for (i = 0; i < aryTempBook.length; i++){
+            for (var i = 0; i < aryTempBook.length; i++){
                 var nRowFloat = i / 2;
                 var nBankBookRow = Math.floor(nRowFloat);
                 if(i % 2 == 0){
@@ -110,8 +110,8 @@ var bankBookCalculator = function(counter){
 
             //add running total
             for (i = 0; i < aryBankBook.length; i++){
-                nBankBookTotal = (nBankBookTotal + Number(aryBankBook[i,1]));
-                console.log(nBankBookTotal);
+                this.var.nBankBookTotal = (this.var.nBankBookTotal + Number(aryBankBook[i,1]));
+                console.log(this.var.nBankBookTotal);
             }
 
             //display results
@@ -128,14 +128,14 @@ var bankBookCalculator = function(counter){
             szFormattedResults = szFormattedResults + "<tr><td>";
             szFormattedResults = szFormattedResults + "Total: </td>";
             szFormattedResults = szFormattedResults + "<td style=\"text-align:right\">";
-            szFormattedResults = szFormattedResults + nBankBookTotal;
+            szFormattedResults = szFormattedResults + this.var.nBankBookTotal;
             szFormattedResults = szFormattedResults + "</td></tr></table>";
 
-            super.programCounter++;
+            this.program_counter++;
 
             break;
         default:
-            super.state = "Stop";
+            this.state = "Stop";
 
 
     }
@@ -177,4 +177,4 @@ var bankBookCalculator = function(counter){
     }
 }
 
-Processes.listOfProcesses.push(new Processes("Bank Book Calculator", bankBookCalculator));
+Processes.listOfProcesses.push(new Process("Bank Book Calculator", bankBookCalculator));

@@ -24,36 +24,36 @@ var VectorCalculator = function (counter){
             OS.FS.open("vectorData.csv");
             break;
         case 2:
-            super.var.oVectorDataPointer = super.var.returnedFile;
+            this.var.oVectorDataPointer = this.var.returnedFile;
             //length of CSV file
-            OS.FS.length(super.var.oVectorDataPointer);
+            OS.FS.length(this.var.oVectorDataPointer);
             break;
         case 3:
-            super.var.szContent = "";
+            this.var.szContent = "";
 
             //read in the CSV file and assign it to contents
-            OS.FS.position(super.var.oVectorDataPointer);
+            OS.FS.position(this.var.oVectorDataPointer);
             break;
         case 4:
-            OS.FS.read(super.var.oVectorDataPointer);
+            OS.FS.read(this.var.oVectorDataPointer);
             break;
         case 5:
-            super.var.szContent += super.var.returnedFromRead;
+            this.var.szContent += this.var.returnedFromRead;
 
-            OS.FS.position(super.var.oVectorDataPointer);
+            OS.FS.position(this.var.oVectorDataPointer);
             break;
         case 6:
-            if (super.var.position < super.var.length){
-                super.programCounter = 4;
+            if (this.var.position < this.var.length){
+                this.program_counter = 4;
                 break;
             } else {
-                super.programCounter++;
+                this.program_counter++;
                 break;
             }
         case 7:
 
             //take the contents and put it in an array
-            var szVectorData = super.var.szContent.split(",");
+            var szVectorData = this.var.szContent.split(",");
 
             //Idk why, but I need to -2 from the length instead of -1.
             var i = (szVectorData.length - 2);
@@ -85,8 +85,9 @@ var VectorCalculator = function (counter){
         case 8:
             OS.FS.close("vectorData");
         default:
-            super.state = "Stop";
+            this.state = "Stop";
     }
 }
 
-Processes.listOfProcesses.push(new Process("Calculate Vectors", vectorCalculator));
+Processes.listOfProcesses.push(new Process("Calculate Vectors", VectorCalculator));
+
