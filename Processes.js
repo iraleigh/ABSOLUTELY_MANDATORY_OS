@@ -33,7 +33,9 @@ var Processes = {
         container.innerHTML += "</br>Creating "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
+
         process.program_counter++;
+
         Directory.Files.push(new File(szFileName,szContent));
       },
       delete: function(szNameOFCallingFunction,szFileName){
@@ -42,7 +44,9 @@ var Processes = {
         container.innerHTML += "</br>Deleting "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
+
         process.program_counter++;
+
         for(var file of Directory.Files){
           if(file.isName(szFileName));
         }
@@ -53,6 +57,7 @@ var Processes = {
         container.innerHTML += "</br>Opening "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
+
         process.program_counter++;
         for(var file of Directory.Files){
           if(file.isName(szFileName)) {
@@ -68,7 +73,9 @@ var Processes = {
         container.innerHTML += "</br>Closing "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
+
         process.program_counter++;
+
         console.log(szFileName + " was closed.");
       },
       read: function(szNameOFCallingFunction,oFilePointer){
@@ -77,7 +84,9 @@ var Processes = {
         container.innerHTML += "</br>Reading from "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
+
         process.program_counter++;
+
         var content;
         var position = oFilePointer.accessPosition();
         var length = oFilePointer.accessLength();
@@ -91,7 +100,9 @@ var Processes = {
           content = oFilePointer.accessContent().substring(position);
           oFilePointer.mutatePosition(length);
         }
+
         process.var.returnedFromRead = content;
+
       },
       write: function(szNameOFCallingFunction,oFilePointer,szInput){
         console.log("Device writing for " + szNameOFCallingFunction);
@@ -99,7 +110,9 @@ var Processes = {
         container.innerHTML += "</br>Writing to "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
+
         process.program_counter++;
+
         var contentOfFile = oFilePointer.accessContent();
         var positionInFile = oFilePointer.accessPosition();
         var lengthOfInput = szInput.length;
@@ -113,8 +126,10 @@ var Processes = {
         container.innerHTML += "</br>Accessing position of "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
+
         process.program_counter++;
         process.var.position =  oFilePointer.accessPosition();
+
       },
       lengthOfFile: function(szNameOFCallingFunction,oFilePointer){
         console.log("Device acquiring length for " + szNameOFCallingFunction);
@@ -122,9 +137,11 @@ var Processes = {
         container.innerHTML += "</br>Accessing length of "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
+
         process.program_counter++;
         console.log(oFilePointer);
         process.var.length = oFilePointer.accessLength();
+
       },
       seek: function(szNameOFCallingFunction,oFilePointer,nOffset){
         console.log("Device seeking for " + szNameOFCallingFunction);
@@ -133,7 +150,9 @@ var Processes = {
                                " offset: "+ nOffset;
         console.log(process.state);
         process.state = "Ready";
+
         process.program_counter++;
+
         var currentPosition = oFilePointer.accessPosition();
         var newPosition = currentPosition + nOffset;
         var length = oFilePointer.accessLength();
@@ -141,9 +160,6 @@ var Processes = {
           oFilePointer.mutatePosition(newPosition);
         }
       }
-    },
-    {
-
-    },
+    }
   ]
 }
