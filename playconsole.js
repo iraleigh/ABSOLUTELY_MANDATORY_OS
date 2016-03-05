@@ -1,6 +1,7 @@
 var CLI = {
     currentInput: "",
-    oldInput: "AMOS<br /> \\> ",
+    oldInput: "AMOS",
+    textHeight: 0,
     status: {
         OK: 0,
         BAD_COMMAND: 1
@@ -10,6 +11,10 @@ var CLI = {
 
 window.onload = function () {
     //ABSOLUTELY MADATORY OS -- AMOS
+    container.innerHTML = CLI.oldInput;
+    CLI.textHeight = document.getElementById('container').offsetHeight;
+    console.log(CLI.textHeight);
+    CLI.oldInput += "<br /> \\>";
     container.innerHTML = CLI.oldInput;
 }
 
@@ -33,6 +38,10 @@ document.onkeypress = function (evt) {
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
     }
+
+    console.log("Doc: " + document.body.clientHeight);
+
+
 }
 
 //Backspace works a little differently
@@ -59,8 +68,23 @@ function doCommand(input) {  //Commands are sent here to be parsed
         return CLI.status.OK;
     }
     if (command[0] == "TEST") {  //Just to test command line
-        for (i = 1; i < command.length; i++) 
-            console.log("Arg " + i + ":" + command [i]);
+        for (i = 1; i < command.length; i++)
+            console.log("Arg " + i + ":" + command[i]);
+        return CLI.status.OK;
+    }
+    if ((command[0] == "LOREM" && command[1] == "IPSUM") || command[0] == "LI") {
+        //var originalHeight = document.documentElement.clientHeight;
+        CLI.currentInput += "<br />";
+        var currentpos = 0;
+        //First limit the number of lines on the screen
+        for (j = 0; j < ((document.documentElement.clientHeight / CLI.textHeight) - 2) ; j++) {
+            for (i = 0; i < (document.documentElement.clientWidth / (CLI.textHeight * 0.57)) ; i++) {
+                CLI.currentInput += Lorem[currentpos];
+                currentpos++;
+            }
+            if (j < ((document.documentElement.clientHeight / CLI.textHeight) - 3))
+                CLI.currentInput += "<br />";
+        }
         return CLI.status.OK;
     }
 
