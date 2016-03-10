@@ -93,4 +93,4 @@ var SecurityUpdate = function(counter){
 
     }
 }
-Processes.listOfProcesses.push(new Process("Security Update",SecurityUpdate));
+Processes.listOfProcesses.push(new Process("SecurityUpdate",SecurityUpdate));

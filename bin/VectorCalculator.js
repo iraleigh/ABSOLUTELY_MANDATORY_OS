@@ -89,5 +89,5 @@ var VectorCalculator = function (counter){
     }
 }
 
-Processes.listOfProcesses.push(new Process("Calculate Vectors", VectorCalculator));
+Processes.listOfProcesses.push(new Process("CalculateVectors", VectorCalculator));
 

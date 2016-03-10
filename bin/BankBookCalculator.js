@@ -177,4 +177,4 @@ var bankBookCalculator = function(counter){
     }
 }
 
-Processes.listOfProcesses.push(new Process("Bank Book Calculator", bankBookCalculator));
+Processes.listOfProcesses.push(new Process("BankBookCalculator", bankBookCalculator));

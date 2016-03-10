@@ -168,4 +168,4 @@ var StatsCalculator =  function(counter){
     }
 }
 
-Processes.listOfProcesses.push(new Process("Calculate Stats", StatsCalculator));
+Processes.listOfProcesses.push(new Process("CalculateStats", StatsCalculator));

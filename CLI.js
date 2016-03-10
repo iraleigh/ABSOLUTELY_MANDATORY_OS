@@ -8,14 +8,18 @@ var CLI = {
     }
 }
 
+var container;
+window.onload = function () { 
 
-window.onload = function () {
+    Processes.generateListOfProcesses();
+    container = window.document.getElementById('container');
     //ABSOLUTELY MADATORY OS -- AMOS
     container.innerHTML = CLI.oldInput;
     CLI.textHeight = document.getElementById('container').offsetHeight;
     console.log(CLI.textHeight);
     CLI.oldInput += "<br /> \\>";
     container.innerHTML = CLI.oldInput;
+
 }
 
 document.onkeypress = function (evt) {
@@ -23,6 +27,8 @@ document.onkeypress = function (evt) {
     if (evt.charCode == 13) { // On enter
         //Grab the function here
         var cmdStatus = doCommand(CLI.currentInput);
+
+        start();
 
         //Prep terminal for new line
         if (cmdStatus == CLI.status.BAD_COMMAND)
@@ -39,7 +45,6 @@ document.onkeypress = function (evt) {
     }
 	window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
 
-
 }
 
 //Backspace works a little differently
@@ -55,21 +60,5 @@ document.onkeydown = function (evt) {
 }
 
 function doCommand(input) {  //Commands are sent here to be parsed
-    var command = CLI.currentInput.toUpperCase().split(" ");
-
-    console.log(command);
-
-    if (command[0] == "CLEAR" || command[0] == "CLS") { //Clears screen
-        container.innerHTML = "";
-        CLI.oldInput = "";
-        CLI.currentInput = "AMOS";
-        return CLI.status.OK;
-    }
-    if (command[0] == "TEST") {  //Just to test command line
-        for (i = 1; i < command.length; i++)
-            console.log("Arg " + i + ":" + command[i]);
-        return CLI.status.OK;
-    }
-
-    return CLI.status.BAD_COMMAND;
+    return Processes.listOfDevices['keyboard'].main(CLI.currentInput);
 }
