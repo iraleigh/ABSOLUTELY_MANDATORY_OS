@@ -3,7 +3,6 @@ function Process (name,main) {
 	this.state = "Stop";
 	this.program_counter = 0;
 	this.var = {};
-
 	this.main = main;
 
 }

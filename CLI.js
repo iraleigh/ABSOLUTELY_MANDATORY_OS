@@ -13,6 +13,9 @@ window.onload = function () {
 
     Processes.generateListOfProcesses();
     container = window.document.getElementById('container');
+
+    addDummyFiles();
+    console.log(Directory.Files);
     //ABSOLUTELY MANDATORY OS -- AMOS
     container.innerHTML = CLI.oldInput;
     CLI.textHeight = document.getElementById('container').offsetHeight;
