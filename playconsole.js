@@ -28,7 +28,7 @@ document.onkeypress = function (evt) {
             CLI.currentInput += "<br/>Unknown command";
         CLI.currentInput += "<br /> \\> ";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
-        window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
+
         CLI.oldInput = CLI.oldInput + CLI.currentInput;
         CLI.currentInput = "";
 
@@ -38,8 +38,7 @@ document.onkeypress = function (evt) {
 
     }
 
-    console.log("Doc: " + document.body.clientHeight);
-
+    window.scrollTo(0, (document.body.scrollHeight - window.innerHeight - 5)); //Keep scrolling down
 
 }
 
