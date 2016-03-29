@@ -13,7 +13,6 @@ window.onload = function () {
     //ABSOLUTELY MADATORY OS -- AMOS
     container.innerHTML = CLI.oldInput;
     CLI.textHeight = document.getElementById('container').offsetHeight;
-    console.log(CLI.textHeight);
     CLI.oldInput += "<br /> \\>";
     container.innerHTML = CLI.oldInput;
 }
@@ -58,7 +57,7 @@ document.onkeydown = function (evt) {
 
 function doCommand(input) {  //Commands are sent here to be parsed
     var command = CLI.currentInput.toUpperCase().split(" ");
-
+    var currentpos = 0;
     console.log(command);
 
     if (command[0] == "CLEAR" || command[0] == "CLS") { //Clears screen
@@ -75,16 +74,18 @@ function doCommand(input) {  //Commands are sent here to be parsed
     if ((command[0] == "LOREM" && command[1] == "IPSUM") || command[0] == "LI") {
         //var originalHeight = document.documentElement.clientHeight;
         CLI.currentInput += "<br />";
-        var currentpos = 0;
+        currentpos = 0;
         //First limit the number of lines on the screen
-        for (j = 0; j < ((document.documentElement.clientHeight / CLI.textHeight) - 2) ; j++) {
-            for (i = 0; i < (document.documentElement.clientWidth / (CLI.textHeight * 0.57)) ; i++) {
+        for (j = 0; j < ((window.innerHeight / CLI.textHeight) - 2) ; j++) {
+            for (i = 0; i < (window.innerWidth / (CLI.textHeight * 0.57)) ; i++) {
                 CLI.currentInput += Lorem[currentpos];
                 currentpos++;
             }
-            if (j < ((document.documentElement.clientHeight / CLI.textHeight) - 3))
+            if (j < ((window.innerHeight / CLI.textHeight) - 3)) {
                 CLI.currentInput += "<br />";
+            }
         }
+        currentpos = 0;
         return CLI.status.OK;
     }
 
