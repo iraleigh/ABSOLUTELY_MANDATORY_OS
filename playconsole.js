@@ -35,7 +35,6 @@ document.onkeypress = function (evt) {
     } else { // A character is typed
         CLI.currentInput += String.fromCharCode(evt.which);
         container.innerHTML = CLI.oldInput + CLI.currentInput;
-
     }
 
     window.scrollTo(0, (document.body.scrollHeight - window.innerHeight - 5)); //Keep scrolling down
@@ -51,6 +50,10 @@ document.onkeydown = function (evt) {
             CLI.currentInput = CLI.currentInput.slice(0, CLI.currentInput.length - 1); //Remove a character
             container.innerHTML = CLI.oldInput + CLI.currentInput;
         }
+    }
+    if (evt.keyCode == 32) {
+        evt.preventDefault(); //Don't scroll page on spacebar.
+        CLI.currentInput += " "; //But I still need to add a space.
     }
 }
 
@@ -73,9 +76,9 @@ function doCommand(input) {  //Commands are sent here to be parsed
     if ((command[0] == "LOREM" && command[1] == "IPSUM") || command[0] == "LI") {
         //var originalHeight = document.documentElement.clientHeight;
         CLI.currentInput += "<br />";
-        currentpos = 0;
-        //First limit the number of lines on the screen
+        //Limit the number of lines on the screen
         for (j = 0; j < ((window.innerHeight / CLI.textHeight) - 2) ; j++) {
+            //Limit the width of the lines and add letters
             for (i = 0; i < (window.innerWidth / (CLI.textHeight * 0.57)) ; i++) {
                 CLI.currentInput += Lorem[currentpos];
                 currentpos++;
@@ -84,7 +87,6 @@ function doCommand(input) {  //Commands are sent here to be parsed
                 CLI.currentInput += "<br />";
             }
         }
-        currentpos = 0;
         return CLI.status.OK;
     }
 
