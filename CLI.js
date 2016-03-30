@@ -20,7 +20,7 @@ window.onload = function () {
     container.innerHTML = CLI.oldInput;
     CLI.textHeight = document.getElementById('container').offsetHeight;
     console.log(CLI.textHeight);
-    CLI.oldInput += "<br /> \\>";
+    CLI.oldInput += "<br /> \\> ";
     container.innerHTML = CLI.oldInput;
 
 }
