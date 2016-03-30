@@ -6,8 +6,8 @@ function File(szName,szContent){
 
     //Added date object to file definition.
     this.date = new Date(); //new Date(); creates a date object with the current date/time.
-    this.isDate = function (ObjDate){
-        return this.date = ObjDate;
+    this.setDate = function (ObjDate){
+        this.date = ObjDate;
     }
     this.accessDate = function(){
         return this.date;

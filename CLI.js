@@ -35,8 +35,6 @@ document.onkeypress = function (evt) {
             CLI.currentInput += "<br/>Unknown command";
         if (cmdStatus == "clear")
             clear(CLI);
-        if(cmdStatus == "touch")
-            touch(CLI);
 
         CLI.currentInput += "<br /> \\> ";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
