@@ -59,7 +59,6 @@ document.onkeydown = function (evt) {
 
 function doCommand(input) {  //Commands are sent here to be parsed
     var command = CLI.currentInput.toUpperCase().split(" ");
-    var currentpos = 0;
     console.log(command);
 
     if (command[0] == "CLEAR" || command[0] == "CLS") { //Clears screen
@@ -74,19 +73,32 @@ function doCommand(input) {  //Commands are sent here to be parsed
         return CLI.status.OK;
     }
     if ((command[0] == "LOREM" && command[1] == "IPSUM") || command[0] == "LI") {
+        currentpos = 0;
         //var originalHeight = document.documentElement.clientHeight;
+        content = Lorem; //Load in something other than Lorem when converted to MORE
+        //content = "Die monster. You don't belong in this world. It was not by my hand that I am once again given flesh...";
         CLI.currentInput += "<br />";
+
+        leaveMore:
         //Limit the number of lines on the screen
-        for (j = 0; j < ((window.innerHeight / CLI.textHeight) - 2) ; j++) {
-            //Limit the width of the lines and add letters
-            for (i = 0; i < (window.innerWidth / (CLI.textHeight * 0.57)) ; i++) {
-                CLI.currentInput += Lorem[currentpos];
-                currentpos++;
+        while(currentpos < content.length){
+            for (j = 0; j < ((window.innerHeight / CLI.textHeight) - 2) ; j++) {
+                //Limit the width of the lines and add letters
+                for (i = 0; i < (window.innerWidth / (CLI.textHeight * 0.57)) ; i++) {
+                    if (currentpos >= content.length) {
+                        currentpos = 0;
+                        break leaveMore;
+                    }
+                    CLI.currentInput += content[currentpos];
+                    currentpos++;
+                }
+                if (j < ((window.innerHeight / CLI.textHeight) - 2)) {
+                    CLI.currentInput += "<br />";
+                }
             }
-            if (j < ((window.innerHeight / CLI.textHeight) - 3)) {
-                CLI.currentInput += "<br />";
-            }
+            CLI.currentInput += "<b>~~~~~~~~~~~Press space key to continue~~~~~~~~~~~</b><br />";
         }
+
         return CLI.status.OK;
     }
 
