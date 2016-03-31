@@ -17,9 +17,7 @@ Processes.listOfDevices['keyboard'] = {
           OS.Scheduler.runNextProcess();
         } else if (nameOfProcess == "cls" || nameOfProcess == "clear"){
             return "clear";
-        } else if (nameOfProcess == "touch"){
-            return "touch";
-        }
+        } 
         else {
         	return CLI.status.BAD_COMMAND;
         }
