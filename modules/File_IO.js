@@ -27,9 +27,9 @@ Processes.listOfDevices['file_io'] = {
 
         process.program_counter++;
 
-        for(var file of Directory.Files){
-          if(file.isName(szFileName));
-        }
+        Directory.Files = Directory.Files.filter(function(file, index ,directory){
+          return !file.isName(szFileName);
+        });
       },
       open: function(szNameOFCallingFunction,szFileName){
         console.log("Device opening for " + szNameOFCallingFunction);
