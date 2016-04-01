@@ -37,15 +37,16 @@ Processes.listOfDevices['file_io'] = {
         container.innerHTML += "</br>Opening "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
-
+        process.var.returnedFile = undefined;
         process.program_counter++;
         for(var file of Directory.Files){
           if(file.isName(szFileName)) {
             process.var.returnedFile = file;
             console.log(file);
             return file;
-          }
+          } 
         }
+
       },
       close: function(szNameOFCallingFunction,szFileName){
         console.log("Device closing for " + szNameOFCallingFunction);
