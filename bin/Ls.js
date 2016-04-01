@@ -1,6 +1,6 @@
 var ls = function(counter){
     Directory.Files.forEach(function(file,index,fileArray){
-        Processes.listOfDevices['display'].main(file.accessName() + "<br >");
+        OS.display(file.accessName() + "<br >");
     });
     this.state = "Stop";
     this.program_counter = 0;

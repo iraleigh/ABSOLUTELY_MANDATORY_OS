@@ -6,31 +6,24 @@ var Touch = function(counter){
     switch(counter)
     {
         case 0:
-            this.var.fileName = this.args;
+            this.var.fileName = this.args[0];
+            console.log(this.var.fileName);
+            OS.FS.open(this.var.fileName)
 
-            if(OS.FS.open(this.fileName) == undefined)
-            {
-                this.var.doesntExist = true;
-                //console.log("doesntExist == TRUE~~~~~~~~~~~~~")
-            }
-            else
-            {
-                this.var.doesntExist = false;
-                //console.log("doesntExist == FALSE~~~~~~~~~~~~~")
-            }
             break;
 
         case 1:
-
-            if(this.var.doesntExist == true)
+            this.var.file = this.var.returnedFile;
+            if(!this.var.file)
             {
                 OS.FS.create(this.var.fileName, ""); //CLI.currentInput is the file name after that touch command.
                 console.log(this.var.fileName + " has been created");
             }
             else
             {
-                this.var.fileName.setDate(new Date());
+                this.var.file.setDate(new Date());
                 console.log("Updated date for file - " + this.var.fileName);
+                this.program_counter = 2;
             }
             break;
 
@@ -40,6 +33,7 @@ var Touch = function(counter){
 
         default:
             this.state = "Stop";
+            this.program_counter = 0;
     }
 
     //http://www.linfo.org/touch.html
@@ -53,4 +47,4 @@ var Touch = function(counter){
     //updates time stamps of the most recent access and modification.
 };
 
-Processes.listOfProcesses.push(new Process("Touch",Touch));
+Processes.listOfProcesses.push(new Process("touch",Touch));

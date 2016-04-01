@@ -1,5 +1,4 @@
-var clear = function (CLI){
-    CLI.oldInput = "";
-    CLI.currentInput = "AMOS";
+var clear = function (){
+    OS.clearScreen();
 };
-Processes.listOfProcesses.push(new Process("clear",clear(CLI)));
+Processes.listOfProcesses.push(new Process("clear",clear()));
