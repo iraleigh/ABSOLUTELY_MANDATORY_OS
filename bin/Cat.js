@@ -2,11 +2,27 @@ var cat = function (counter) {
     switch (counter) {
         case 0:
             var args = this.args;
+            this.var.returnedFile = null;
             OS.FS.open(args[0]);
+            if (args[0] == null) {
+                CLI.currentInput += "<br />No file specified."
+                this.state = "Stop";
+                this.program_counter = 0;
+                break;
+            }
             break;
 
         case 1:
             this.var.filePointer = this.var.returnedFile;
+            try {
+                this.var.filePointer.accessName();
+            } catch (e) {
+                CLI.currentInput += "<br />File not found."
+                this.state = "Stop";
+                this.program_counter = 0;
+                break;
+            }
+            this.var.filePointer.position = 0;
             OS.FS.length(this.var.filePointer);
             break;
         case 2:
@@ -44,7 +60,7 @@ var cat = function (counter) {
 
         default:
             this.state = "Stop";
-            break;
+            this.program_counter = 0;
     }
 }
 Processes.listOfProcesses.push(new Process("cat", cat));

@@ -30,9 +30,7 @@ document.onkeypress = function (evt) {
     if (evt.charCode == 13) { // On enter
         //Grab the function here
         var cmdStatus = doCommand(CLI.currentInput);
-
-        start();
-
+            start();
         //Prep terminal for new line
         if (cmdStatus == CLI.status.BAD_COMMAND)
             CLI.currentInput += "<br/>Unknown command";
@@ -40,6 +38,7 @@ document.onkeypress = function (evt) {
             clear(CLI);
         CLI.currentInput += "<br /> \\> ";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
+
         CLI.oldInput = CLI.oldInput + CLI.currentInput;
         CLI.currentInput = "";
 

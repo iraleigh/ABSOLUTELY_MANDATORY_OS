@@ -3,7 +3,7 @@ function start() {
 
   while (!everyProcessStopped) {
     everyProcessStopped = Processes.listOfProcesses.every(function(element){
-      if (element.state == "Stop") {
+        if (element.state == "Stop") {
         return true;
       } else {
         return false;
@@ -13,7 +13,7 @@ function start() {
     OS.Scheduler.runNextProcess();
     
     everyProcessStopped = Processes.listOfProcesses.every(function(element){
-      if (element.state == "Stop") {
+        if (element.state == "Stop") {
         return true;
       } else {
         return false;
