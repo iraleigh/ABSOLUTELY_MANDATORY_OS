@@ -38,6 +38,7 @@ document.onkeypress = function (evt) {
             CLI.currentInput += "<br/>Unknown command";
         if (cmdStatus == "clear")
             clear(CLI);
+
         CLI.currentInput += "<br /> \\> ";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
         CLI.oldInput = CLI.oldInput + CLI.currentInput;

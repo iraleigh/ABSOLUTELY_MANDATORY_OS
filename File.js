@@ -3,6 +3,16 @@ function File(szName,szContent){
     this.content = szContent;
     this.position = 0;
     this.length = szContent.length;
+
+    //Added date object to file definition.
+    this.date = new Date(); //new Date(); creates a date object with the current date/time.
+    this.setDate = function (ObjDate){
+        this.date = ObjDate;
+    }
+    this.accessDate = function(){
+        return this.date;
+    }
+
     this.isName = function (szName) {
       return this.name === szName;
     }
