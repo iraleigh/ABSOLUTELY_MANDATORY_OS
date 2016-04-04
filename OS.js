@@ -4,7 +4,7 @@ var OS = {
       //Processes.listOfDevices[0].create(szFileName,szContent);
       console.log("In Create");
       var process = Processes.findProcessByName(OS.FS.create.caller.displayName);
-      container.innerHTML += "</br> Adding "+ process.name + " to queue";
+   //   container.innerHTML += "</br> Adding "+ process.name + " to queue";
       process.state = "Waiting";
       OS.ProcessQueue.enqueue(
         OS.ProcessQueue.wrapFunction(
@@ -21,7 +21,7 @@ var OS = {
       //Processes.listOfDevices['file_io'].delete(szFileName);
       console.log("In Delete");
       var process = Processes.findProcessByName(OS.FS.delete.caller.displayName);
-      container.innerHTML += "</br> Adding "+ process.name + " to queue";
+    //  container.innerHTML += "</br> Adding "+ process.name + " to queue";
       process.state = "Waiting";
       OS.ProcessQueue.enqueue(
         OS.ProcessQueue.wrapFunction(
@@ -37,7 +37,7 @@ var OS = {
       //return Processes.listOfDevices['file_io'].open(szFileName);
       console.log("In Open");
       var process = Processes.findProcessByName(OS.FS.open.caller.displayName);
-      container.innerHTML += "</br> Adding "+ process.name + " to queue";
+  //    container.innerHTML += "</br> Adding "+ process.name + " to queue";
       process.state = "Waiting";
       OS.ProcessQueue.enqueue(
         OS.ProcessQueue.wrapFunction(
@@ -53,7 +53,7 @@ var OS = {
       //Processes.listOfDevices['file_io'].close(szFileName);
       console.log("In Close");
       var process = Processes.findProcessByName(OS.FS.close.caller.displayName);
-      container.innerHTML += "</br> Adding "+ process.name + " to queue";
+   //   container.innerHTML += "</br> Adding "+ process.name + " to queue";
       process.state = "Waiting";
       OS.ProcessQueue.enqueue(
         OS.ProcessQueue.wrapFunction(
@@ -85,7 +85,7 @@ var OS = {
       //Processes.listOfDevices['file_io'].write(oFilePointer,szInput);
       console.log("In Write");
       var process = Processes.findProcessByName(OS.FS.write.caller.displayName);
-      container.innerHTML += "</br> Adding "+ process.name + " to queue";
+   //   container.innerHTML += "</br> Adding "+ process.name + " to queue";
       process.state = "Waiting";
       OS.ProcessQueue.enqueue(
         OS.ProcessQueue.wrapFunction(
@@ -101,7 +101,7 @@ var OS = {
       //return Processes.listOfDevices['file_io'].position(oFilePointer);
       console.log("In Position");
       var process = Processes.findProcessByName(OS.FS.position.caller.displayName);
-      container.innerHTML += "</br> Adding "+ process.name + " to queue";
+  //    container.innerHTML += "</br> Adding "+ process.name + " to queue";
       process.state = "Waiting";
       OS.ProcessQueue.enqueue(
         OS.ProcessQueue.wrapFunction(
@@ -118,7 +118,7 @@ var OS = {
       console.log("In length");
       console.log(oFilePointer);
       var process = Processes.findProcessByName(OS.FS.length.caller.displayName);
-      container.innerHTML += "</br> Adding "+ process.name + " to queue";
+  //    container.innerHTML += "</br> Adding "+ process.name + " to queue";
       process.state = "Waiting";
       OS.ProcessQueue.enqueue(
         OS.ProcessQueue.wrapFunction(
@@ -134,7 +134,7 @@ var OS = {
       //Processes.listOfDevices['file_io'].seek(oFilePointer,nOffset);
       console.log("In seek");
       var process = Processes.findProcessByName(OS.FS.seek.caller.displayName);
-      container.innerHTML += "</br> Adding "+ process.name + " to queue";
+ //     container.innerHTML += "</br> Adding "+ process.name + " to queue";
       process.state = "Waiting";
       OS.ProcessQueue.enqueue(
         OS.ProcessQueue.wrapFunction(
@@ -150,7 +150,7 @@ var OS = {
   display: function(output){
     Processes.listOfDevices['display'].main(output);
   },
-  clearScreen: function(){
+  clearScreen: function () {
     Processes.listOfDevices['display'].clear();
   },
   ProcessQueue: {

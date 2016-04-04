@@ -2,7 +2,7 @@ var container;
 window.onload = function(){
   start = function() {
     container = window.document.getElementById('container');
-    container.innerHTML = "Starting OS...";
+ //   container.innerHTML = "Starting OS...";
     Processes.generateListOfProcesses();
 
     var everyProcessStopped = false;

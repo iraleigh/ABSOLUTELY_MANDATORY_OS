@@ -5,7 +5,7 @@ var cat = function (counter) {
             this.var.returnedFile = null;
             OS.FS.open(args[0]);
             if (args[0] == null) {
-                CLI.currentInput += "<br />No file specified."
+                CLI.currentInput += "<br />No file specified"
                 this.state = "Stop";
                 this.program_counter = 0;
                 break;
@@ -17,7 +17,7 @@ var cat = function (counter) {
             try {
                 this.var.filePointer.accessName();
             } catch (e) {
-                CLI.currentInput += "<br />File not found."
+                CLI.currentInput += "<br />File not found"
                 this.state = "Stop";
                 this.program_counter = 0;
                 break;
