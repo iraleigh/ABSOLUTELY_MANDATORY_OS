@@ -23,6 +23,7 @@ var rm = function(counter) {
 			break;
 		default:
 			this.state = "Stop";
+			this.program_counter = 0;
 			console.log(Directory.Files);
 	}
 }
