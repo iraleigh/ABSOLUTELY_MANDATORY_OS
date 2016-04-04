@@ -34,10 +34,10 @@ document.onkeypress = function (evt) {
         //Prep terminal for new line
         if (cmdStatus == CLI.status.BAD_COMMAND)
             CLI.currentInput += "<br/>Unknown command";
-        if (cmdStatus == "clear")
-            clear(CLI);
+        // if (cmdStatus == "clear")
+        //     clear(CLI);
 
-        CLI.currentInput += "<br /> \\> ";
+        CLI.currentInput += "<br /> \\>";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
         CLI.oldInput = CLI.oldInput + CLI.currentInput;

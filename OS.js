@@ -147,6 +147,12 @@ var OS = {
       //Processes.listOfDevices['file_io'].main();
     }
   },
+  display: function(output){
+    Processes.listOfDevices['display'].main(output);
+  },
+  clearScreen: function(){
+    Processes.listOfDevices['display'].clear();
+  },
   ProcessQueue: {
     queue: [],
     wrapFunction: function(fn, context, params) {
