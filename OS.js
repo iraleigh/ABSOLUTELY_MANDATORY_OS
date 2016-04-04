@@ -69,7 +69,7 @@ var OS = {
       //return Processes.listOfDevices['file_io'].read(oFilePointer);
       console.log("In Read");
       var process = Processes.findProcessByName(OS.FS.read.caller.displayName);
-      container.innerHTML += "</br> Adding "+ process.name + " to queue";
+      //container.innerHTML += "</br> Adding "+ process.name + " to queue";
       process.state = "Waiting";
       OS.ProcessQueue.enqueue(
         OS.ProcessQueue.wrapFunction(
