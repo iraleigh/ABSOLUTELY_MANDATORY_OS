@@ -37,13 +37,13 @@ document.onkeypress = function (evt) {
         // if (cmdStatus == "clear")
         //     clear(CLI);
 
-        CLI.currentInput += "<br /> \\>";
+        CLI.currentInput += "<br /> \\> ";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
         CLI.oldInput = CLI.oldInput + CLI.currentInput;
         CLI.currentInput = "";
 
-    } else { // A character is typed
+    } else if (evt.charCode != 60 && evt.charCode != 62){ // A character is typed (Not '<' or '>' for HTML reasons)
         CLI.currentInput += String.fromCharCode(evt.which);
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
