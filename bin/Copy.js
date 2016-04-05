@@ -17,20 +17,24 @@
 */
 
 var cp = function(counter) {
+
 	switch(counter){
 		case 0:
-			var args = this.args;
-      var szForceOverwrite = false;
-      var szInteractiveMode = false;
-      var szForbidOverwrite = false;
-      var szRecursiveCopy = false;
-      var szVerboseMode = false;
-      var szSourceFile = new String();
-      var szTargetFile = new String();
-      var szTargetExists = false;
-      var szWriteThisFile = false;
+    var args = this.args;
+    this.var.szForceOverwrite = false;
+    this.var.szInteractiveMode = false;
+    this.var.szForbidOverwrite = false;
+    this.var.szRecursiveCopy = false;
+    this.var.szVerboseMode = false;
+    this.var.szSourceFile = new String();
+    this.var.szTargetFile = new String();
+    this.var.szTargetExists = false;
+    this.var.szWriteThisFile = false;
 
-      var szArgZero = args[0];
+    var szArgZero = args[0];
+
+    this.var.szSource;
+    this.var.szSourceContent;
 
       //Check Options
       if (szArgZero.charAt(0) == '-'){
@@ -50,19 +54,19 @@ var cp = function(counter) {
 
         //Set compatible options
         if(szArgZero.includes('f')){
-          szForceOverwrite = true;
+          this.var.szForceOverwrite = true;
         }
         if(szArgZero.includes('i')){
-          szInteractiveMode = true;
+          this.var.szInteractiveMode = true;
         }
         if(szArgZero.includes('n')){
-          szForbidOverwrite = true;
+          this.var.szForbidOverwrite = true;
         }
         if(szArgZero.includes('R')){
-          szRecursiveCopy = true;
+          this.var.szRecursiveCopy = true;
         }
         if(szArgZero.includes('v')){
-          szVerboseMode = true;
+          this.var.szVerboseMode = true;
         }
 
         //set file names
@@ -70,32 +74,42 @@ var cp = function(counter) {
           OS.display("Error: Missing a filename argument.<br/>");
           return 2;
         }
-        szSourceFile = args[1];
-        szTargetFile = args[2];
+        this.var.szSourceFile = args[1];
+        this.var.szTargetFile = args[2];
       }
       else{  //no options specified
         if(args[0] == null || args[1] == null){
           OS.display("Error: Missing a filename argument.<br/>");
           return 2;
         }
-        szSourceFile = args[0];
-        szTargetFile = args[1];
+        this.var.szSourceFile = args[0];
+        this.var.szTargetFile = args[1];
       }
 
 
       //Open and read the source file
-			var szSource = OS.FS.open(szSourceFile);
-      var szSourceContent = OS.FS.read(szSource);
-      OS.FS.close(szSource);
+			this.var.szSource = OS.FS.open(this.var.szSourceFile);
+      break;
 
+      case 1:
+      this.var.szSourceContent = OS.FS.read(this.var.szSource);
+      break;
+
+      case 2:
+      OS.FS.close(this.var.szSource);
+      break;
+
+      case 3:
       //Check to see if the destination file exists
-      if(OS.FS.open(szTargetFile) != null){
-        szTargetExists = true;
+      if(OS.FS.open(this.var.szTargetFile) != null){
+        this.var.szTargetExists = true;
       }
+      break;
 
+      case 4:
       //Prompt user to replace if in interactive mode
-      if(szInteractiveMode == true && szTargetExists == true){
-        OS.display("Replace existing file " + szTargetFile + "? y/n: ");
+      if(this.var.szInteractiveMode == true && this.var.szTargetExists == true){
+        OS.display("Replace existing file " + this.var.szTargetFile + "? y/n: ");
         //Get input from keyboard.
         //set new variable equal to input decision
         //if yes, force overwrite of target file.
@@ -103,26 +117,26 @@ var cp = function(counter) {
       }
 
       //Display filenames if in verbose mode.
-      if(szVerboseMode == true){
-        OS.display("Copying " + szSourceFile + " to " + szTargetFile + "<br/>");
+      if(this.var.szVerboseMode == true){
+        OS.display("Copying " + this.var.szSourceFile + " to " + this.var.szTargetFile + "<br/>");
       }
 
       //Write target file.
-      if(szForceOverwrite == true){
-        szWriteThisFile == true;
+      if(this.var.szForceOverwrite == true){
+        this.var.szWriteThisFile == true;
       }
       else{
-        szWriteThisFile == false;
+        this.var.szWriteThisFile == false;
       }
-      if(szForbidOverwrite == true){
-        szWriteThisFile = false;
+      if(this.var.szForbidOverwrite == true){
+        this.var.szWriteThisFile = false;
       }
-      if(szTargetExists == false){
-        szWriteThisFile = true;
+      if(this.var.szTargetExists == false){
+        this.var.szWriteThisFile = true;
       }
 
-      if(szWriteThisFile == true){
-        OS.FS.create(szTargetFile, szSourceContent);
+      if(this.var.szWriteThisFile == true){
+        OS.FS.create(this.var.szTargetFile, this.var.szSourceContent);
       }
 
       //Implement recursive copy if/when directories are implemented
