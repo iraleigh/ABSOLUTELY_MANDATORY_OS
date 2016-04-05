@@ -13,11 +13,9 @@ Processes.listOfDevices['keyboard'] = {
         	process.args = input;
         	process.state = "Ready";
         	OS.Scheduler.runNextProcess();
-        } else if(nameOfProcess == ""){
-          OS.Scheduler.runNextProcess();
-        } else if (nameOfProcess == "cls" || nameOfProcess == "clear"){
-            return "clear";
-        } 
+        //} else if(nameOfProcess == ""){
+        //  OS.Scheduler.runNextProcess();
+        }
         else {
         	return CLI.status.BAD_COMMAND;
         }

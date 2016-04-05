@@ -10,7 +10,7 @@ Processes.listOfDevices['file_io'] = {
       create: function(szNameOFCallingFunction,szFileName,szContent){
         console.log("Device creating for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
-        container.innerHTML += "</br>Creating "+szFileName+" for "+process.name;
+        //container.innerHTML += "</br>Creating "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
 
@@ -21,7 +21,7 @@ Processes.listOfDevices['file_io'] = {
       delete: function(szNameOFCallingFunction,szFileName){
         console.log("Device deleting for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
-        container.innerHTML += "</br>Deleting "+szFileName+" for "+process.name;
+        //container.innerHTML += "</br>Deleting "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
 
@@ -34,7 +34,7 @@ Processes.listOfDevices['file_io'] = {
       open: function(szNameOFCallingFunction,szFileName){
         console.log("Device opening for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
-        container.innerHTML += "</br>Opening "+szFileName+" for "+process.name;
+        //container.innerHTML += "</br>Opening "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
         process.var.returnedFile = undefined;
@@ -51,7 +51,7 @@ Processes.listOfDevices['file_io'] = {
       close: function(szNameOFCallingFunction,szFileName){
         console.log("Device closing for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
-        container.innerHTML += "</br>Closing "+szFileName+" for "+process.name;
+       // container.innerHTML += "</br>Closing "+szFileName+" for "+process.name;
         console.log(process.state);
         process.state = "Ready";
 
@@ -62,7 +62,7 @@ Processes.listOfDevices['file_io'] = {
       read: function(szNameOFCallingFunction,oFilePointer){
         console.log("Device reading for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
-        container.innerHTML += "</br>Reading from "+oFilePointer.accessName();
+       // container.innerHTML += "</br>Reading from "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
 
@@ -88,7 +88,7 @@ Processes.listOfDevices['file_io'] = {
       write: function(szNameOFCallingFunction,oFilePointer,szInput){
         console.log("Device writing for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
-        container.innerHTML += "</br>Writing to "+oFilePointer.accessName();
+       // container.innerHTML += "</br>Writing to "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
 
@@ -104,7 +104,7 @@ Processes.listOfDevices['file_io'] = {
       position: function(szNameOFCallingFunction,oFilePointer){
         console.log("Device finding postion for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
-        container.innerHTML += "</br>Accessing position of "+oFilePointer.accessName();
+      //  container.innerHTML += "</br>Accessing position of "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
 
@@ -115,7 +115,7 @@ Processes.listOfDevices['file_io'] = {
       lengthOfFile: function(szNameOFCallingFunction,oFilePointer){
         console.log("Device acquiring length for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
-        container.innerHTML += "</br>Accessing length of "+oFilePointer.accessName();
+     //   container.innerHTML += "</br>Accessing length of "+oFilePointer.accessName();
         console.log(process.state);
         process.state = "Ready";
 
@@ -127,7 +127,7 @@ Processes.listOfDevices['file_io'] = {
       seek: function(szNameOFCallingFunction,oFilePointer,nOffset){
         console.log("Device seeking for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
-        container.innerHTML += "</br>Seeking "+oFilePointer.accessName();+
+     //   container.innerHTML += "</br>Seeking "+oFilePointer.accessName();+
                                " offset: "+ nOffset;
         console.log(process.state);
         process.state = "Ready";

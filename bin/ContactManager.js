@@ -129,11 +129,11 @@ var ContactManager = function(counter) {
           console.log("To be written: " + output);
           this.var.output = output;
           //Open and write to the resultant file
-          OS.FS.create("ContactManager Results.csv", "");
+          OS.FS.create("ContactManager_Results.csv", "");
           break;
 
           case 9:
-          var oContactManagerResultFile = OS.FS.open("ContactManager Results.csv");
+          var oContactManagerResultFile = OS.FS.open("ContactManager_Results.csv");
           break;
 
           case 10:
@@ -145,8 +145,7 @@ var ContactManager = function(counter) {
           break;
 
           case 11:
-          //container.innerHTML += "</br>" + this.var.output;
-          OS.FS.close("ContactManager Results.csv");
+          OS.FS.close("ContactManager_Results.csv");
 
           default:
           this.state = "Stop";

@@ -20,7 +20,7 @@ window.onload = function () {
     container.innerHTML = CLI.oldInput;
     CLI.textHeight = document.getElementById('container').offsetHeight;
     console.log(CLI.textHeight);
-    CLI.oldInput += "<br /> \\>";
+    CLI.oldInput += "<br /> \\> ";
     container.innerHTML = CLI.oldInput;
 
 }
@@ -30,21 +30,20 @@ document.onkeypress = function (evt) {
     if (evt.charCode == 13) { // On enter
         //Grab the function here
         var cmdStatus = doCommand(CLI.currentInput);
-
-        start();
-
+            start();
         //Prep terminal for new line
         if (cmdStatus == CLI.status.BAD_COMMAND)
             CLI.currentInput += "<br/>Unknown command";
         // if (cmdStatus == "clear")
         //     clear(CLI);
 
-        CLI.currentInput += "<br /> \\>";
+        CLI.currentInput += "<br /> \\> ";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
+
         CLI.oldInput = CLI.oldInput + CLI.currentInput;
         CLI.currentInput = "";
 
-    } else { // A character is typed
+    } else if (evt.charCode != 60 && evt.charCode != 62){ // A character is typed (Not '<' or '>' for HTML reasons)
         CLI.currentInput += String.fromCharCode(evt.which);
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
