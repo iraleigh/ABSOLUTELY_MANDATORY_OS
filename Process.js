@@ -5,8 +5,9 @@ function Process (name,main) {
 	this.var = {};
 	this.main = main;
 	this.threads = [];
+	this.main.displayName = this.name;
 
-	this.newThread = function(callback) {
-		this.threads.push(new Thread(this.name, this.threads.length, this.var,callback));
+	this.newThread = function(name, callback) {
+		this.threads[name] = new Thread(this.name, name, this.var,callback);
 	};
 }

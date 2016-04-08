@@ -1,15 +1,24 @@
-function Thread(parent, id, parentVariables, callback){
+function Thread(parent, givenName, parentVariables, callback){
 	this.parent = parent;
-	this.name = parent + ": thread " +  id;
-	this.id = id;
+	this.name = parent + ": thread " +  givenName;
 	this.callback = callback;
 	this.var = parentVariables;
 
 	this.run = function() {
-		console.log(this.name);
-		// var thread = new Process(this.name, this.callback);
-		// thread.var = this.var;
-		// listOfProcesses.push(thread);
+		var thread = new Process(this.name, this.callback);
+		thread.var = this.var;
+		thread.state = "Ready";
+		Processes.listOfProcesses.push(thread);
+	}
+
+	this.sleep = function(milliseconds) {
+		//change process state to pause for milliseconds
+
+		//switch state to paused
+
+		//set timeout for milliseconds
+
+		//switch state to ready
 	}
 
 }
