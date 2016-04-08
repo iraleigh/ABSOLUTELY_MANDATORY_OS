@@ -21,4 +21,10 @@ function Thread(parent, givenName, parentVariables, callback){
 		//switch state to ready
 	}
 
+	this.sleep = function(millisecond){
+
+		this.state = "pause";
+		setTimeout(function(){this.state = "ready";},5000);
+
+	}
 }
