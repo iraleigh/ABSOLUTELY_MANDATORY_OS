@@ -7,6 +7,9 @@ var testingThreads = function(counter) {
 				console.log(this.var.sampleVar);
 				OS.FS.open('a');
 				break;
+			case 1:
+				OS.FS.open('d');
+				break;
 			default:
 				this.state = 'Stop';
 		}
@@ -31,6 +34,7 @@ var testingThreads = function(counter) {
 	});
 
 	this.threads['one'].run();
+	this.threads['one'].sleep(2);
 	this.threads['two'].run();
 	this.threads['three'].run();
 
