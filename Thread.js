@@ -12,4 +12,10 @@ function Thread(parent, id, parentVariables, callback){
 		// listOfProcesses.push(thread);
 	}
 
+	this.sleep = function(millisecond){
+
+		this.state = "pause";
+		setTimeout(function(){this.state = "ready";},5000);
+
+	}
 }
