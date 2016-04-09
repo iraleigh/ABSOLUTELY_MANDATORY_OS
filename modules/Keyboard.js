@@ -7,6 +7,8 @@ Processes.listOfDevices['keyboard'] = {
         pipes = input.split('|');
         console.log(pipes);
         for (i = 0; i < pipes.length; i++) {
+            CLI.STDIn = CLI.STDOut;
+            CLI.STDOut = "";
             input = pipes[i].trim();
             input = input.split(" ");
             nameOfProcess = input.shift();
@@ -24,5 +26,6 @@ Processes.listOfDevices['keyboard'] = {
                 return CLI.status.BAD_COMMAND;
             }
         }
+        OS.outputToConsole();
     }
 }
