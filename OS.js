@@ -196,15 +196,15 @@ var OS = {
             //Semaphores only require a key to access the file.
             //read, write, close, open
             //These methods should take a mutex object?
-            acquire: function() {
-                //while(!available)
-                //{
-                //    //Wait for resource to become available.
-                //}
-                //available = false;
+            acquire: function(mutex) {
+                while(!mutex.accessAvailable)
+                {
+                    //Wait for resource to become available.
+                }
+                mutex.setAvailable(false);
             },
-            release: function() {
-                //available = true;
+            release: function(mutex) {
+               mutex.setAvailable(true);
             }
         },
         semaphores: {
