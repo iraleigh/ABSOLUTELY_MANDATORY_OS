@@ -106,7 +106,8 @@ var cp = function(counter) {
       }
       break;
 
-      case 4:
+	    case 4:
+	        console.log("Case 4 reached");
       //Prompt user to replace if in interactive mode
       if(this.var.szInteractiveMode == true && this.var.szTargetExists == true){
         OS.display("Replace existing file " + this.var.szTargetFile + "? y/n: ");
@@ -138,12 +139,13 @@ var cp = function(counter) {
       if(this.var.szWriteThisFile == true){
         OS.FS.create(this.var.szTargetFile, this.var.szSourceContent);
       }
-
+      console.log("END OF case 4");
       //Implement recursive copy if/when directories are implemented
 
 
 			break;
-		default:
+	    default:
+	        console.log("Code reached");
 			this.state = "Stop";
 			this.program_counter = 0;
 			console.log(Directory.Files);
