@@ -196,15 +196,33 @@ var OS = {
             //Semaphores only require a key to access the file.
             //read, write, close, open
             //These methods should take a mutex object?
+
+            //array of files
+            arrayOfMutexes: [],
+
+            //basically locking it
             acquire: function(mutex) {
                 while(!mutex.accessAvailable)
                 {
                     //Wait for resource to become available.
                 }
+
+                arrayOfMutexes.push(mutex);
+
                 mutex.setAvailable(false);
             },
+
+            //obviously unlocking it
             release: function(mutex) {
-               mutex.setAvailable(true);
+
+                arrayOfMutexes.foreach(function (element, index, array)
+                {
+                    if(arrayOfMutexes[index] == mutex) {
+                        arrayOfMutexes.pop();//basically saying it's not a locked object anymore
+                    }
+                });
+
+                mutex.setAvailable(true);
             }
         },
         semaphores: {
