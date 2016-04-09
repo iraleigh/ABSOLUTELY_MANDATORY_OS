@@ -2,9 +2,14 @@
  * Created by Matt on 4/9/2016.
  */
 
-function mutex() {
+function mutex(file_name) {
     this.available = true;
+    this.file_name = file_name;
     //Include file name that is locked/unlocked?
+
+    this.accessFileName = function() {
+        return this.file_name;
+    };
 
     this.accessAvailable = function(){
         return this.available;
@@ -21,6 +26,7 @@ function mutex() {
 
     this.MutexToString = function(){
         console.log("Available == " + this.available + "\n");
+        console.log("File associated with mutex == " + this.file_name + "\n");
     };
 }
 
