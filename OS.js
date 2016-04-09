@@ -195,19 +195,28 @@ var OS = {
             //Mutexlock and semaphores almost same thing
             //Semaphores only require a key to access the file.
             //read, write, close, open
+            //These methods should take a mutex object?
             acquire: function() {
-
+                //while(!available)
+                //{
+                //    //Wait for resource to become available.
+                //}
+                //available = false;
             },
             release: function() {
-
+                //available = true;
             }
         },
         semaphores: {
-            wait: function() {
-
+            wait: function(S) {
+                //while(S <= 0)
+                //{
+                //    //Wait for signal
+                //}
+                //S--;
             },
-            signal: function() {
-
+            signal: function(S) {
+                //S++;
             }
         }
 }
