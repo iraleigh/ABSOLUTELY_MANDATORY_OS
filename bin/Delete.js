@@ -1,5 +1,5 @@
-var rm = function (counter) {
-    switch (counter) {
+var rm = function(counter) {
+	switch(counter){
 		case 0:
 			var args = this.args;
 			var isDirectory = false;
@@ -27,4 +27,4 @@ var rm = function (counter) {
 			console.log(Directory.Files);
 	}
 }
-Processes.listOfProcesses.push(new Process("rm", rm));
+Processes.listOfProcesses.push(new Process("rm",rm));
