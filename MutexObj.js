@@ -2,6 +2,7 @@
  * Created by Matt on 4/9/2016.
  */
 var arrayOfMutexes = [];
+var arrayOfWaiting = [];
 
 function Mutex(file_name) {
     this.available = true;
