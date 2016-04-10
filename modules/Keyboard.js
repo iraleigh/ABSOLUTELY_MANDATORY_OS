@@ -6,10 +6,10 @@ Processes.listOfDevices['keyboard'] = {
         var process;
         pipes = input.split('|');
         console.log(pipes);
-        for (i = 0; i < pipes.length; i++) {
+        for (pipe_iterator = 0; pipe_iterator < pipes.length; pipe_iterator++) {
             CLI.STDIn = CLI.STDOut;
             CLI.STDOut = "";
-            input = pipes[i].trim();
+            input = pipes[pipe_iterator].trim();
             input = input.split(" ");
             nameOfProcess = input.shift();
             process = Processes.findProcessByName(nameOfProcess);
@@ -20,8 +20,6 @@ Processes.listOfDevices['keyboard'] = {
                 process.state = "Ready";
                 while (Processes.findProcessByName(nameOfProcess).state != "Stop")
                     OS.Scheduler.runNextProcess();
-                //} else if(nameOfProcess == ""){
-                //  OS.Scheduler.runNextProcess();
             } else {
                 return CLI.status.BAD_COMMAND;
             }
