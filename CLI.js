@@ -2,6 +2,9 @@ var CLI = {
     currentInput: "",
     oldInput: "AMOS",
     textHeight: 0,
+    STDIn: "",
+    STDOut: "",
+    STDErr: "",
     status: {
         OK: 0,
         BAD_COMMAND: 1

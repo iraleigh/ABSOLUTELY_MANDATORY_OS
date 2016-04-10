@@ -153,6 +153,9 @@ var OS = {
   clearScreen: function () {
     Processes.listOfDevices['display'].clear();
   },
+  outputToConsole: function () {
+      Processes.listOfDevices['display'].outputToConsole();
+  },
   ProcessQueue: {
     queue: [],
     wrapFunction: function(fn, context, params) {
