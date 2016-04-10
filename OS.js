@@ -305,7 +305,7 @@ var OS = {
                                 arrayOfWaiting.splice(index, 1); //removes it from waiting to be locked
                             }
                         });
-                        
+
                     }
                 });
 
@@ -316,15 +316,19 @@ var OS = {
             }
         },
         semaphores: {
-            wait: function(S) {
-                //while(S <= 0)
-                //{
-                //    //Wait for signal
-                //}
-                //S--;
+            wait: function(sema) {
+                if(sema.accessSynchNum() != 0){
+                    var tempSynch = sema.accessSynchNum();
+                    sema.setSynchNum(--tempSynch);
+                }
             },
-            signal: function(S) {
-                //S++;
+            
+            signal: function(sema) {
+
+                var tempSynch = sema.accessSynchNum();
+                sema.setSynchNum(++tempSynch);
+                
+                // call the next in the queue and remember to shift back and push itself to the end of the queue
             }
         }
 }
