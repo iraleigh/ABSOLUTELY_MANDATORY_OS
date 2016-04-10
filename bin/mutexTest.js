@@ -59,9 +59,17 @@ var MutexTest = function(counter){
             OS.mutexLock.acquire(this.var.test2);
             OS.mutexLock.acquire(this.var.test3);
 
+            arrayOfMutexes[0].MutexToString();
+            arrayOfMutexes[1].MutexToString();
             OS.mutexLock.release(this.var.test3);
+            arrayOfMutexes[0].MutexToString();
+            OS.mutexLock.release(this.var.test);
+
+            arrayOfMutexes[0].MutexToString();
+
             OS.mutexLock.release(this.var.test2);
-            OS.mutexLock.release(this.var.test2);
+
+
 
             break;
 
