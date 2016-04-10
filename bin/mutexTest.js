@@ -15,7 +15,8 @@ var MutexTest = function(counter){
 
         case 2:
             OS.FS.create("testFile3", "This is the content of a test file.");
-
+            break;
+        case 3:
             this.var.test = new Mutex("testFile");
             this.var.test2 = new Mutex("testFile");
             this.var.test3 = new Mutex("testFile3");
@@ -29,30 +30,35 @@ var MutexTest = function(counter){
             //case 2 and so forth. As you can see, the one below works without the cases work perfecrtly fine. So save me.
             // PS I need help with my process, Dining Philosopher, sorry, you're going to have to bear with me on this one.
             // Alvin
-
-            /*
+            this.program_counter++;
+            
             break;
 
-        case 1:
+        case 4:
         //    console.log(this.var.test);
         //    console.log("****************************");
             OS.mutexLock.acquire(this.var.test);
-        case 2:
-            OS.mutexLock.acquire(this.var.test2);
-            break;
-        case 3:
-            OS.mutexLock.acquire(this.var.test3);
-            break;
-        case 4:
-            OS.mutexLock.release(this.var.test3);
+            this.program_counter++;
             break;
         case 5:
-         OS.mutexLock.release(this.var.test2);
+            OS.mutexLock.acquire(this.var.test2);
+            this.program_counter++;
             break;
         case 6:
-            OS.mutexLock.release(this.var.test2);
+            OS.mutexLock.acquire(this.var.test3);
+            this.program_counter++;
             break;
-        */
+        case 7:
+            OS.mutexLock.release(this.var.test3);
+            this.program_counter++;
+            break;
+        case 8:
+            OS.mutexLock.release(this.var.test2);
+            this.program_counter++;
+            break;
+        case 9:
+            OS.mutexLock.release(this.var.test2);
+        
 
 
             OS.mutexLock.acquire(this.var.test);
@@ -69,7 +75,7 @@ var MutexTest = function(counter){
 
             OS.mutexLock.release(this.var.test2);
 
-
+            this.program_counter++
 
             break;
 
