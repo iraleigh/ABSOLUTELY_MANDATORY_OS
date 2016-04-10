@@ -207,7 +207,7 @@ var OS = {
                     //Wait for resource to become available.
                 }
 
-                arrayOfMutexes.push(mutex);
+                OS.mutexLock.arrayOfMutexes.push(mutex);
 
                 mutex.setAvailable(false);
             },
