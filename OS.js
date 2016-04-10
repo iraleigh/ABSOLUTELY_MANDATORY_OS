@@ -202,12 +202,32 @@ var OS = {
 
             //basically locking it
             acquire: function(mutex) {
-                while(!mutex.accessAvailable)
+
+                var available;
+
+                //I think we need to add something here
+                if(arrayOfMutexes.indexOf(mutex) >= 0)
+                {
+                    available = false;
+                }
+                else
+                {
+                    available = true;
+                }
+
+                while(!available)
                 {
                     //Wait for resource to become available.
                 }
 
-                OS.mutexLock.arrayOfMutexes.push(mutex);
+                arrayOfMutexes.push(mutex);
+
+                console.log("****************************");
+                arrayOfMutexes.forEach(function (element, index, array)
+                {
+                    console.log(element);
+                });
+                console.log("****************************");
 
                 mutex.setAvailable(false);
             },

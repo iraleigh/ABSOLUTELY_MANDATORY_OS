@@ -1,8 +1,9 @@
 /**
  * Created by Matt on 4/9/2016.
  */
+var arrayOfMutexes = [];
 
-function mutex(file_name) {
+function Mutex(file_name) {
     this.available = true;
     this.file_name = file_name;
     //Include file name that is locked/unlocked?
