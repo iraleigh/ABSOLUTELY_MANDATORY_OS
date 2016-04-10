@@ -33,6 +33,5 @@ function Mutex(file_name) {
 }
 
 //A mutex is passed to the OS functions, acquire, release.
-//A semaphore is passed ot the OS functions, wait, signal.
 
 
