@@ -8,6 +8,9 @@ var CLI = {
     status: {
         OK: 0,
         BAD_COMMAND: 1
+    },
+    getSTDIn: function(){
+        return this.STDIn.trim();
     }
 }
 
@@ -40,6 +43,8 @@ document.onkeypress = function (evt) {
         // if (cmdStatus == "clear")
         //     clear(CLI);
 
+        CLI.STDIn = "";
+        CLI.STDOut = "";
         CLI.currentInput += "<br /> \\> ";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
