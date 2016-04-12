@@ -80,7 +80,7 @@ var CharacterCounter = function (counter){
     this.newThread('two', function(counter){
         switch(counter){
             case 0:
-                OS.FS.create("charTestFile.csv",
+                OS.FS.create("charTestFile1.csv",
                     "Create your own process – This process must come from one of these" +
                     "specialties … Math, Physics, Chemistry, or Data Processing. The process " +
                     "must read a file and output a file, or update a file. The process must " +
@@ -89,7 +89,7 @@ var CharacterCounter = function (counter){
                 break;
 
             case 1:
-                this.var.oCharTestFile = OS.FS.open("charTestFile.csv");
+                this.var.oCharTestFile = OS.FS.open("charTestFile1.csv");
                 break;
 
             case 2:
