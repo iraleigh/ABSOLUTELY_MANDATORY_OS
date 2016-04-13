@@ -24,6 +24,6 @@ Processes.listOfDevices['keyboard'] = {
                 return CLI.status.BAD_COMMAND;
             }
         }
-        OS.outputToConsole();
+        //OS.outputToConsole();
     }
-}
+};
