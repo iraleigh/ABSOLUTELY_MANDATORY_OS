@@ -12,9 +12,17 @@ var ActiveFile = function(counter)
         //I don't think a new process is being created with the Processes.listOfProcesses.push(new Process("SleepingFile", SleepingFile));
 
         case 0:
-            Processes.listOfProcesses.push(new Process("SleepingFile", SleepingFile));
+            //Hackish way of creating a new process inside of another process.
+            this.var.newProcess =  new Process("SleepingFile", SleepingFile);
+            this.var.newProcess.state = "Ready";
+
+            Processes.listOfProcesses.push(this.var.newProcess);
+
             console.log("Initialize semaphore");
             this.var.semaphore = new Semaphore(1);
+
+            this.var.newProcess.var.semaphore = this.var.semaphore;
+
             this.var.semaphore.SemaphoreToString();
 
             OS.semaphores.wait(this.var.semaphore);
@@ -41,12 +49,6 @@ var ActiveFile = function(counter)
             console.log("Semaphore signals . . .");
 
             OS.FS.create("dumbFile2", "Dumb content2");
-            break;
-
-        case 3:
-            console.log("ActiveFile: case 3");
-
-            OS.FS.create("dumbFile3", "Dumb content3");
             break;
 
         default:
