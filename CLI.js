@@ -38,8 +38,6 @@ window.onload = function () {
 document.onkeypress = function (evt) {
     evt = evt || window.event;
     if (evt.charCode == 13) { // On enter
-        if (CLI.currentInput == "exit") //This can be hard coded...
-            window.close(); 
         //Grab the function here
         CLI.commandPosition = 0;
         CLI.commandHistory.splice(1, 0, CLI.currentInput);
