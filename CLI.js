@@ -33,6 +33,10 @@ window.onload = function () {
     CLI.oldInput += "<br /> \\> ";
     container.innerHTML = CLI.oldInput + CLI.cursor;
 
+    //HelpInfo.generateListOfHelp();
+    console.log("Help info: " + HelpInfo.listOfHelp[0].name);
+    console.log("Help info: " + HelpInfo.listOfHelp[1].name);
+
 }
 
 document.onkeypress = function (evt) {

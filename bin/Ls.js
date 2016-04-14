@@ -5,4 +5,5 @@ var ls = function(counter){
     this.state = "Stop";
     this.program_counter = 0;
 }
-Processes.listOfProcesses.push(new Process("ls",ls));
+Processes.listOfProcesses.push(new Process("ls", ls));
+HelpInfo.listOfHelp.push(new Manual("ls", "LS man", true));
