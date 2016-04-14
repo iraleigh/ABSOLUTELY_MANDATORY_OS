@@ -14,7 +14,7 @@ OS.Scheduler = {
 
         if (readyProcessExists) {
             oNextProcess = readyProcesses.reduce(function(oldest_process, current_process){
-                return oldest_process.last_acess < current_process.last_acess ? current_process : oldest_process;
+                return oldest_process.last_access < current_process.last_access ? current_process : oldest_process;
             });
         }
 
