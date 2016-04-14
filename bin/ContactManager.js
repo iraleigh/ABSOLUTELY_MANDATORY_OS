@@ -151,5 +151,5 @@ var ContactManager = function(counter) {
           this.state = "Stop";
 }
 }
-Processes.listOfProcesses.push(new Process("ContactManager",ContactManager));
-
+Processes.listOfProcesses.push(new Process("ContactManager", ContactManager));
+HelpInfo.listOfHelp.push(new Manual("ContactManager", "ContactManager man", false));

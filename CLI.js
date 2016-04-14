@@ -28,14 +28,9 @@ window.onload = function () {
     CLI.commandHistory = new Array();
     CLI.commandHistory.push("");
     container.innerHTML = CLI.oldInput;
-    CLI.textHeight = document.getElementById('container').offsetHeight;
     console.log(CLI.textHeight);
-    CLI.oldInput += "<br /> \\> ";
+    CLI.oldInput += "\n\\> ";
     container.innerHTML = CLI.oldInput + CLI.cursor;
-
-    //HelpInfo.generateListOfHelp();
-    console.log("Help info: " + HelpInfo.listOfHelp[0].name);
-    console.log("Help info: " + HelpInfo.listOfHelp[1].name);
 
 }
 
@@ -55,7 +50,7 @@ document.onkeypress = function (evt) {
 
         CLI.STDIn = "";
         CLI.STDOut = "";
-        CLI.currentInput += "<br /> \\> ";
+        CLI.currentInput += "\n\\> ";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
         CLI.oldInput = CLI.oldInput + CLI.currentInput;
