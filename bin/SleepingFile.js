@@ -8,21 +8,21 @@ var SleepingFile = function(counter)
     {
         case 0:
             console.log("EXECTUING SLEEPING FILE****************************");
-            //if(this.var.semaphore.accessSynchNum() == 0)
-            //{
-            //    //OS.FS.create("SleepDumbFile", "Dumb content");
-            //    //this.program_counter--;
-            //    //Do not continue
-            //    break;
-            //}
-            //else
-            //{
-            //    OS.semaphores.wait(this.var.semaphore);
-            //    //OS.FS.create("SleepDumbFile", "Dumb content");
-            //    this.var.semaphore.SemaphoreToString();
-            //    this.program_counter++;
-            //}
-            this.program_counter++;
+            if(this.var.semaphore.accessSynchNum() == 0)
+            {
+                OS.FS.create("SleepDumbFile", "Dumb content");
+                this.program_counter--;
+                //Do not continue
+                break;
+            }
+            else
+            {
+                OS.semaphores.wait(this.var.semaphore);
+                OS.FS.create("SleepDumbFile", "Dumb content");
+                this.var.semaphore.SemaphoreToString();
+                //this.program_counter++;
+            }
+
 
             break;
 
@@ -35,16 +35,16 @@ var SleepingFile = function(counter)
                 criticalSection++;
             }
             console.log(criticalSection);
-            //OS.FS.create("SleepDumbFile2", "Dumb content2");
+            OS.FS.create("SleepDumbFile2", "Dumb content2");
             this.program_counter++;
             break;
 
         case 2:
             console.log("SleepingFile: case 1");
-            //OS.semaphores.signal(this.var.semaphore);
-            //this.var.semaphore.SemaphoreToString();
+            OS.semaphores.signal(this.var.semaphore);
+            this.var.semaphore.SemaphoreToString();
 
-            //OS.FS.create("SleepDumbFile3", "Dumb content3");
+            OS.FS.create("SleepDumbFile3", "Dumb content3");
             this.program_counter++;
             break;
 
