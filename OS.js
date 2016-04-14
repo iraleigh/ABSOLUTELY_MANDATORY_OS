@@ -153,6 +153,9 @@ var OS = {
         clearScreen: function () {
             Processes.listOfDevices['display'].clear();
         },
+        outputToConsole: function () {
+            Processes.listOfDevices['display'].outputToConsole();
+        },
         ProcessQueue: {
             queue: [],
             wrapFunction: function (fn, context, params) {
@@ -167,28 +170,6 @@ var OS = {
                 //var fn = OS.ProcessQueue.queue.shift();
                 //return fn();
                 return OS.ProcessQueue.queue.shift()();
-            }
-        },
-        Scheduler: {
-            runNextProcess: function () {
-                var oNextProcess = Processes.listOfProcesses.find(function (element, index, array) {
-                    if (element.state == "Ready") {
-                        console.log(element.name + " is Ready");
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-                if (oNextProcess != undefined) {
-
-                    oNextProcess.main(oNextProcess.program_counter);
-
-                } else {
-                    return OS.Scheduler.runDevice();
-                }
-            },
-            runDevice: function () {
-                return Processes.listOfDevices['file_io'].main();
             }
         },
         mutexLock: {
