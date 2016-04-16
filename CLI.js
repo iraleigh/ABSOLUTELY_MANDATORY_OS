@@ -22,7 +22,8 @@ window.onload = function () {
     container = window.document.getElementById('container');
 
     addDummyFiles();
-    console.log(Directory.Files);
+    OS.FS.setPwd(Directory.Files);
+    console.log(OS.FS.getPwd());
     //ABSOLUTELY MANDATORY OS -- AMOS
     setInterval(cursor, 500);
     CLI.commandHistory = new Array();

@@ -3,7 +3,27 @@ var cat = function (counter) {
         case 0:
             var args = this.args;
             this.var.returnedFile = null;
-            OS.FS.open(args[0]);
+
+            //parse file path
+            szPathString = this.args[0].trim();
+            aryParsedPath = szPathString.split("/");
+            process.var.returnedFile = undefined;
+            var oTargetFile;
+
+            if(aryParsedPath.length > 1){
+              for (var n = 0; n < aryParsedPath.length; n++ ){
+                oTargetFile = aryParsedPath[n];
+                for(var dir of Directory.Files){
+                  if(dir.isName(oTargetFile)) {
+                    oTargetFile = dir;
+                    console.log(dir);
+                    //return file;
+                  }
+                }
+              }
+            }
+
+            OS.FS.open(oTargetFile);
             if (args[0] == null) {
                 OS.display("No file specified");
                 this.state = "Stop";
