@@ -22,6 +22,7 @@ OS.Scheduler = {
 
         if (oNextProcess != undefined) {
             oNextProcess.setLastAccess(Date.now());
+            //console.log(Date.now());
             oNextProcess.main(oNextProcess.program_counter);
 
         } else {
