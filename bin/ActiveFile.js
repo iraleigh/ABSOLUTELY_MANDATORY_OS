@@ -12,46 +12,32 @@ var ActiveFile = function(counter)
         //I don't think a new process is being created with the Processes.listOfProcesses.push(new Process("SleepingFile", SleepingFile));
 
         case 0:
+            console.log("ActiveFile: case 0");
             //Hackish way of creating a new process inside of another process.
             this.var.newProcess =  new Process("SleepingFile", SleepingFile);
             this.var.newProcess.state = "Ready";
-
             Processes.listOfProcesses.push(this.var.newProcess);
 
             console.log("Initialize semaphore");
             this.var.semaphore = new Semaphore(1);
-
             this.var.newProcess.var.semaphore = this.var.semaphore;
-
             this.var.semaphore.SemaphoreToString();
 
             OS.semaphores.wait(this.var.semaphore);
             this.var.semaphore.SemaphoreToString();
-            OS.FS.create("dumbFile0", "Dumb content0");
-            //this.program_counter++;
+            OS.FS.create("dumbFile", "Dumb content");
             break;
 
         case 1:
             console.log("ActiveFile: case 1");
-            var CriticalSection = 0;
-            //Just a for loop to simulate a critical section of code.
-            for(var i = 0; i <= 5000; i++)
-            {
-                CriticalSection++
-            }
-            console.log(CriticalSection);
-
-            OS.FS.create("dumbFile1", "Dumb content1");
-            //this.program_counter++;
+            this.var.filePointer = OS.FS.open("dumbFile");
             break;
 
         case 2:
             console.log("ActiveFile: case 2");
+            OS.FS.close("dumbFile");
             OS.semaphores.signal(this.var.semaphore); //The sleeping file should now activate and start getting in the mix.
             console.log("Semaphore signals . . .");
-
-            OS.FS.create("dumbFile2", "Dumb content2");
-            //this.program_counter++;
             break;
 
         default:
