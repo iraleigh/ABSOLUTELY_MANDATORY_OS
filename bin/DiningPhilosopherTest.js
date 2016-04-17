@@ -180,7 +180,7 @@ var diningPhilosopher = function(counter) {
         Processes.findProcessByName("DineTest: thread four").state = 'Stop';
         Processes.findProcessByName("DineTest: thread five").state = 'Stop';
         this.state = 'Stop';
-    },600); // 60000ms = 1 minute
+    },60000); // 60000ms = 1 minute
 
     this.threads['one'].run();
     this.threads['two'].run();
