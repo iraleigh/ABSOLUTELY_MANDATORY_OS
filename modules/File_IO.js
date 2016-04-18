@@ -1,3 +1,5 @@
+var CAPACITY = 100000000;
+
 Processes.listOfDevices['file_io'] = {
       name: "File IO",
       state: "Ready",
@@ -16,7 +18,14 @@ Processes.listOfDevices['file_io'] = {
 
         process.program_counter++;
 
-        Directory.Files.push(new File(szFileName,szContent));
+        if (Processes.listOfDevices['file_io'].capacityReached()) {
+          process.err = {};
+          process.err.file_io = true;
+          process.err.message = "Hard Drive capacity reached";
+        } else {
+          Directory.Files.push(new File(szFileName,szContent));
+        }
+        
       },
       delete: function(szNameOFCallingFunction,szFileName){
         console.log("Device deleting for " + szNameOFCallingFunction);
@@ -40,7 +49,7 @@ Processes.listOfDevices['file_io'] = {
         process.var.returnedFile = undefined;
         process.program_counter++;
         for(var file of Directory.Files){
-          if(file.isName(szFileName)) {
+          if(file instanceof File && file.isName(szFileName)) {
             process.var.returnedFile = file;
             console.log(file);
             return file;
@@ -140,5 +149,25 @@ Processes.listOfDevices['file_io'] = {
         if(newPosition >= 0 && newPosition < length){
           oFilePointer.mutatePosition(newPosition);
         }
+      },
+
+      capacityReached: function() {
+
+        var currentSize = Directory.Files.reduce(flatten_callback, Directory.Files[0].accessLength());
+
+
+
+        return currentSize >= CAPACITY;
       }
+
     }
+
+
+var flatten_callback = function (previous, current, index, array){
+  if (current instanceof Array) {
+    return current.reduce(flatten_callback, previous);
+  } else {
+    return previous + current.accessLength();
+  }
+}
+

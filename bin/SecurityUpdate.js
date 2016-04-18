@@ -18,6 +18,11 @@ var SecurityUpdate = function(counter){
             );
             break;
         case 1:
+            if (this.err.file_io != undefined) {
+                this.program_counter = 10;
+                OS.display(this.err.message);
+                break;
+            }
             this.var.oSecurityFile = OS.FS.open("securityFile.csv");
             break;
 
