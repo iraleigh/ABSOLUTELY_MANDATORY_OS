@@ -22,7 +22,6 @@ window.onload = function () {
     container = window.document.getElementById('container');
 
     addDummyFiles();
-    console.log(Directory.Files);
     //ABSOLUTELY MANDATORY OS -- AMOS
     setInterval(cursor, 500);
     CLI.commandHistory = new Array();
@@ -30,7 +29,6 @@ window.onload = function () {
     container.innerHTML = CLI.oldInput;
     CLI.oldInput += "\n\n\\> ";
     container.innerHTML = CLI.oldInput + CLI.cursor;
-    console.log(HelpInfo.listofHelp);
 
 }
 

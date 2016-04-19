@@ -22,3 +22,4 @@ var sort = function (counter) {
     }
 }
 Processes.listOfProcesses.push(new Process("sort", sort));
+HelpInfo.listOfHelp.push(new Manual("sort", "[previous_command] | sort", "Piping command: Sorts the output of the previous command in descending order."));
