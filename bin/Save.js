@@ -38,3 +38,4 @@ var save = function (counter) {
     }
 }
 Processes.listOfProcesses.push(new Process("save", save));
+HelpInfo.listOfHelp.push(new Manual("save", "[previous_command] | save [file_destination]", "Piping command: Saves the output of the previous command to the given file destination."));
