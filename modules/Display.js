@@ -6,7 +6,7 @@ Processes.listOfDevices['display'] = {
     },
     clear: function () {
         CLI.oldInput = "";
-        CLI.currentInput = "AMOS";
+        CLI.currentInput = "<b>AMOS</b>";
     },
     outputToConsole: function () {
         CLI.currentInput += CLI.STDOut;

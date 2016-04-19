@@ -152,4 +152,3 @@ var ContactManager = function(counter) {
 }
 }
 Processes.listOfProcesses.push(new Process("ContactManager", ContactManager));
-HelpInfo.listOfHelp.push(new Manual("ContactManager", "ContactManager man", false));

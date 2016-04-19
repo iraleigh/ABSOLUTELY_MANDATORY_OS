@@ -1,6 +1,6 @@
 var CLI = {
     currentInput: "",
-    oldInput: "AMOS",
+    oldInput: "<b>AMOS</b>\nFor help getting started, type 'help'",
     textHeight: 0,
     STDIn: "",
     STDOut: "",
@@ -28,9 +28,9 @@ window.onload = function () {
     CLI.commandHistory = new Array();
     CLI.commandHistory.push("");
     container.innerHTML = CLI.oldInput;
-    console.log(CLI.textHeight);
-    CLI.oldInput += "\n\\> ";
+    CLI.oldInput += "\n\n\\> ";
     container.innerHTML = CLI.oldInput + CLI.cursor;
+    console.log(HelpInfo.listofHelp);
 
 }
 
@@ -46,11 +46,11 @@ document.onkeypress = function (evt) {
         start();
         //Prep terminal for new line
         if (cmdStatus == CLI.status.BAD_COMMAND)
-            CLI.currentInput += "<br/>Unknown command";
+            CLI.currentInput += "\nUnknown command";
 
         CLI.STDIn = "";
         CLI.STDOut = "";
-        CLI.currentInput += "\n\\> ";
+        CLI.currentInput += "\n\n\\> ";
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
         CLI.oldInput = CLI.oldInput + CLI.currentInput;
