@@ -29,4 +29,4 @@ Processes.listOfDevices['keyboard'] = {
         }
         OS.outputToConsole();
     }
-}
+};
