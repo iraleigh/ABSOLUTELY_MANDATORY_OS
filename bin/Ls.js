@@ -1,6 +1,6 @@
 var ls = function(counter){
     this.oCurrentDir = OS.FS.getPwd();
-    console.log("Current directory: " + this.oCurrentDir);
+    //console.log("Current directory: " + this.oCurrentDir);
 
     OS.display(".");
     OS.display("..");

@@ -154,6 +154,39 @@ var OS = {
     setPwd: function(szNewPath){
       OS.FS.pwd = szNewPath;
       return;
+    },
+    getPwdTopLevel: function(){
+      this.szCurrentDirName = "";
+      this.oCurrentDir = OS.FS.getPwd();
+      if(this.oCurrentDir == Directory.Files){
+        return "/";
+      }
+      else{
+        return this.oCurrentDir.name;
+      }
+    },
+    getPwdText: function(){
+      this.oCurrentDir = OS.FS.getPwd();
+      this.aryPathConstructor = new Array();
+      this.szFullyQualifiedPath = "";
+      if(this.oCurrentDir == Directory.Files){
+        return this.aryPathConstructor.push("/");
+      }
+      else{
+        while(this.oCurrentDir != Directory.Files){
+          this.aryPathConstructor.push(this.oCurrentDir.name);
+          this.oCurrentDir = this.oCurrentDir.parent;
+        }
+      }
+
+
+      for (var n = this.aryPathConstructor.length - 1; n >= 0; n--){
+        console.log(this.aryPathConstructor.length + " " + n);
+        console.log(this.aryPathConstructor[n]);
+        this.szFullyQualifiedPath += this.aryPathConstructor[n];
+        this.szFullyQualifiedPath += "/";
+      }
+      return this.szFullyQualifiedPath;
     }
   },
   display: function (output) {

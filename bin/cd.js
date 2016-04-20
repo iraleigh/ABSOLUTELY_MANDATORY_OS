@@ -38,7 +38,8 @@ var cd = function(counter){
             this.oCurrentDir = this.oCurrentDir[n];
             //matching directory found
           }
-          else{if(n == (this.oCurrentDir.length - 1)){
+          else{
+            if(n == (this.oCurrentDir.length - 1) && szArgs != "/"){
             OS.display("Directory does not exist");
           }
         }

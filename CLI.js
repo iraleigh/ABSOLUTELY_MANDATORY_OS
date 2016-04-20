@@ -30,7 +30,7 @@ window.onload = function () {
     container.innerHTML = CLI.oldInput;
     CLI.textHeight = document.getElementById('container').offsetHeight;
     console.log(CLI.textHeight);
-    CLI.oldInput += "<br /> \\> ";
+    CLI.oldInput += "<br /> \/ \$ ";
     container.innerHTML = CLI.oldInput + CLI.cursor;
 
 }
@@ -51,7 +51,12 @@ document.onkeypress = function (evt) {
 
         CLI.STDIn = "";
         CLI.STDOut = "";
-        CLI.currentInput += "<br /> \\> ";
+        if(OS.FS.getPwd() == Directory.Files){
+          CLI.currentInput += "<br /> \/ \$ ";
+        }
+        else{
+          CLI.currentInput += "<br /> " + OS.FS.getPwdTopLevel() + "\/ \$ ";
+        }
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
         CLI.oldInput = CLI.oldInput + CLI.currentInput;

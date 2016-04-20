@@ -2,7 +2,7 @@ var pwd = function(counter){
     if(OS.FS.getPwd() == Directory.Files)
       OS.display("/");
     else
-      OS.display(OS.FS.getPwd().accessName());
+      OS.display("/" + OS.FS.getPwdText());
     this.state = "Stop";
     this.program_counter = 0;
 }
