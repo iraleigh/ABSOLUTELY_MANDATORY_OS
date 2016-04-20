@@ -18,18 +18,9 @@ var CLI = {
 
 var container;
 window.onload = function () {
-    Processes.generateListOfProcesses();
-    container = window.document.getElementById('container');
-
-    addDummyFiles();
-    //ABSOLUTELY MANDATORY OS -- AMOS
+    init_d();
     setInterval(cursor, 500);
-    CLI.commandHistory = new Array();
-    CLI.commandHistory.push("");
-    container.innerHTML = CLI.oldInput;
-    CLI.oldInput += "\n\n\\> ";
-    container.innerHTML = CLI.oldInput + CLI.cursor;
-
+    container = window.document.getElementById('container');
 }
 
 document.onkeypress = function (evt) {
