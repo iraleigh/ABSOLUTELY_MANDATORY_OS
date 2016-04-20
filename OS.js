@@ -151,8 +151,8 @@ var OS = {
     getPwd: function(){
       return OS.FS.pwd;
     },
-    setPwd: function(newPath){
-      OS.FS.pwd = newPath;
+    setPwd: function(szNewPath){
+      OS.FS.pwd = szNewPath;
       return;
     }
   },

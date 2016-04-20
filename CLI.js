@@ -23,7 +23,6 @@ window.onload = function () {
 
     addDummyFiles();
     OS.FS.setPwd(Directory.Files);
-    console.log(OS.FS.getPwd());
     //ABSOLUTELY MANDATORY OS -- AMOS
     setInterval(cursor, 500);
     CLI.commandHistory = new Array();

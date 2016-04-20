@@ -17,18 +17,16 @@ var cd = function(counter){
   else if (szArgs == ".."){
     //change to parent directory
     this.oCurrentDir = OS.FS.getPwd();
-    this.oCurrentDir = this.oCurrentDir.getParent();
-    console.log("..");
-    //console.log(oCurrentDir.accessName());
+    if(this.oCurrentDir != Directory.Files){
+      this.oCurrentDir = this.oCurrentDir.getParent();
+    }
   }
   else if (aryArgsCharArr[0] != "/" && aryArgsCharArr[0] != ".") {
     //get current directory to change to a nested directory
     this.oCurrentDir = OS.FS.getPwd();
-    console.log("1 " + this.oCurrentDir);
   }
 
   if(szArgs != "." && szArgs != ".."){
-
     for (var n = 0; n < aryParsedPath.length; n++){
       var szCurrentPathLevelName = aryParsedPath[n];
 
@@ -38,27 +36,30 @@ var cd = function(counter){
           //Matching directory found
           if (this.oCurrentDir[n].accessName() == szCurrentPathLevelName){
             this.oCurrentDir = this.oCurrentDir[n];
+            //matching directory found
           }
-          //Matching directory not found
-          else{
-            //OS.display("Directory does not exist");
+          else{if(n == (this.oCurrentDir.length - 1)){
+            OS.display("Directory does not exist");
           }
-
         }
       }
+    }
       else{
         //Change to a child of a non-root directory
-        console.log("2 " + this.oCurrentDir);
-        var szDirectorySize = this.oCurrentDir.content.length;
-        console.log("Directory size: " + szDirectorySize);
-        for (n = 0; n < szDirectorySize; n++){
+
+        //var szDirectorySize = this.oCurrentDir.content.length;
+
+        for (n = 0; n < this.oCurrentDir.content.length; n++){
           if (this.oCurrentDir.content[n].name == szCurrentPathLevelName){
             this.oCurrentDir = this.oCurrentDir.content[n]; //Matching directory found
+            console.log("Directory found");
           }
-
-          //No matching directory foound
           else{
-            //OS.display("Directory does not exist");
+            console.log(n);
+            console.log(this.oCurrentDir.content.length);
+            if(n == (this.oCurrentDir.content.length - 1)){
+              OS.display("Directory does not exist");
+            }
           }
         }
       }
