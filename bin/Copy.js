@@ -152,3 +152,4 @@ var cp = function(counter) {
 }
 
 Processes.listOfProcesses.push(new Process("cp", cp));
+HelpInfo.listOfHelp.push(new Manual("cp", "cp [file_name] [file_destination]", "Makes a copy a file with a different file name."));

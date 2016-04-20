@@ -63,3 +63,4 @@ var cat = function (counter) {
     }
 }
 Processes.listOfProcesses.push(new Process("cat", cat));
+HelpInfo.listOfHelp.push(new Manual("cat", "cat [file_name]", "Displays the contents of a file."));
