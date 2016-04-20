@@ -1,6 +1,6 @@
 var CLI = {
     currentInput: "",
-    oldInput: "<b>AMOS</b>\nFor help getting started, type 'help'",
+    oldInput: "",
     textHeight: 0,
     STDIn: "",
     STDOut: "",
