@@ -11,13 +11,23 @@ var addDummyFiles = function() {
 	Directory.Files.push(new File("num_list", "34\n34\n13\n48\n19\n51\n76\n43\n94\n52\n44\n45\n46\n61\n93\n84\n82\n70\n30\n91\n23\n8\n27\n51\n75\n39\n75\n99\n90\n89\n56\n96\n90\n80\n10\n80\n97\n92\n47\n6\n41\n62\n62\n91\n88\n27\n97\n58\n45\n86\n66\n7\n15\n13\n90\n3\n96\n32\n76\n9\n95\n36\n89\n82\n70\n77\n27\n43\n51\n37\n74\n56\n34\n74\n94\n23\n75\n16\n84\n49\n79\n64\n60\n11\n92\n17\n80\n79\n10\n44\n60\n12\n30\n58\n94\n6\n80\n36\n42\n20"));
 	Directory.Files.push(new Dir("bin",Directory.Files));
 	Directory.Files.push(new Dir("dummy_dir",Directory.Files));
-	var oDummyDir = undefined;
+	var oTargetDir = undefined;
 	for(var n = 0; n < Directory.Files.length; n++){
 		if(Directory.Files[n].name == "dummy_dir"){
-			oDummyDir = Directory.Files[n];
+			oTargetDir = Directory.Files[n];
 		}
 	}
-	oDummyDir.content.push(new File("testFile","This file has no content."));
+	oTargetDir.content.push(new File("testFile","This file has no content."));
+
+	for(var n = 0; n < Directory.Files.length; n++){
+		if(Directory.Files[n].name == "bin"){
+			oTargetDir = Directory.Files[n];
+		}
+	}
+	for(var n = 0; n < Processes.listOfProcesses.length; n++){
+		szFileName = Processes.listOfProcesses[n].name;
+		oTargetDir.content.push(new File(szFileName,"This is an executable."));
+	}
 }
 
 var Lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur posuere sapien id aliquet posuere. Maecenas tincidunt, massa ac tempor consectetur, urna felis dignissim odio, eu imperdiet metus arcu ac eros. Nullam et tortor ligula. Aliquam erat volutpat. Pellentesque iaculis elit a laoreet suscipit. Curabitur diam mi, maximus non dolor et, pharetra dapibus ligula. Nam vel tortor sollicitudin, posuere justo sed, tempor arcu. Cras suscipit magna lacus, et fringilla lacus ultrices ut. Praesent eget ante a ex accumsan consectetur. Quisque non orci fringilla odio tincidunt luctus. Pellentesque vehicula tempor libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam volutpat tempor erat vitae pellentesque.\n"
