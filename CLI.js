@@ -2,7 +2,6 @@ var CLI = {
     currentInput: "",
     oldInput: "",
     textHeight: 0,
-    shiftDown: false,
     STDIn: "",
     STDOut: "",
     cursor: "_",
@@ -27,7 +26,7 @@ window.onload = function () {
 document.onkeypress = function (evt) {
     evt = evt || window.event;
     if (evt.charCode == 13) { // On enter
-        if (CLI.shiftDown) { //If shift if held, insert a newline instead
+        if (evt.shiftKey) { //If shift if held, insert a newline instead
             CLI.currentInput += "\n";
             container.innerHTML = CLI.oldInput + CLI.currentInput;
             window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
@@ -86,14 +85,6 @@ document.onkeydown = function (evt) {
             window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
         }
     }
-    if (evt.keyCode == 16) //Shift was released
-        CLI.shiftDown = true;
-}
-
-document.onkeyup = function (evt) {
-    evt = evt || window.event;
-    if (evt.keyCode == 16) //Shift was released
-        CLI.shiftDown = false;
 }
 
 function doCommand(input) {  //Commands are sent here to be parsed
