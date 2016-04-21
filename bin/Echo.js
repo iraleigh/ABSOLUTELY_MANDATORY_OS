@@ -15,4 +15,4 @@ var echo = function (counter) {
     }
 }
 Processes.listOfProcesses.push(new Process("echo", echo));
-HelpInfo.listOfHelp.push(new Manual("echo", "echo [word_1], ... ,[word_n]", "Outputs a sentence that you type. Good when piped with save command.\nExample: 'echo Hello World! | save Hi'\nPoor man's nano."));
+HelpInfo.listOfHelp.push(new Manual("echo", "echo [word_1], ... ,[word_n]", "Outputs a message that you type. Hold shift when pressing enter for a new line. Good when piped with save command.\nExample: 'echo Hello World! | save Hi'\nPoor man's nano."));
