@@ -187,6 +187,82 @@ var OS = {
         this.szFullyQualifiedPath += "/";
       }
       return this.szFullyQualifiedPath;
+    },
+    getDirectory: function(szPath){
+      //Takes a string containing a path and returns a pointer to the referenced
+      //directory.
+      this.oCurrentDir = undefined;
+
+      //Determine if the path is absolute or relative
+      this.aryPathChars = szPath.split();
+      this.aryParsedPath = szPath.split("/");
+
+      if(this.aryPathChars[0] == "/"){
+        //absolute path
+        this.oCurrentDir = Directory.Files;
+
+        if(this.aryParsedPath.length == 1){
+          //Target directory is a child of the root directory
+          for(var n = 0; n < this.oCurrentDir.length; n++){
+            if(this.oCurrentDir[n].accessName() == this.aryParsedPath[0]){
+              this.oCurrentDir = this.oCurrentDir[n];
+            }
+          }
+        }
+        else{
+          //Target directory is a child of a subdirectory
+          //get first subdirectory
+          for(var n = 0; n < this.oCurrentDir.length; n++){
+            if(this.oCurrentDir[n].accessName() == this.aryParsedPath[0]){
+              this.oCurrentDir = this.oCurrentDir[n];
+            }
+          }
+          //traverse the remaining subdirectories
+          for(var n = 1; n < this.aryParsedPath.length; n++){
+            for(var i = 0; i < this.oCurrentDir.content.length; i++){
+              if(this.aryParsedPath[n] == this.oCurrentDir[n].name){
+                this.oCurrentDir = this.oCurrentDir[n];
+              }
+            }
+          }
+        }
+
+      }
+      else{
+
+        //relative path
+        this.oCurrentDir = getPwd();
+
+        //pwd == Directory.Files
+        if(this.oCurrentDir == Directory.Files){
+          for(var n = 0; n < this.oCurrentDir.length; n++){
+            if(this.oCurrentDir[n].accessName() == this.aryParsedPath[0]){
+              this.oCurrentDir = this.oCurrentDir[n];
+            }
+          }
+          //traverse the remaining subdirectories
+          for(var n = 1; n < this.aryParsedPath.length; n++){
+            for(var i = 0; i < this.oCurrentDir.content.length; i++){
+              if(this.aryParsedPath[n] == this.oCurrentDir[n].name){
+                this.oCurrentDir = this.oCurrentDir[n];
+              }
+            }
+          }
+        }
+        else{
+
+          //pwd != Directory.Files
+          for(var n = 0; n < this.aryParsedPath.length; n++){
+            for(var i = 0; i < this.oCurrentDir.content.length; i++){
+              if(this.aryParsedPath[n] == this.oCurrentDir[n].name){
+                this.oCurrentDir = this.oCurrentDir[n];
+              }
+            }
+          }
+        }
+      }
+
+      return this.oCurrentDir;
     }
   },
   display: function (output) {

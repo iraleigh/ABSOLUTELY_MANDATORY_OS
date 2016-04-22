@@ -39,13 +39,47 @@ Processes.listOfDevices['file_io'] = {
         process.state = "Ready";
         process.var.returnedFile = undefined;
         process.program_counter++;
-        for(var file of Directory.Files){
-          if(file.isName(szFileName)) {
-            process.var.returnedFile = file;
-            console.log(file);
-            return file;
-          } 
+
+        //get directory
+        var aryParsedPath = szFileName.split("/");
+        var nPathDepth = aryParsedPath.length;
+        var szPathString = "";
+        var oTargetDir = undefined;
+        console.log(szFileName);
+
+        if(aryParsedPath.length > 1){
+          for(var n = 0; n < aryParsedPath.length -1; n++){
+            szPathString += aryParsedPath[n] + "/";
+            console.log("Path length > 1");
+          }
+          oTargetDir = OS.FS.getDirectory(szPathString);
         }
+        else{
+          console.log("Path length = 1");
+          oTargetDir = OS.FS.getPwd();
+        }
+
+        if(oTargetDir == Directory.Files){
+          console.log("File is located at root directory.");
+          for(var n = 0; n < Directory.Files.length; n++){
+            if(Directory.Files[n].isName(aryParsedPath[nPathDepth -1 ])) {
+              process.var.returnedFile = Directory.Files[n];
+              console.log("Found the file.");
+              return Directory.Files[n];
+            }
+          }
+        }
+        else{
+          console.log("File is located in a subdirectory");
+          for(var n = 0; n < Directory.Files.length; n++){
+            if(oCurrentDir.content[n].isName(aryParsedPath[nPathDepth - 1])) {
+              process.var.returnedFile = oCurrentDir.content[n];
+              console.log(oCurrentDir.content[n]);
+              return oCurrentDir.content[n];
+            }
+          }
+        }
+
 
       },
       close: function(szNameOFCallingFunction,szFileName){

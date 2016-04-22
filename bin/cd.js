@@ -48,8 +48,6 @@ var cd = function(counter){
       else{
         //Change to a child of a non-root directory
 
-        //var szDirectorySize = this.oCurrentDir.content.length;
-
         for (n = 0; n < this.oCurrentDir.content.length; n++){
           if (this.oCurrentDir.content[n].name == szCurrentPathLevelName){
             this.oCurrentDir = this.oCurrentDir.content[n]; //Matching directory found

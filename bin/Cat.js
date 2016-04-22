@@ -1,36 +1,17 @@
 var cat = function (counter) {
     switch (counter) {
-        case 0:
-            var args = this.args;
-            this.var.returnedFile = null;
+      case 0:
+          var args = this.args;
+          this.var.returnedFile = null;
+          OS.FS.open(args[0]);
+          if (args[0] == null) {
+              OS.display("No file specified");
+              this.state = "Stop";
+              this.program_counter = 0;
+              break;
+          }
+          break;
 
-            //parse file path
-            szPathString = this.args[0].trim();
-            aryParsedPath = szPathString.split("/");
-            process.var.returnedFile = undefined;
-            var oTargetFile;
-
-            if(aryParsedPath.length > 1){
-              for (var n = 0; n < aryParsedPath.length; n++ ){
-                oTargetFile = aryParsedPath[n];
-                for(var dir of Directory.Files){
-                  if(dir.isName(oTargetFile)) {
-                    oTargetFile = dir;
-                    console.log(dir);
-                    //return file;
-                  }
-                }
-              }
-            }
-
-            OS.FS.open(oTargetFile);
-            if (args[0] == null) {
-                OS.display("No file specified");
-                this.state = "Stop";
-                this.program_counter = 0;
-                break;
-            }
-            break;
 
         case 1:
             this.var.filePointer = this.var.returnedFile;
