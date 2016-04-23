@@ -1,11 +1,9 @@
 Processes.listOfDevices['keyboard'] = {
-    name: "Keyboard",
-    state: "Ready",
     main: function (input) {
         var nameOfProcess;
         var process;
         pipes = input.split('|');
-        for (pipe_iterator = 0; pipe_iterator < pipes.length; pipe_iterator++) {
+        for (var pipe_iterator = 0; pipe_iterator < pipes.length; pipe_iterator++) {
             CLI.STDIn = CLI.STDOut;
             CLI.STDOut = "";
             input = pipes[pipe_iterator].trim();

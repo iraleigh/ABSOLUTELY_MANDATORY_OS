@@ -1,6 +1,6 @@
 var CLI = {
     currentInput: "",
-    oldInput: "<b>AMOS</b>\nFor help getting started, type 'help'",
+    oldInput: "",
     textHeight: 0,
     STDIn: "",
     STDOut: "",
@@ -18,23 +18,20 @@ var CLI = {
 
 var container;
 window.onload = function () {
-    Processes.generateListOfProcesses();
-    container = window.document.getElementById('container');
-
-    addDummyFiles();
-    //ABSOLUTELY MANDATORY OS -- AMOS
+    init_d();
     setInterval(cursor, 500);
-    CLI.commandHistory = new Array();
-    CLI.commandHistory.push("");
-    container.innerHTML = CLI.oldInput;
-    CLI.oldInput += "\n\n\\> ";
-    container.innerHTML = CLI.oldInput + CLI.cursor;
-
+    container = window.document.getElementById('container');
 }
 
 document.onkeypress = function (evt) {
     evt = evt || window.event;
     if (evt.charCode == 13) { // On enter
+        if (evt.shiftKey) { //If shift if held, insert a newline instead
+            CLI.currentInput += "\n";
+            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+            window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
+            return;
+        }
         //Grab the function here
         CLI.commandPosition = 0;
         CLI.commandHistory.splice(1, 0, CLI.currentInput);
@@ -55,7 +52,7 @@ document.onkeypress = function (evt) {
         CLI.currentInput = "";
 
     } else if (evt.charCode != 60 && evt.charCode != 62) { // A character is typed (Not '<' or '>' for HTML reasons)
-        CLI.currentInput += String.fromCharCode(evt.which);
+        CLI.currentInput += String.fromCharCode(evt.charCode);
         container.innerHTML = CLI.oldInput + CLI.currentInput;
     }
     window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
@@ -69,7 +66,8 @@ document.onkeydown = function (evt) {
         evt.preventDefault(); //Don't go the previous webpage!!
         if (CLI.currentInput.length > 0) { //To be safe
             CLI.currentInput = CLI.currentInput.slice(0, CLI.currentInput.length - 1); //Remove a character
-            container.innerHTML = CLI.oldInput + CLI.currentInput;
+            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+
         }
     } else if (evt.keyCode == 38) { //Up key history
         evt.preventDefault();
@@ -86,6 +84,7 @@ document.onkeydown = function (evt) {
             container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
         }
     }
+    window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
 }
 
 function doCommand(input) {  //Commands are sent here to be parsed
@@ -93,9 +92,9 @@ function doCommand(input) {  //Commands are sent here to be parsed
 }
 
 function cursor() {
-    if (CLI.cursor == "")
+    if (CLI.cursor == " ")
         CLI.cursor = "_";
     else
-        CLI.cursor = "";
+        CLI.cursor = " ";
     container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
 }

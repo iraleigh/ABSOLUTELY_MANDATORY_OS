@@ -1,6 +1,4 @@
 Processes.listOfDevices['file_io'] = {
-      name: "File IO",
-      state: "Ready",
       main: function(){
         console.log(OS.ProcessQueue.queue.length);
         if (OS.ProcessQueue.queue.length > 0){
