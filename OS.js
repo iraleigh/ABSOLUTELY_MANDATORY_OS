@@ -231,19 +231,24 @@ var OS = {
       else{
 
         //relative path
-        this.oCurrentDir = getPwd();
+        this.oCurrentDir = OS.FS.getPwd();
 
         //pwd == Directory.Files
         if(this.oCurrentDir == Directory.Files){
+          console.log("1st ");
+          console.log(this.oCurrentDir);
           for(var n = 0; n < this.oCurrentDir.length; n++){
             if(this.oCurrentDir[n].accessName() == this.aryParsedPath[0]){
               this.oCurrentDir = this.oCurrentDir[n];
             }
           }
+          console.log("2nd ");
+          console.log(this.oCurrentDir);
           //traverse the remaining subdirectories
           for(var n = 1; n < this.aryParsedPath.length; n++){
             for(var i = 0; i < this.oCurrentDir.content.length; i++){
-              if(this.aryParsedPath[n] == this.oCurrentDir[n].name){
+              console.log("oCurrentDir[n] " + this.oCurrentDir.content[n]);
+              if(this.aryParsedPath[n] == this.oCurrentDir.name){
                 this.oCurrentDir = this.oCurrentDir[n];
               }
             }

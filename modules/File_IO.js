@@ -46,6 +46,7 @@ Processes.listOfDevices['file_io'] = {
         var szPathString = "";
         var oTargetDir = undefined;
         console.log(szFileName);
+          console.log(aryParsedPath);
 
         if(aryParsedPath.length > 1){
           for(var n = 0; n < aryParsedPath.length -1; n++){
@@ -53,6 +54,7 @@ Processes.listOfDevices['file_io'] = {
             console.log("Path length > 1");
           }
           oTargetDir = OS.FS.getDirectory(szPathString);
+            console.log("Path length > 2");
         }
         else{
           console.log("Path length = 1");
@@ -72,10 +74,10 @@ Processes.listOfDevices['file_io'] = {
         else{
           console.log("File is located in a subdirectory");
           for(var n = 0; n < Directory.Files.length; n++){
-            if(oCurrentDir.content[n].isName(aryParsedPath[nPathDepth - 1])) {
-              process.var.returnedFile = oCurrentDir.content[n];
-              console.log(oCurrentDir.content[n]);
-              return oCurrentDir.content[n];
+            if(oTargetDir.content[n].isName(aryParsedPath[nPathDepth - 1])) {
+              process.var.returnedFile = oTargetDir.content[n];
+              console.log(oTargetDir.content[n]);
+              return oTargetDir.content[n];
             }
           }
         }
