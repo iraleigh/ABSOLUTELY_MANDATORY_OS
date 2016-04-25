@@ -21,8 +21,8 @@ window.onload = function () {
     Processes.generateListOfProcesses();
     container = window.document.getElementById('container');
 
-    addDummyFiles();
     OS.FS.setPwd(Directory.Files);
+    addDummyFiles();
     //ABSOLUTELY MANDATORY OS -- AMOS
     setInterval(cursor, 500);
     CLI.commandHistory = new Array();

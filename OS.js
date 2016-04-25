@@ -151,8 +151,9 @@ var OS = {
     getPwd: function(){
       return OS.FS.pwd;
     },
-    setPwd: function(szNewPath){
-      OS.FS.pwd = szNewPath;
+    setPwd: function(oNewPath){
+      OS.FS.pwd = oNewPath;
+      console.log("Current working directory changed to: " + oNewPath);
       return;
     },
     getPwdTopLevel: function(){
@@ -162,11 +163,19 @@ var OS = {
         return "/";
       }
       else{
-        return this.oCurrentDir.name;
+        console.log(this.oCurrentDir);
+        if(this.oCurrentDir != Directory.Files && this.oCurrentDir != undefined){
+          return this.oCurrentDir.name;
+        }
+        else{
+          return "/";
+        }
+
       }
     },
     getPwdText: function(){
       this.oCurrentDir = OS.FS.getPwd();
+      console.log(this.oCurrentDir);
       this.aryPathConstructor = new Array();
       this.szFullyQualifiedPath = "";
       if(this.oCurrentDir == Directory.Files){
@@ -174,8 +183,9 @@ var OS = {
       }
       else{
         while(this.oCurrentDir != Directory.Files){
+          console.log(this.oCurrentDir);
           this.aryPathConstructor.push(this.oCurrentDir.name);
-          this.oCurrentDir = this.oCurrentDir.parent;
+          this.oCurrentDir = this.oCurrentDir.parentDir;
         }
       }
 
@@ -247,7 +257,7 @@ var OS = {
           //traverse the remaining subdirectories
           for(var n = 1; n < this.aryParsedPath.length; n++){
             for(var i = 0; i < this.oCurrentDir.content.length; i++){
-              console.log("oCurrentDir[n] " + this.oCurrentDir.content[n]);
+              console.log(this.oCurrentDir[n] + this.oCurrentDir.content[n]);
               if(this.aryParsedPath[n] == this.oCurrentDir.name){
                 this.oCurrentDir = this.oCurrentDir[n];
               }

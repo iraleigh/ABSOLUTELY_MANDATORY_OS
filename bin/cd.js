@@ -18,12 +18,15 @@ var cd = function(counter){
     //change to parent directory
     this.oCurrentDir = OS.FS.getPwd();
     if(this.oCurrentDir != Directory.Files){
-      this.oCurrentDir = this.oCurrentDir.getParent();
+      console.log("setting directory to ..");
+      this.oCurrentDir = this.oCurrentDir.parentDir;
+      console.log(".. is " + this.oCurrentDir);
     }
   }
   else if (aryArgsCharArr[0] != "/" && aryArgsCharArr[0] != ".") {
     //get current directory to change to a nested directory
     this.oCurrentDir = OS.FS.getPwd();
+    console.log("Current directory: " + this.oCurrentDir);
   }
 
   if(szArgs != "." && szArgs != ".."){
@@ -40,11 +43,11 @@ var cd = function(counter){
           }
           else{
             if(n == (this.oCurrentDir.length - 1) && szArgs != "/"){
-            OS.display("Directory does not exist");
+              OS.display("Directory does not exist");
+            }
           }
         }
       }
-    }
       else{
         //Change to a child of a non-root directory
 

@@ -1,5 +1,5 @@
 function Dir(szName,oParentDir){
-    this.name = szName;
+    this.name = " ";
     this.content = new Array
     this.fileType = "Directory";
     this.parentDir = "";
@@ -9,6 +9,7 @@ function Dir(szName,oParentDir){
     //Added date object to file definition.
     this.date = new Date(); //new Date(); creates a date object with the current date/time.
     this.parentDir = oParentDir;
+    this.name = szName;
     this.setDate = function (ObjDate){
         this.date = ObjDate;
     }
@@ -21,6 +22,10 @@ function Dir(szName,oParentDir){
     }
     this.accessName = function(){
       return this.name;
+    }
+    this.setName = function(szName){
+      this.name = szName;
+      return;
     }
     this.accessContent = function(){
       return this.content;
@@ -35,7 +40,7 @@ function Dir(szName,oParentDir){
       return this.content;
     }
     this.getParent = function(){
-      return this.parent;
+      return this.parentDir;
     }
     this.setParent = function(oParent){
       this.parentDir = oParent;
