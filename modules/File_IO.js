@@ -19,6 +19,7 @@ Processes.listOfDevices['file_io'] = {
         Directory.Files.push(new File(szFileName,szContent));
       },
       delete: function(szNameOFCallingFunction,szFileName){
+        var szSetPwd = false;
         console.log("Device deleting for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
         //container.innerHTML += "</br>Deleting "+szFileName+" for "+process.name;
@@ -27,9 +28,16 @@ Processes.listOfDevices['file_io'] = {
 
         process.program_counter++;
 
+        if(OS.FS.getPwd() == Directory.Files){
+          szSetPwd = true;
+        }
+
         Directory.Files = Directory.Files.filter(function(file, index ,directory){
           return !file.isName(szFileName);
         });
+        if(szSetPwd == true){
+          OS.FS.setPwd(Directory.Files);
+        }
       },
       open: function(szNameOFCallingFunction,szFileName){
         console.log("Device opening for " + szNameOFCallingFunction);
