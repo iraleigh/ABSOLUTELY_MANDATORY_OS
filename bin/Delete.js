@@ -2,53 +2,45 @@ var rm = function(counter) {
 	switch(counter){
 		case 0:
 		var args = this.args[0];
-		var isDirectory = false;
-		var forceRemoval = false;
-		var nameOfResource = "";
+		this.isDirectory = false;
+		this.forceRemoval = false;
+		this.nameOfResource = "";
 
-		var aryArgChars = args.split();
-		console.log(aryArgChars[0]);
+		this.aryArgChars = args.split();
+		console.log(this.aryArgChars[0]);
 
-		if(aryArgChars[0] == "-"){
-			console.log("reading arguments");
-			args.forEach(function(arg, index, args_arr){
-				switch (arg){
-					case "-r":
-					isDirectory = true;
-					break;
-					case "-f":
-					forceRemoval = true;
-					break;
-					default:
-					nameOfResource = arg;
-				}
-			});
-		}
-
-		if(isDirectory){
-			console.log("Deleting a directory.");
-			this.oWorkingDir = OS.FS.getDirectory(this.args[this.args.length - 1]);
-			this.parentDir = this.oWorkingDir.parentDir;
-			if(this.parentDir != Directory.Files && this.oWorkingDir.parentDir.fileType == "Directory"){
-				for (var n = 0; n < this.parentDir.length; n++){
-					if(this.parentDir.content[n].name == this.oWorkingDir){
-						this.parentDir.content.splice(n,1);
-					}
-					else if (this.oWorkingDir.parentDir == Directory.Files){
-						for (var n = 0; n < Directory.Files.length; n++){
-							if(Directory.Files[n].name == this.oWorkingDir){
-								Directory.Files.splice(n,1);
-							}
-						}
-					}
-					else{
-						OS.display("Cannot delete the root directory.");
-					}
-				}
+		//-r
+		for (var n = 0; n < this.args.length; n++){
+			if(this.args[n] == "-r"){
+				this.isDirectory = true;
 			}
 		}
 
-		OS.FS.delete(nameOfResource);
+		//-f
+		for (var n = 0; n < this.args.length; n++){
+			if(this.args[n] == "-f"){
+				this.forceRemoval = true;
+			}
+		}
+
+		this.nameOfResource = this.args[this.args.length - 1];
+		this.oTargetFile = OS.FS.getDirectory(this.nameOfResource);
+		if(this.oTargetFile.fileType == "Directory"){
+			if(this.isDirectory == true){
+				OS.FS.delete(this.nameOfResource);
+			}
+			else{
+				OS.display("Error: the target is a directory.  Use -r option to delete.");
+			}
+		}
+		else if (this.oTargetFile.fileType == "File"){
+			OS.FS.delete(this.nameOfResource);
+		}
+		else{
+			OS.display("Unable to determine file type.");
+		}
+
+
 		break;
 		default:
 		this.state = "Stop";

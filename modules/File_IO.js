@@ -20,6 +20,76 @@ Processes.listOfDevices['file_io'] = {
       },
       delete: function(szNameOFCallingFunction,szFileName){
         var szSetPwd = false;
+        var aryParsedPath = szFileName.split("/");
+        var aryPathChars = szFileName.split();
+        var oCurrentDir = undefined;
+
+        var oTargetFile = OS.FS.getDirectory(szFileName);
+        console.log("Target file: " + szFileName);
+
+        if(oTargetFile.fileType == "Directory"){
+          console.log("Target is a directory.");
+          var oParentDir = oTargetFile.parentDir;
+          if(oParentDir != Directory.Files){
+            var nTargetIndex = undefined;
+            for (var n = 0; n < oParentDir.content.length; n++){
+              if(oParentDir.content[n].name == aryParsedPath[aryParsedPath.length -1]){
+                nTargetIndex = n;
+                console.log("Target directory is at index " + n);
+              }
+            }
+            oParentDir.content.splice(nTargetIndex,1); //delete target
+          }
+          else{
+            var nTargetIndex = undefined;
+            for (var n = 0; n < Directory.Files.length; n++){
+              if(Directory.Files[n].name == aryParsedPath[aryParsedPath.length -1]){
+                nTargetIndex = n;
+                console.log("Target directory is at index " + n);
+              }
+            }
+            Directory.Files.splice(nTargetIndex, 1);
+            console.log("Deleting directory.");
+          }
+        }
+        else if (oTargetFile.fileType == "File"){
+          console.log("Target is a file.");
+          //Target is a file, not a directory
+          var szParentPath = "";
+          if(aryPathChars[0] == "/"){
+            szParentPath += "";
+          }
+          for(var n = 0; n < aryParsedPath.length -1; n++){
+            szParentPath += aryParsedPath[n] + "/";
+          }
+          var oParentDir = OS.FS.getDirectory(szParentPath);
+
+          if(oParentDir != Directory.Files){
+            var nTargetIndex = undefined;
+            for (var n = 0; n < oParentDir.content.length; n++){
+              if(oParentDir.content[n].name == aryParsedPath[aryParsedPath.length -1]){
+                nTargetIndex = n;
+                console.log("Target file is at index " + n);
+              }
+            }
+            oParentDir.content.splice(nTargetIndex,1);
+          }
+          else{
+            var nTargetIndex = undefined;
+            for (var n = 0; n < Directory.Files.length; n++){
+              if(Directory.Files[n].name == aryParsedPath[aryParsedPath.length -1]){
+                nTargetIndex = n;
+                console.log("Target file is at index " + n);
+              }
+            }
+            Directory.Files.splice(nTargetIndex,1);
+            console.log("Deleting target file.");
+          }
+
+        }
+        else{
+          console.log("Unable to read file type.");
+        }
         console.log("Device deleting for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
         //container.innerHTML += "</br>Deleting "+szFileName+" for "+process.name;

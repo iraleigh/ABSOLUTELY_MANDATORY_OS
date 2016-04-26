@@ -242,6 +242,7 @@ var OS = {
 
         //relative path
         this.oCurrentDir = OS.FS.getPwd();
+        console.log("Current directory: " + this.oCurrentDir);
 
         //pwd == Directory.Files
         if(this.oCurrentDir == Directory.Files){
@@ -257,9 +258,9 @@ var OS = {
           //traverse the remaining subdirectories
           for(var n = 1; n < this.aryParsedPath.length; n++){
             for(var i = 0; i < this.oCurrentDir.content.length; i++){
-              console.log(this.oCurrentDir[n] + this.oCurrentDir.content[n]);
-              if(this.aryParsedPath[n] == this.oCurrentDir.name){
-                this.oCurrentDir = this.oCurrentDir[n];
+              //console.log(this.oCurrentDir[i] + this.oCurrentDir[i].content);
+              if(this.aryParsedPath[n] == this.oCurrentDir.content[i].name){
+                this.oCurrentDir = this.oCurrentDir.content[i];
               }
             }
           }
@@ -269,8 +270,8 @@ var OS = {
           //pwd != Directory.Files
           for(var n = 0; n < this.aryParsedPath.length; n++){
             for(var i = 0; i < this.oCurrentDir.content.length; i++){
-              if(this.aryParsedPath[n] == this.oCurrentDir[n].name){
-                this.oCurrentDir = this.oCurrentDir[n];
+              if(this.aryParsedPath[n] == this.oCurrentDir.content[i].name){
+                this.oCurrentDir = this.oCurrentDir.content[i];
               }
             }
           }
