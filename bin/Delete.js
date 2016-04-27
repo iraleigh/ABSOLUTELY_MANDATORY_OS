@@ -50,4 +50,6 @@ var rm = function(counter) {
 		console.log(Directory.Files);
 	}
 }
-Processes.listOfProcesses.push(new Process("rm",rm));
+
+Processes.listOfProcesses.push(new Process("rm", rm));
+HelpInfo.listOfHelp.push(new Manual("rm", "rm [file_name]", "Deletes a given file."));
