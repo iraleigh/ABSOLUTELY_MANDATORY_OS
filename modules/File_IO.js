@@ -1,5 +1,6 @@
 var CAPACITY = 100000000;
 
+
 Processes.listOfDevices['file_io'] = {
       main: function(){
         console.log(OS.ProcessQueue.queue.length);
@@ -17,9 +18,8 @@ Processes.listOfDevices['file_io'] = {
         process.program_counter++;
 
         if (Processes.listOfDevices['file_io'].capacityReached()) {
-          process.err = {};
-          process.err.file_io = true;
-          process.err.message = "Hard Drive capacity reached";
+          process.state = "Stop";
+          OS.display("Hard Drive Capacity Reached! Process: " + process.name + " terminated.");
         } else {
           Directory.Files.push(new File(szFileName,szContent));
         }
@@ -266,8 +266,6 @@ Processes.listOfDevices['file_io'] = {
 
         var currentSize = Directory.Files.reduce(flatten_callback, Directory.Files[0].accessLength());
 
-
-
         return currentSize >= CAPACITY;
       }
 
@@ -275,8 +273,8 @@ Processes.listOfDevices['file_io'] = {
 
 
 var flatten_callback = function (previous, current, index, array){
-  if (current instanceof Array) {
-    return current.reduce(flatten_callback, previous);
+  if (current instanceof Dir) {
+    return current.content.reduce(flatten_callback, previous);
   } else {
     return previous + current.accessLength();
   }
