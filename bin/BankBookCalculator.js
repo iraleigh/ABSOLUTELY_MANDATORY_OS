@@ -58,7 +58,7 @@ var bankBookCalculator = function(counter){
         case 1:
 
             console.log(this.var.szFileName);
-            OS.FS.open(this.var.szFileName);
+            this.var.returnedFile = OS.FS.open(this.var.szFileName);
 
             break;
         case 2:
@@ -66,16 +66,16 @@ var bankBookCalculator = function(counter){
                 this.var.returnedFile;
 
             //length of CSV file
-            OS.FS.length(this.var.oBankBookFile);
+            this.var.lenght = OS.FS.length(this.var.oBankBookFile);
             break;
         case 3:
             this.var.szContent = "";
 
             //read in the CSV file and assign it to contents
-            OS.FS.position(this.var.oBankBookFile);
+            this.var.position = OS.FS.position(this.var.oBankBookFile);
             break;
         case 4:
-            OS.FS.read(this.var.oBankBookFile);
+            this.var.szContent += OS.FS.read(this.var.oBankBookFile);
             break;
         case 5:
             this.var.szContent += this.var.returnedFromRead;

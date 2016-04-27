@@ -11,3 +11,4 @@ var exit = function (counter) {
     }
 }
 Processes.listOfProcesses.push(new Process("exit", exit));
+HelpInfo.listOfHelp.push(new Manual("exit", "exit", "Exits out of AMOS. (Closes the browser window)"));
