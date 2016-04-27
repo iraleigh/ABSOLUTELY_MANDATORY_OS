@@ -1,3 +1,3 @@
 var Directory = {
-  Files: [] 
+  Files: [], 
 }

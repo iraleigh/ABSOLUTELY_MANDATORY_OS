@@ -1,12 +1,12 @@
 var rm = function(counter) {
 	switch(counter){
 		case 0:
-		var args = this.args[0];
+		var args = this.args;
 		this.isDirectory = false;
 		this.forceRemoval = false;
 		this.nameOfResource = "";
 
-		this.aryArgChars = args.split();
+		this.aryArgChars = args[0].split();
 		console.log(this.aryArgChars[0]);
 
 		//-r
@@ -30,6 +30,7 @@ var rm = function(counter) {
 				OS.FS.delete(this.nameOfResource);
 			}
 			else{
+				this.program_counter ++;
 				OS.display("Error: the target is a directory.  Use -r option to delete.");
 			}
 		}
@@ -37,6 +38,7 @@ var rm = function(counter) {
 			OS.FS.delete(this.nameOfResource);
 		}
 		else{
+			this.program_counter ++;
 			OS.display("Unable to determine file type.");
 		}
 

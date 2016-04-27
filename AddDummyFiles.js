@@ -1,5 +1,7 @@
 var addDummyFiles = function() {
-	Directory.Files.push(new File("a","This is the 'a' file.\nIt has a line break."));
+	Directory.Files.push(new File("."," "));
+	Directory.Files.push(new File(".."," "));
+	Directory.Files.push(new File("aa","This is the 'a' file.\nIt has a line break."));
 	Directory.Files.push(new File("b","b"));
 	Directory.Files.push(new File("c","c"));
 	Directory.Files.push(new File("d","d"));

@@ -1,6 +1,6 @@
 function Dir(szName,oParentDir){
     this.name = " ";
-    this.content = new Array
+    this.content = new Array;
     this.fileType = "Directory";
     this.parentDir = "";
     //this.position = 0;

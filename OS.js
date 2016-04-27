@@ -214,7 +214,7 @@ var OS = {
         if(this.aryParsedPath.length == 1){
           //Target directory is a child of the root directory
           for(var n = 0; n < this.oCurrentDir.length; n++){
-            if(this.oCurrentDir[n].accessName() == this.aryParsedPath[0]){
+            if(this.oCurrentDir[n].name == this.aryParsedPath[0]){
               this.oCurrentDir = this.oCurrentDir[n];
             }
           }
@@ -223,7 +223,7 @@ var OS = {
           //Target directory is a child of a subdirectory
           //get first subdirectory
           for(var n = 0; n < this.oCurrentDir.length; n++){
-            if(this.oCurrentDir[n].accessName() == this.aryParsedPath[0]){
+            if(this.oCurrentDir[n].name == this.aryParsedPath[0]){
               this.oCurrentDir = this.oCurrentDir[n];
             }
           }
@@ -249,8 +249,10 @@ var OS = {
           console.log("1st ");
           console.log(this.oCurrentDir);
           for(var n = 0; n < this.oCurrentDir.length; n++){
-            if(this.oCurrentDir[n].accessName() == this.aryParsedPath[0]){
+            console.log(this.oCurrentDir.length + " " + this.oCurrentDir[n]);
+            if(this.oCurrentDir[n].name == this.aryParsedPath[0]){
               this.oCurrentDir = this.oCurrentDir[n];
+              break;
             }
           }
           console.log("2nd ");
@@ -318,7 +320,6 @@ var OS = {
 
       /*
       var available;
-
       //I think we need to add something here
       if(arrayOfMutexes.indexOf(mutex) >= 0) //checks if its already locked, if so, it is not available
       //because it was not available, it is thrown to the Waiting array
@@ -332,7 +333,6 @@ var OS = {
     {
     available = true;
     arrayOfMutexes.push(mutex);
-
     mutex.setAvailable(false);
     console.log("locked " + mutex);
   }
@@ -372,9 +372,7 @@ while(!available)
 {
 //Wait for resource to become available.
 }
-
 arrayOfMutexes.push(mutex);
-
 mutex.setAvailable(false);
 */
 },
@@ -388,19 +386,14 @@ release: function(mutex) {
   arrayOfMutexes.pop();//basically saying it's not a locked object anymore
 }
 });
-
 mutex.setAvailable(true);
-
 console.log("unlocked" + mutex);
-
 var find = true;
 while(find == true){
 arrayOfWaiting.forEach(function (element, index, array){
 if(arrayOfMutexes[index].accessFileName() == mutex.accessFileName()){
 mutex.setAvailable(false);
-
 console.log("locked" + mutex);
-
 arrayOfWaiting.splice(index, 1);
 find = false;
 }
