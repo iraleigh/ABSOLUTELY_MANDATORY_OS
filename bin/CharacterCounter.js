@@ -46,19 +46,20 @@ var CharacterCounter = function (counter){
                 }
 
             case 7:
-                var string  =  this.var.szContent;
+                var string  =  String(this.var.szContent);
                 var getFrequency = function(string){
                     var frequency = {};
                     for (var i=0; i<string.length; i++){
-                        var character = string.charAt(i);
+                        var character = String(string).charAt(i);
                         if (frequency[character]){
                             frequency[character]++;
                         }
                         else{
                             frequency[character] = 1;
                         }
+                        result += String(frequency);
                     }
-                    result += frequency;
+
                 }
                 getFrequency(string);
                 OS.FS.create("charCount.csv", result);
@@ -124,16 +125,16 @@ var CharacterCounter = function (counter){
                 var string  =  this.var.szContent;
                 var getFrequency = function(string){
                     var frequency = {};
-                    for (var i=0; i<string.length; i++){
-                        var character = string.charAt(i);
-                        if (frequency[character]){
+                    for (var i=0; i<string.length; i++) {
+                        var character = String(string).charAt(i);
+                        if (frequency[character]) {
                             frequency[character]++;
                         }
-                        else{
+                        else {
                             frequency[character] = 1;
                         }
+                        result += String(frequency);
                     }
-                    result += frequency;
                 }
                 getFrequency(string);
                 OS.FS.create("charCount.csv", result);

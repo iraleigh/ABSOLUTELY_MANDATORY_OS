@@ -19,8 +19,20 @@ var CLI = {
 var container;
 window.onload = function () {
     init_d();
-    setInterval(cursor, 500);
+    Processes.generateListOfProcesses();
     container = window.document.getElementById('container');
+
+    OS.FS.setPwd(Directory.Files);
+    addDummyFiles();
+    //ABSOLUTELY MANDATORY OS -- AMOS
+    setInterval(cursor, 500);
+    CLI.commandHistory = new Array();
+    CLI.commandHistory.push("");
+    container.innerHTML = CLI.oldInput;
+    CLI.textHeight = document.getElementById('container').offsetHeight;
+    console.log(CLI.textHeight);
+    CLI.oldInput += "<br />\\> ";
+    container.innerHTML = CLI.oldInput + CLI.cursor;
 }
 
 document.onkeypress = function (evt) {
@@ -45,7 +57,12 @@ document.onkeypress = function (evt) {
 
         CLI.STDIn = "";
         CLI.STDOut = "";
-        CLI.currentInput += "\n\n\\> ";
+        if(OS.FS.getPwd() == Directory.Files){
+          CLI.currentInput += "<br />\\> ";
+        }
+        else{
+          CLI.currentInput += "<br />" + OS.FS.getPwdTopLevel() + "\\> ";
+        }
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
         CLI.oldInput = CLI.oldInput + CLI.currentInput;
