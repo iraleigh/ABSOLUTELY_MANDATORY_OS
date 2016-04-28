@@ -18,6 +18,7 @@ var SecurityUpdate = function(counter){
             );
             break;
         case 1:
+        
             this.var.oSecurityFile = OS.FS.open("securityFile.csv");
             break;
 
