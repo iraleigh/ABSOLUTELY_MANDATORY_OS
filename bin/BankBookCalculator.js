@@ -10,7 +10,7 @@ var bankBookCalculator = function(counter){
             var container = window.document.getElementById('container');
 
             //Create data for file if it doesn't exist
-            var szFileName = "bankBook.csv";
+            var szFileName = "/bankBook.csv";
             this.var.szFileName = szFileName;
             var nBankBookSize = 25;
 
@@ -58,7 +58,7 @@ var bankBookCalculator = function(counter){
         case 1:
 
             console.log(this.var.szFileName);
-            this.var.returnedFile = OS.FS.open(this.var.szFileName);
+            OS.FS.open(this.var.szFileName);
 
             break;
         case 2:
