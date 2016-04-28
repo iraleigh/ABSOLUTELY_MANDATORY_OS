@@ -18,7 +18,9 @@ var SecurityUpdate = function(counter){
             );
             break;
         case 1:
+        
             OS.FS.open("/dummy_dir/securityFile.csv");
+
             break;
 
         case 2:

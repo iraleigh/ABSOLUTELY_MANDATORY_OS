@@ -1,3 +1,6 @@
+var CAPACITY = 100000000;
+
+
 Processes.listOfDevices['file_io'] = {
       main: function(){
         console.log(OS.ProcessQueue.queue.length);
@@ -13,17 +16,26 @@ Processes.listOfDevices['file_io'] = {
         process.state = "Ready";
 
         process.program_counter++;
-        var path = szFileName.split("/");
-        var file = path.pop();
-
-        var currentDirectory = OS.FS.getDirectory(path.join("/"));
-
-        if (currentDirectory == Directory.Files) {
-          Directory.Files.push(new File(file,szContent));
+        
+        if (Processes.listOfDevices['file_io'].capacityReached()) {
+         
+          process.state = "Stop";
+          OS.display("Hard Drive Capacity Reached! Process: " + process.name + " terminated.");
+        
         } else {
-          currentDirectory.content.push(new File(file,szContent));
-        }
 
+          var path = szFileName.split("/");
+          var file = path.pop();
+
+          var currentDirectory = OS.FS.getDirectory(path.join("/"));
+
+          if (currentDirectory == Directory.Files) {
+            Directory.Files.push(new File(file,szContent));
+          } else {
+            currentDirectory.content.push(new File(file,szContent));
+          }
+
+        }
         
       },
       delete: function(szNameOFCallingFunction,szFileName){
@@ -78,7 +90,6 @@ Processes.listOfDevices['file_io'] = {
         process.state = "Ready";
         process.var.returnedFile = undefined;
         process.program_counter++;
-
         //get directory
         var aryParsedPath = szFileName.split("/");
         var nPathDepth = aryParsedPath.length;
@@ -193,5 +204,23 @@ Processes.listOfDevices['file_io'] = {
         if(newPosition >= 0 && newPosition < length){
           oFilePointer.mutatePosition(newPosition);
         }
+      },
+
+      capacityReached: function() {
+
+        var currentSize = Directory.Files.reduce(flatten_callback, Directory.Files[0].accessLength());
+
+        return currentSize >= CAPACITY;
       }
+
     }
+
+
+var flatten_callback = function (previous, current, index, array){
+  if (current instanceof Dir) {
+    return current.content.reduce(flatten_callback, previous);
+  } else {
+    return previous + current.accessLength();
+  }
+}
+
