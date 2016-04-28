@@ -1,6 +1,6 @@
 var CLI = {
     currentInput: "",
-    oldInput: "AMOS",
+    oldInput: "",
     textHeight: 0,
     STDIn: "",
     STDOut: "",
@@ -18,11 +18,12 @@ var CLI = {
 
 var container;
 window.onload = function () {
+    init_d();
     Processes.generateListOfProcesses();
     container = window.document.getElementById('container');
 
+    OS.FS.setPwd(Directory.Files);
     addDummyFiles();
-    console.log(Directory.Files);
     //ABSOLUTELY MANDATORY OS -- AMOS
     setInterval(cursor, 500);
     CLI.commandHistory = new Array();
@@ -30,14 +31,19 @@ window.onload = function () {
     container.innerHTML = CLI.oldInput;
     CLI.textHeight = document.getElementById('container').offsetHeight;
     console.log(CLI.textHeight);
-    CLI.oldInput += "<br /> \\> ";
+    CLI.oldInput += "<br />\\> ";
     container.innerHTML = CLI.oldInput + CLI.cursor;
-
 }
 
 document.onkeypress = function (evt) {
     evt = evt || window.event;
     if (evt.charCode == 13) { // On enter
+        if (evt.shiftKey) { //If shift if held, insert a newline instead
+            CLI.currentInput += "\n";
+            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+            window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
+            return;
+        }
         //Grab the function here
         CLI.commandPosition = 0;
         CLI.commandHistory.splice(1, 0, CLI.currentInput);
@@ -47,18 +53,23 @@ document.onkeypress = function (evt) {
         start();
         //Prep terminal for new line
         if (cmdStatus == CLI.status.BAD_COMMAND)
-            CLI.currentInput += "<br/>Unknown command";
+            CLI.currentInput += "\nUnknown command";
 
         CLI.STDIn = "";
         CLI.STDOut = "";
-        CLI.currentInput += "<br /> \\> ";
+        if(OS.FS.getPwd() == Directory.Files){
+          CLI.currentInput += "<br />\\> ";
+        }
+        else{
+          CLI.currentInput += "<br />" + OS.FS.getPwdTopLevel() + "\\> ";
+        }
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
         CLI.oldInput = CLI.oldInput + CLI.currentInput;
         CLI.currentInput = "";
 
     } else if (evt.charCode != 60 && evt.charCode != 62) { // A character is typed (Not '<' or '>' for HTML reasons)
-        CLI.currentInput += String.fromCharCode(evt.which);
+        CLI.currentInput += String.fromCharCode(evt.charCode);
         container.innerHTML = CLI.oldInput + CLI.currentInput;
     }
     window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
@@ -72,7 +83,8 @@ document.onkeydown = function (evt) {
         evt.preventDefault(); //Don't go the previous webpage!!
         if (CLI.currentInput.length > 0) { //To be safe
             CLI.currentInput = CLI.currentInput.slice(0, CLI.currentInput.length - 1); //Remove a character
-            container.innerHTML = CLI.oldInput + CLI.currentInput;
+            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+
         }
     } else if (evt.keyCode == 38) { //Up key history
         evt.preventDefault();
@@ -89,6 +101,7 @@ document.onkeydown = function (evt) {
             container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
         }
     }
+    window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
 }
 
 function doCommand(input) {  //Commands are sent here to be parsed
@@ -96,9 +109,9 @@ function doCommand(input) {  //Commands are sent here to be parsed
 }
 
 function cursor() {
-    if (CLI.cursor == "")
+    if (CLI.cursor == " ")
         CLI.cursor = "_";
     else
-        CLI.cursor = "";
+        CLI.cursor = " ";
     container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
 }

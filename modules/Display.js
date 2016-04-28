@@ -1,12 +1,10 @@
 Processes.listOfDevices['display'] = {
-    name: "Display",
-    state: "Ready",
     main: function (output) {
         CLI.STDOut += '\n' + output;
     },
     clear: function () {
         CLI.oldInput = "";
-        CLI.currentInput = "AMOS";
+        CLI.currentInput = "<b>AMOS</b>";
     },
     outputToConsole: function () {
         CLI.currentInput += CLI.STDOut;

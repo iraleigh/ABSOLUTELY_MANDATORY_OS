@@ -25,3 +25,4 @@ var grep = function (counter) {
     }
 }
 Processes.listOfProcesses.push(new Process("grep", grep));
+HelpInfo.listOfHelp.push(new Manual("grep", "[previous_command] | grep [arg_1], ... ,[arg_n]", "Piping command: Searches the output of the previous command for the given search term(s), and outputs the line that term was contained in."));
