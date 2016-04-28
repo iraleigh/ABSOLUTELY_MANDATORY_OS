@@ -38,23 +38,6 @@ Processes.listOfDevices['file_io'] = {
         }
         
       },
-      copy: function (szNameOFCallingFunction, aryPath, szFileName) {
-        console.log("Device copying for " + szNameOFCallingFunction);
-        var process = Process.findProcessByName(szNameOFCallingFunction);
-        console.log(process.state);
-        process.state = "Ready";
-        process.program_counter++;
-        if (Processes.listOfDevices['file_io'].capacityReached()) {
-
-          process.state = "Stop";
-          OS.display("Hard Drive Capacity Reached! Process: " + process.name + " terminated.");
-
-        } else {
-
-          // destination and file name
-
-        }
-      },
       delete: function(szNameOFCallingFunction,szFileName){
         var szSetPwd = false;
         var aryParsedPath = szFileName.split("/");
