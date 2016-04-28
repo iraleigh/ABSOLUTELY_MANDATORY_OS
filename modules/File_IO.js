@@ -13,8 +13,18 @@ Processes.listOfDevices['file_io'] = {
         process.state = "Ready";
 
         process.program_counter++;
+        var path = szFileName.split("/");
+        var file = path.pop();
 
-        Directory.Files.push(new File(szFileName,szContent));
+        var currentDirectory = OS.FS.getDirectory(path.join("/"));
+
+        if (currentDirectory == Directory.Files) {
+          Directory.Files.push(new File(file,szContent));
+        } else {
+          currentDirectory.content.push(new File(file,szContent));
+        }
+
+        
       },
       delete: function(szNameOFCallingFunction,szFileName){
         var szSetPwd = false;
@@ -22,72 +32,28 @@ Processes.listOfDevices['file_io'] = {
         var aryPathChars = szFileName.split();
         var oCurrentDir = undefined;
 
-        var oTargetFile = OS.FS.getDirectory(szFileName);
-        console.log("Target file: " + szFileName);
 
-        if(oTargetFile.fileType == "Directory"){
-          console.log("Target is a directory.");
-          var oParentDir = oTargetFile.parentDir;
-          if(oParentDir != Directory.Files){
-            var nTargetIndex = undefined;
-            for (var n = 0; n < oParentDir.content.length; n++){
-              if(oParentDir.content[n].name == aryParsedPath[aryParsedPath.length -1]){
-                nTargetIndex = n;
-                console.log("Target directory is at index " + n);
-              }
-            }
-            oParentDir.content.splice(nTargetIndex,1); //delete target
-          }
-          else{
-            var nTargetIndex = undefined;
-            for (var n = 0; n < Directory.Files.length; n++){
-              if(Directory.Files[n].name == aryParsedPath[aryParsedPath.length -1]){
-                nTargetIndex = n;
-                console.log("Target directory is at index " + n);
-              }
-            }
-            Directory.Files.splice(nTargetIndex, 1);
-            console.log("Deleting directory.");
-          }
-        }
-        else if (oTargetFile.fileType == "File"){
-          console.log("Target is a file.");
-          //Target is a file, not a directory
-          var szParentPath = "";
-          if(aryPathChars[0] == "/"){
-            szParentPath += "";
-          }
-          for(var n = 0; n < aryParsedPath.length -1; n++){
-            szParentPath += aryParsedPath[n] + "/";
-          }
-          var oParentDir = OS.FS.getDirectory(szParentPath);
+        var path = szFileName.split("/");
+        var name = path.pop();
 
-          if(oParentDir != Directory.Files){
-            var nTargetIndex = undefined;
-            for (var n = 0; n < oParentDir.content.length; n++){
-              if(oParentDir.content[n].name == aryParsedPath[aryParsedPath.length -1]){
-                nTargetIndex = n;
-                console.log("Target file is at index " + n);
-              }
-            }
-            oParentDir.content.splice(nTargetIndex,1);
-          }
-          else{
-            var nTargetIndex = undefined;
-            for (var n = 0; n < Directory.Files.length; n++){
-              if(Directory.Files[n].name == aryParsedPath[aryParsedPath.length -1]){
-                nTargetIndex = n;
-                console.log("Target file is at index " + n);
-              }
-            }
-            Directory.Files.splice(nTargetIndex,1);
-            console.log("Deleting target file.");
-          }
 
+        var oTargetDirectory = OS.FS.getDirectory(path.join("/"));
+        
+        if (oTargetDirectory == Directory.Files) {
+          var index = oTargetDirectory.findIndex(function(resource){
+            return resource.name == name;
+          });
+
+          oTargetDirectory.splice(index,1);
+
+        } else {
+          var index = oTargetDirectory.content.findIndex(function(resource){
+            return resource.name == name;
+          });
+
+          oTargetDirectory.content.splice(index,1);
         }
-        else{
-          console.log("Unable to read file type.");
-        }
+
         console.log("Device deleting for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
         //container.innerHTML += "</br>Deleting "+szFileName+" for "+process.name;
@@ -100,9 +66,6 @@ Processes.listOfDevices['file_io'] = {
           szSetPwd = true;
         }
 
-        Directory.Files = Directory.Files.filter(function(file, index ,directory){
-          return !file.isName(szFileName);
-        });
         if(szSetPwd == true){
           OS.FS.setPwd(Directory.Files);
         }
@@ -121,43 +84,21 @@ Processes.listOfDevices['file_io'] = {
         var nPathDepth = aryParsedPath.length;
         var szPathString = "";
         var oTargetDir = undefined;
-        console.log(szFileName);
-          console.log(aryParsedPath);
+ 
 
-        if(aryParsedPath.length > 1){
-          for(var n = 0; n < aryParsedPath.length -1; n++){
-            szPathString += aryParsedPath[n] + "/";
-            console.log("Path length > 1");
-          }
-          oTargetDir = OS.FS.getDirectory(szPathString);
-            console.log("Path length > 2");
-        }
-        else{
-          console.log("Path length = 1");
-          oTargetDir = OS.FS.getPwd();
-        }
+        var name = aryParsedPath.pop();
+        var path = aryParsedPath.join("/");
+        oTargetDir = OS.FS.getDirectory(path);
 
-        if(oTargetDir == Directory.Files){
-          console.log("File is located at root directory.");
-          for(var n = 0; n < Directory.Files.length; n++){
-            if(Directory.Files[n].isName(aryParsedPath[nPathDepth -1 ])) {
-              process.var.returnedFile = Directory.Files[n];
-              console.log("Found the file.");
-              return Directory.Files[n];
-            }
-          }
+        if (oTargetDir == Directory.Files) {
+          process.var.returnedFile = oTargetDir.find(function(file){
+            return file.name == name 
+          });
+        } else {
+          process.var.returnedFile = oTargetDir.content.find(function(file){ 
+            return file.name == name;
+          });
         }
-        else{
-          console.log("File is located in a subdirectory");
-          for(var n = 0; n < Directory.Files.length; n++){
-            if(oTargetDir.content[n].isName(aryParsedPath[nPathDepth - 1])) {
-              process.var.returnedFile = oTargetDir.content[n];
-              console.log(oTargetDir.content[n]);
-              return oTargetDir.content[n];
-            }
-          }
-        }
-
 
       },
       close: function(szNameOFCallingFunction,szFileName){

@@ -199,88 +199,46 @@ var OS = {
       return this.szFullyQualifiedPath;
     },
     getDirectory: function(szPath){
-      //Takes a string containing a path and returns a pointer to the referenced
-      //directory.
-      this.oCurrentDir = undefined;
 
-      //Determine if the path is absolute or relative
-      this.aryPathChars = szPath.split();
-      this.aryParsedPath = szPath.split("/");
-
-      if(this.aryPathChars[0] == "/"){
-        //absolute path
-        this.oCurrentDir = Directory.Files;
-
-        if(this.aryParsedPath.length == 1){
-          //Target directory is a child of the root directory
-          for(var n = 0; n < this.oCurrentDir.length; n++){
-            if(this.oCurrentDir[n].name == this.aryParsedPath[0]){
-              this.oCurrentDir = this.oCurrentDir[n];
-            }
-          }
-        }
-        else{
-          //Target directory is a child of a subdirectory
-          //get first subdirectory
-          for(var n = 0; n < this.oCurrentDir.length; n++){
-            if(this.oCurrentDir[n].name == this.aryParsedPath[0]){
-              this.oCurrentDir = this.oCurrentDir[n];
-            }
-          }
-          //traverse the remaining subdirectories
-          for(var n = 1; n < this.aryParsedPath.length; n++){
-            for(var i = 0; i < this.oCurrentDir.content.length; i++){
-              if(this.aryParsedPath[n] == this.oCurrentDir[n].name){
-                this.oCurrentDir = this.oCurrentDir[n];
-              }
-            }
-          }
-        }
-
-      }
-      else{
-
-        //relative path
-        this.oCurrentDir = OS.FS.getPwd();
-        console.log("Current directory: " + this.oCurrentDir);
-
-        //pwd == Directory.Files
-        if(this.oCurrentDir == Directory.Files){
-          console.log("1st ");
-          console.log(this.oCurrentDir);
-          for(var n = 0; n < this.oCurrentDir.length; n++){
-            console.log(this.oCurrentDir.length + " " + this.oCurrentDir[n]);
-            if(this.oCurrentDir[n].name == this.aryParsedPath[0]){
-              this.oCurrentDir = this.oCurrentDir[n];
-              break;
-            }
-          }
-          console.log("2nd ");
-          console.log(this.oCurrentDir);
-          //traverse the remaining subdirectories
-          for(var n = 1; n < this.aryParsedPath.length; n++){
-            for(var i = 0; i < this.oCurrentDir.content.length; i++){
-              //console.log(this.oCurrentDir[i] + this.oCurrentDir[i].content);
-              if(this.aryParsedPath[n] == this.oCurrentDir.content[i].name){
-                this.oCurrentDir = this.oCurrentDir.content[i];
-              }
-            }
-          }
-        }
-        else{
-
-          //pwd != Directory.Files
-          for(var n = 0; n < this.aryParsedPath.length; n++){
-            for(var i = 0; i < this.oCurrentDir.content.length; i++){
-              if(this.aryParsedPath[n] == this.oCurrentDir.content[i].name){
-                this.oCurrentDir = this.oCurrentDir.content[i];
-              }
-            }
+      var current_position_in_fs = this.getPwd();
+      var directories_in_path = szPath.split("/");
+      
+      var recursive_directory_search = function (fs_element, index, directory_tree) {
+        if (fs_element.fileType == "Directory"){
+          if (fs_element.name == name){
+            oCurrentDir = fs_element;
+          } else {
+            fs_element.content.forEach(recursive_directory_search);
           }
         }
       }
+      var oCurrentDir = undefined;
+      var name = directories_in_path.pop();
+      directories_in_path = directories_in_path.concat(name);
+      switch (directories_in_path[0]) {
+        case "":
+          if (directories_in_path.length > 1) {
+            current_position_in_fs.forEach(recursive_directory_search);
+            return oCurrentDir;
+          } else {
+            return Directory.Files;
+          }
+        case ".":
+          if (directories_in_path.length > 1) {
+            current_position_in_fs.forEach(recursive_directory_search);
+            return oCurrentDir;
+          } else {
+            return this.getPwd();
+          }
+        case "..": 
+          if (directories_in_path.length > 1) {
+            current_position_in_fs.forEach(recursive_directory_search);
+            return oCurrentDir;
+          } else {
+            return this.getPwd().getParent();
+          }
+      }
 
-      return this.oCurrentDir;
     }
   },
   display: function (output) {

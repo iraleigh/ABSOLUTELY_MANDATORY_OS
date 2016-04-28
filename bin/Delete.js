@@ -24,7 +24,22 @@ var rm = function(counter) {
 		}
 
 		this.nameOfResource = this.args[this.args.length - 1];
-		this.oTargetFile = OS.FS.getDirectory(this.nameOfResource);
+
+		var path = this.nameOfResource.split("/");
+		var name = path.pop();
+
+
+		this.oTargetDirectory = OS.FS.getDirectory(path.join("/"));
+
+		var isRoot = this.oTargetDirectory == Directory.Files;
+
+		var directory = isRoot ? Directory.Files : this.oTargetDirectory.content;
+
+		this.oTargetFile = directory.find(function(resource){
+			return resource.name == name;
+		});
+
+		
 		if(this.oTargetFile.fileType == "Directory"){
 			if(this.isDirectory == true){
 				OS.FS.delete(this.nameOfResource);
