@@ -44,3 +44,9 @@ Please see release v2.0 for the Assignment 2 source code
 
 A working demo of Assignment 2 can be found [here](http://iraleigh.github.io/ABSOLUTELY_MANDATORY_OS/assignment-two/)
 
+##Assignment 4:
+
+Please see release v4.0 for the Assignment 4 source code 
+
+A working demo of Assignment 4 can be found [here](http://iraleigh.github.io/ABSOLUTELY_MANDATORY_OS/assignment-four/)
+
