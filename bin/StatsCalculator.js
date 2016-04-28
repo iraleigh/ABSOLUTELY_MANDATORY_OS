@@ -5,7 +5,7 @@ var StatsCalculator =  function(counter){
     switch(counter){
         case 0:
             console.log("Calculating Stats.");
-            OS.FS.create("statsFile.csv",
+            OS.FS.create("/statsFile.csv",
                 "1.10\n" + "5.09\n" + "0.97\n" + "1.59\n" + "4.60\n" + "0.32\n" +
                 "0.55\n" + "1.45\n" + "0.14\n" + "4.47\n" + "1.20\n" + "3.50\n" +
                 "5.02\n" + "4.67\n" + "5.22\n" + "2.69\n" + "3.98\n" + "3.17\n" +
@@ -14,7 +14,7 @@ var StatsCalculator =  function(counter){
             break;
         case 1:
 
-            this.var.oStatsFile = OS.FS.open("statsFile.csv");
+            this.var.oStatsFile = OS.FS.open("/statsFile.csv");
 
             break;
         case 2:
@@ -153,15 +153,15 @@ var StatsCalculator =  function(counter){
             };
             standardDeviation(rows);
 
-            OS.FS.create("statsResult.csv", result);
+            OS.FS.create("/statsResult.csv", result);
 
             break;
         case 8:
-            OS.FS.close("statsFile.csv");
+            OS.FS.close("/statsFile.csv");
 
             break;
         case 9:
-            OS.FS.close("statsResult.csv");
+            OS.FS.close("/statsResult.csv");
 
         default:
             this.state = "Stop";

@@ -4,7 +4,7 @@
 var RoutesCalculator = function (counter){
     switch (counter) {
         case 0:
-            OS.FS.create("route.csv", "POR,ORL,3031\n" +
+            OS.FS.create("/route.csv", "POR,ORL,3031\n" +
                 "SFO,CHI,2132\n" +
                 "DEN,POR,1243\n" +
                 "NYC,SFO,2915\n" +
@@ -108,7 +108,7 @@ var RoutesCalculator = function (counter){
             break;
         case 1:
 
-            this.var.oRouteFile = OS.FS.open("route.csv");
+            this.var.oRouteFile = OS.FS.open("/route.csv");
             break;
         case 2:
             this.var.oRouteFile = this.var.returnedFile;
@@ -159,16 +159,16 @@ var RoutesCalculator = function (counter){
             });
             this.var.result = result;
 
-            OS.FS.create("result.csv", result);
+            OS.FS.create("/result.csv", result);
             break;
 
         case 7:
-            OS.FS.close("route.csv");
+            OS.FS.close("/route.csv");
             break;
 
         case 8:
             //container.innerHTML += "</br>" + Processes.listOfProcesses[3].variables.result;
-            OS.FS.close("result.csv");
+            OS.FS.close("/result.csv");
         default:
             this.state = "Stop";
     }
