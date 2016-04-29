@@ -94,4 +94,5 @@ var ConsumeTheDiskSpace = function(counter)
             this.program_counter = 0;
     }
 }
-Processes.listOfProcesses.push(new Process("ConsumeHD",ConsumeTheDiskSpace));
+Processes.listOfProcesses.push(new Process("ConsumeHD", ConsumeTheDiskSpace));
+HelpInfo.listOfHelp.push(new Manual("ConsumeHD", "ConsumeHD", "Fills most of the available storage space."));

@@ -166,7 +166,7 @@ var OS = {
     },
     setPwd: function(oNewPath){
       OS.FS.pwd = oNewPath;
-      console.log("Current working directory changed to: " + oNewPath);
+      //console.log("Current working directory changed to: " + oNewPath);
       return;
     },
     getPwdTopLevel: function(){

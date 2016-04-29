@@ -3,8 +3,9 @@ function init_d() {
     Processes.generateListOfProcesses();
     addDummyFiles();
     //CLI
-    CLI.oldInput = "<b>AMOS</b>\nFor help getting started, type 'help'\n\n ";
+    CLI.oldInput = "<b>AMOS</b>\nFor help getting started, type 'help'\n\n/> ";
     CLI.commandHistory.push("");
+    OS.FS.setPwd(Directory.Files);
     window.document.getElementById('container').innerHTML = CLI.oldInput + CLI.cursor;
     //Device init
     Processes.listOfDevices['keyboard'].name = "Keyboard";

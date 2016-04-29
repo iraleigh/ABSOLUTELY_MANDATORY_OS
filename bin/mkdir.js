@@ -1,7 +1,12 @@
 var mkdir = function(counter){
   switch(counter){
     case 0:
-
+    if (this.args[0] == null) {
+        OS.display("No directory specified");
+        this.state = "Stop";
+        this.program_counter = 0;
+        return;
+    }
     //Declare variables
     var szPath = this.args[0];
     szPath = szPath.trim();

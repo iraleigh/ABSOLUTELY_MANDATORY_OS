@@ -1,7 +1,7 @@
 var addDummyFiles = function() {
 	Directory.Files.push(new File("."," "));
 	Directory.Files.push(new File(".."," "));
-	Directory.Files.push(new File("aa","This is the 'a' file.\nIt has a line break."));
+	Directory.Files.push(new File("a","This is the 'a' file.\nIt has a line break."));
 	Directory.Files.push(new File("b","b"));
 	Directory.Files.push(new File("c","c"));
 	Directory.Files.push(new File("d","d"));
@@ -32,7 +32,7 @@ var addDummyFiles = function() {
 		}
 	}
 	for(var n = 0; n < Processes.listOfProcesses.length; n++){
-		szFileName = Processes.listOfProcesses[n].name;
+		szFileName = "<i>" + Processes.listOfProcesses[n].name + "</i>"; //Italics indicate processes and make them impossible to cat
 		oTargetDir.content.push(new File(szFileName,"This is an executable."));
 	}
 }
