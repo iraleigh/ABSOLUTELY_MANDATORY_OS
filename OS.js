@@ -231,7 +231,7 @@ var OS = {
       switch (directories_in_path[0]) {
         case "":
           if (directories_in_path.length > 1) {
-            current_position_in_fs.forEach(recursive_directory_search);
+            Directory.Files.forEach(recursive_directory_search);
             return oCurrentDir;
           } else {
             return Directory.Files;
