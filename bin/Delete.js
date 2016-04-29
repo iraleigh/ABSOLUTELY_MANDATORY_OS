@@ -52,12 +52,11 @@ var rm = function(counter) {
 		            this.state = "Stop";
 		            break;
 		    }
-
 		if(this.oTargetFile.fileType == "Directory"){
 		    if (this.isDirectory == true) {
-		        if (this.nameOfResource == "bin" && !this.forceRemoval) { //Protected folders
+		        if (this.nameOfResource == "bin" && !this.forceRemoval && isRoot) { //Protected folders
 		            this.program_counter++;
-		            OS.display("This directory cannot be deleted.");
+		            OS.display("This directory cannot be deleted");
 		        } else
 		            OS.FS.delete(this.nameOfResource);
 			}
@@ -71,7 +70,7 @@ var rm = function(counter) {
 		}
 		else{
 			this.program_counter ++;
-			OS.display("Unable to determine file type.");
+			OS.display("Unable to determine file type");
 		}
 
 		break;
