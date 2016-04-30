@@ -202,6 +202,8 @@ var OS = {
 
       var current_position_in_fs = this.getPwd();
       var directories_in_path = szPath.split("/");
+
+      console.log(directories_in_path);
       
       var recursive_directory_search = function (fs_element, index, directory_tree) {
         if (fs_element.fileType == "Directory"){
