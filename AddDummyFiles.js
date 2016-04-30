@@ -13,7 +13,7 @@ var addDummyFiles = function () {
 			oTargetDir = Directory.Files[n];
 		}
 	}
-	oTargetDir.content.push(new File("testFile", "This file has no content.\nNone at all."));
+	oTargetDir.content.push(new File("testFile.txt", "This file has no content.\nNone at all."));
 	oTargetDir.content.push(new File("li.txt", Lorem));
 	oTargetDir.content.push(new File("simpsons.txt", "Homer\nMarge\nBart\nLisa\nMaggie\nMr. Burns\nSmithers\nChief Wiggum\nDuffman\nPatty\nSelma\nKrusty\nAbe\nMona\nFlanders\nMoe\nBarney\nCarl\nLenny\nSkinner\nItchy\nScratchy\nPoochie\nSideshow Bob\nRainier Wolfcastle\nMr. Sparkle\nJoe Quimby\nFat Tony\nSnake\nApu\nRoy\nMilhouse\nNelson\nRalph\nSherri\nTerri\nComic Book Guy\nSanta's Little Helper\nSnowball"));
 	oTargetDir.content.push(new File("num_list.txt", "34\n34\n13\n48\n19\n51\n76\n43\n94\n52\n44\n45\n46\n61\n93\n84\n82\n70\n30\n91\n23\n8\n27\n51\n75\n39\n75\n99\n90\n89\n56\n96\n90\n80\n10\n80\n97\n92\n47\n6\n41\n62\n62\n91\n88\n27\n97\n58\n45\n86\n66\n7\n15\n13\n90\n3\n96\n32\n76\n9\n95\n36\n89\n82\n70\n77\n27\n43\n51\n37\n74\n56\n34\n74\n94\n23\n75\n16\n84\n49\n79\n64\n60\n11\n92\n17\n80\n79\n10\n44\n60\n12\n30\n58\n94\n6\n80\n36\n42\n20"));
