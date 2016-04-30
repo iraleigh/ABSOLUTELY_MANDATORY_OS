@@ -77,7 +77,7 @@ var ConsumeTheDiskSpace = function(counter)
             var currentAvailSize = Directory.Files.reduce(flatten_callback, Directory.Files[0].accessLength());
             currentAvailSize = CAPACITY - currentAvailSize;
             currentAvailSize = (currentAvailSize / 1000000);
-            OS.display("Available HDSpace: " + currentAvailSize + " MB");
+            OS.display("Current Available HD Space: " + currentAvailSize + " MB");
 
             if (fileSize <= currentAvailSize)
             {

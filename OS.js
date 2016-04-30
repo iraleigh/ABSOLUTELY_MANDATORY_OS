@@ -19,19 +19,6 @@ var OS = {
       //OS.ProcessQueue.dequeue();
       //Processes.listOfDevices['file_io'].main();
     },
-    copy: function(szFileName){
-      console.log("In Copy");
-      var process = Processes.findProcessByName(OS.FS.copy.caller.displayName);
-      process.state = "Waiting";
-      OS.ProcessQueue.enqueue(
-          OS.ProcessQueue.wrapFunction(
-              Processes.listOfDevices['file_io'].copy,
-              OS.FS.copy.caller,
-              [OS.FS.copy.caller.displayName, szFileName]
-          )
-      );
-      OS.Scheduler.runNextProcess();
-    },
     delete: function (szFileName) {
       //Processes.listOfDevices['file_io'].delete(szFileName);
       console.log("In Delete");
@@ -215,6 +202,8 @@ var OS = {
 
       var current_position_in_fs = this.getPwd();
       var directories_in_path = szPath.split("/");
+
+      console.log(directories_in_path);
       
       var recursive_directory_search = function (fs_element, index, directory_tree) {
         if (fs_element.fileType == "Directory"){
