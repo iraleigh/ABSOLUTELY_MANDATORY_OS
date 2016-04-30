@@ -1,6 +1,8 @@
 /**
  * Created by internet on 2/26/2016.
  */
+var bankBookCSV = "";
+
 var bankBookCalculator = function(counter){
     switch(counter){
         case 0:
@@ -49,10 +51,12 @@ var bankBookCalculator = function(counter){
                 console.log(aryBankBook[k,0]);
                 console.log(aryBankBook[k,1]);
                 szFileContents = szFileContents + aryBankBook[k,0] + ",";
-                szFileContents = szFileContents + aryBankBook[k,1] + ",";
+                szFileContents = szFileContents + aryBankBook[k,1] + "\n";
 
             }
-            OS.FS.create(szFileName,szFileContents);
+            Directory.Files.push(new File("bankBook.csv", szFileContents));
+            this.program_counter++;
+           // OS.FS.create(szFileName,szFileContents);
 
             break;
         case 1:
@@ -135,6 +139,7 @@ var bankBookCalculator = function(counter){
 
             break;
         default:
+            this.program_counter = 0;
             this.state = "Stop";
 
 
@@ -153,7 +158,7 @@ var bankBookCalculator = function(counter){
         else if (nTransactionType == 3)
             szTransactionName = "Debit";
 
-        //console.log(szTransactionName);
+        OS.display(szTransactionName);
 
         return szTransactionName;
     }
@@ -171,10 +176,12 @@ var bankBookCalculator = function(counter){
             nTransactionAmount = -160.0 * Math.random();
 
         nFormattedResult = Number(nTransactionAmount).toFixed(2);
-        //console.log(nFormattedResult);
+        OS.display(nFormattedResult);
+        OS.display("Total: " + nFormattedResult);
 
         return nFormattedResult;
     }
 }
 
 Processes.listOfProcesses.push(new Process("BankBookCalculator", bankBookCalculator));
+HelpInfo.listOfHelp.push(new Manual("BankBookCalculator", "BankBookCalculator", "Generates a CSV file and prints the balance to another file."));

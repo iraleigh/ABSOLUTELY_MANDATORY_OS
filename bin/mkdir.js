@@ -66,3 +66,4 @@ var mkdir = function(counter){
     this.program_counter = 0;
   }
   Processes.listOfProcesses.push(new Process("mkdir",mkdir));
+  HelpInfo.listOfHelp.push(new Manual("mkdir", "mkdir [new_directory]", "Creates a new directory inside of the current directory."));

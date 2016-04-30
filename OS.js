@@ -234,7 +234,7 @@ var OS = {
             Directory.Files.forEach(recursive_directory_search);
             return oCurrentDir;
           } else {
-            return Directory.Files;
+                  this.getPwd();
           }
         case ".":
           if (directories_in_path.length > 1) {

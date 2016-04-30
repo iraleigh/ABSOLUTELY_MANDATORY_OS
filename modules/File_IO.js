@@ -32,7 +32,12 @@ Processes.listOfDevices['file_io'] = {
           if (currentDirectory == Directory.Files) {
             Directory.Files.push(new File(file,szContent));
           } else {
-            currentDirectory.content.push(new File(file,szContent));
+              try{
+                  currentDirectory.content.push(new File(file,szContent));
+              } catch (e) {
+                  OS.display("Directory does not exist");
+                  throw new Error("Directory does not exist");
+              }
           }
 
         }

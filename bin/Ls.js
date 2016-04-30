@@ -26,10 +26,10 @@ var ls = function(counter){
       }
     }
     if(this.oCurrentDir == Directory.Files){
-      OS.display("<br>" + (this.oCurrentDir.length) + " files.");
+      OS.display("<br>" + (this.oCurrentDir.length) + " files");
     }
     else{
-      OS.display("<br>" + (this.oCurrentDir.content.length + 2) + " files.");
+      OS.display("<br>" + (this.oCurrentDir.content.length + 2) + " files");
     }
 
 
@@ -38,5 +38,5 @@ var ls = function(counter){
 }
 
 Processes.listOfProcesses.push(new Process("ls", ls));
-HelpInfo.listOfHelp.push(new Manual("ls", "ls", "Displays the files in the current directory."));
+HelpInfo.listOfHelp.push(new Manual("ls", "ls", "Displays the files, <b>directories</b> and <i><b>processes</b></i> in the current directory."));
 
