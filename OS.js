@@ -19,19 +19,6 @@ var OS = {
       //OS.ProcessQueue.dequeue();
       //Processes.listOfDevices['file_io'].main();
     },
-    copy: function(szFileName){
-      console.log("In Copy");
-      var process = Processes.findProcessByName(OS.FS.copy.caller.displayName);
-      process.state = "Waiting";
-      OS.ProcessQueue.enqueue(
-          OS.ProcessQueue.wrapFunction(
-              Processes.listOfDevices['file_io'].copy,
-              OS.FS.copy.caller,
-              [OS.FS.copy.caller.displayName, szFileName]
-          )
-      );
-      OS.Scheduler.runNextProcess();
-    },
     delete: function (szFileName) {
       //Processes.listOfDevices['file_io'].delete(szFileName);
       console.log("In Delete");
