@@ -2,7 +2,7 @@
  * Created by Matt on 4/30/2016.
  */
 
-function user(name, pw)
+function User(name, pw)
 {
     this.userName = name;
     this.password = pw;
