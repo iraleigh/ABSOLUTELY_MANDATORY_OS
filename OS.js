@@ -161,6 +161,20 @@ var OS = {
       OS.Scheduler.runNextProcess();
       //Processes.listOfDevices['file_io'].main();
     },
+    checkAccess: function(userObj, file)
+    {
+      //returns true if the userObj is in the access group of the file.
+      //returns false if the userOb is not in the access group of the file.
+
+      //Check the userObject.name against the access group names.
+      var flag = false;
+      file.accessGroup.forEach(function(element,index,array){
+          if(element == userObj.getUserName())
+          {
+            flag = true;
+          }
+      });
+    },
     getPwd: function(){
       return OS.FS.pwd;
     },
