@@ -28,12 +28,8 @@ var save = function (counter) {
                 this.program_counter = 0;
                 break;
             }
-            try{
                 OS.FS.create(args[0], saveWork);
-                OS.display("Saved to " + args[0]);
-            } catch (e) {
-                OS.display("File not saved");
-            }
+
 
 
             this.program_counter++;

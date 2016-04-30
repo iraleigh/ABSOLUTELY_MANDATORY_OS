@@ -36,7 +36,6 @@ Processes.listOfDevices['file_io'] = {
                   currentDirectory.content.push(new File(file,szContent));
               } catch (e) {
                   OS.display("Directory does not exist");
-                  throw new Error("Directory does not exist");
               }
           }
 

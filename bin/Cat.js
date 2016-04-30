@@ -3,13 +3,13 @@ var cat = function (counter) {
       case 0:
           var args = this.args;
           this.var.returnedFile = null;
-          OS.FS.open(args[0]);
           if (args[0] == null) {
               OS.display("No file specified");
               this.state = "Stop";
               this.program_counter = 0;
               break;
           }
+          OS.FS.open(args[0]);
           break;
 
 
