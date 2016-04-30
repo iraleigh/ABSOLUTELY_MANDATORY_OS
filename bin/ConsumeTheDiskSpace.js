@@ -84,7 +84,7 @@ var ConsumeTheDiskSpace = function(counter)
                 this.program_counter = 0;
             }
             else {
-                OS.display("Not enough HD Space Available.");
+                //OS.display("Not enough HD Space Available.");
                 this.program_counter++;
             }
             break;
