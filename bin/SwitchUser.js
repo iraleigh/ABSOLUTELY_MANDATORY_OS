@@ -2,6 +2,8 @@
  * Created by Matt on 4/30/2016.
  */
 
+//Still need to test, and error out if incorrect input is given.
+
 var SwitchUser = function(counter)
 {
     switch(counter)

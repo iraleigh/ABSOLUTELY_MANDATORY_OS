@@ -39,13 +39,22 @@ function File(szName,szContent){
     this.getKind = function(){
       return this.fileType;
     }
-    this.removeFromAcessGroup = function(removeName){
+    this.getOwner = function(){
+        return this.fileOwner;
+    }
+    this.setOwner = function(newOwner){
+        this.fileOwner = newOwner;
+    }
+    this.removeFromAcessGroup = function(userObject){
         this.accessGroup.forEach(function(element,index,array)
         {
-
+            if(element.getUserName == userObject.getUserName)
+            {
+                this.accessGroup.splice(index, 1);
+            }
         });
     }
-    this.addToAccessGroup = function (){
-
+    this.addToAccessGroup = function (userObject){
+        this.accessGroup.push(userObject);
     }
 }
