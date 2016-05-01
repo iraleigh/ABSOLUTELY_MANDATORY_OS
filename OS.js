@@ -161,15 +161,15 @@ var OS = {
       OS.Scheduler.runNextProcess();
       //Processes.listOfDevices['file_io'].main();
     },
-    checkAccess: function(userObj, file)
+    checkAccess: function(currUser, file)
     {
       //returns true if the userObj is in the access group of the file.
       //returns false if the userOb is not in the access group of the file.
 
-      //Check the userObject.name against the access group names.
+      //Check the currentUser.name against the access group names.
       var flag = false;
       file.accessGroup.forEach(function(element,index,array){
-          if(element == userObj.getUserName())
+          if(element == currUser.getUserName())
           {
             flag = true;
           }
