@@ -20,24 +20,31 @@
 //}
 
 
-//I tried making a singleton object for the current user to make sure that we only have one at any time.
-var currentUserSingleton = function(userObj)
+//I'm trying to make a singleton and failing I think. Idk javascript syntax...
+function currentUserSingleton()
 {
-    var currentUser;
-
     //Default this current user to guest in init.d when the OS starts
+
+    //initializes the instance of currentUser.
     function createInstance()
     {
-        currentUser = userObj;
+        this.currentUser = new User("Guest", "Password");
     }
 
+    //So only one instance of current user is available at any time.
     function getInstance()
     {
-        if(currentUser != undefined)
+        if(this.currentUser != undefined)
         {
-            currentUser = userObj;
+            this.currentUser = createInstance();
         }
 
-        return currentUser;
+        return this.currentUser;
+    }
+
+    //So we can change who the current user is.
+    function setInstance(userObj)
+    {
+        this.currentUser = userObj;
     }
 };
