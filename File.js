@@ -4,6 +4,7 @@ function File(szName,szContent){
     this.position = 0;
     this.length = szContent.length;
     this.fileType = "File";
+    this.fileOwner = currentUserSingleton.getInstance().getUserName(); //The person who is currently logged in gets to be the file owner.
 
     //Added date object to file definition.
     this.date = new Date(); //new Date(); creates a date object with the current date/time.
@@ -37,5 +38,14 @@ function File(szName,szContent){
     }
     this.getKind = function(){
       return this.fileType;
+    }
+    this.removeFromAcessGroup = function(removeName){
+        this.accessGroup.forEach(function(element,index,array)
+        {
+
+        });
+    }
+    this.addToAccessGroup = function (){
+
     }
 }

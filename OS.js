@@ -174,6 +174,7 @@ var OS = {
             flag = true;
           }
       });
+      return flag;
     },
     getPwd: function(){
       return OS.FS.pwd;
@@ -423,5 +424,39 @@ semaphores: {
 
     // call the next in the queue and remember to shift back and push itself to the end of the queue
   }
-}
+},
+  //Maybe I don't need the newUserName and password I just use the userObject they are passed in.
+  UserSwap: function(newUserName, password, userObject)
+  {
+    var userNameFlag = false;
+    var passwordFlag = false;
+    var flag = false;
+
+    //This check may not be necessary since we do it in the switch user process, but it's safe to keep it here I guess.
+    //check if the user name is in the OS.Users array on the OS.
+    //check if the password is correct.
+    OS.Users.forEach(function(element,index,array){
+        if(element.getUserName() == userObject.getUserName())
+        {
+          userNameFlag = true;
+        }
+
+        if(element.getPassword() == userObject.getPassword())
+        {
+          passwordFlag = true;
+        }
+    });
+
+    if(userNameFlag == true && passwordFlag == true)
+    {
+      flag = true;
+    }
+
+    //if the userName is different than what is already in the singleton, and the username exists on the OS
+    //replace the
+    if(currentUserSingleton.getInstance().getUserName() != newUserName && flag == true)
+    {
+      currentUserSingleton.setInstance(userObject);
+    }
+  }
 }

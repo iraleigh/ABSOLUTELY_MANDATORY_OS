@@ -36,7 +36,7 @@ var currentUserSingleton =
     {
         if(this.currentUser != undefined)
         {
-            this.currentUser = createInstance();
+            this.currentUser = this.createInstance();
         }
 
         return this.currentUser;
