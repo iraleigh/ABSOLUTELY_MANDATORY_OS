@@ -21,18 +21,18 @@
 
 
 //I'm trying to make a singleton and failing I think. Idk javascript syntax...
-function currentUserSingleton()
+var currentUserSingleton =
 {
     //Default this current user to guest in init.d when the OS starts
 
     //initializes the instance of currentUser.
-    function createInstance()
+    createInstance: function ()
     {
         this.currentUser = new User("Guest", "Password");
-    }
+    },
 
     //So only one instance of current user is available at any time.
-    function getInstance()
+    getInstance: function ()
     {
         if(this.currentUser != undefined)
         {
@@ -40,10 +40,10 @@ function currentUserSingleton()
         }
 
         return this.currentUser;
-    }
-
+    },
+    
     //So we can change who the current user is.
-    function setInstance(userObj)
+    setInstance: function(userObj)
     {
         this.currentUser = userObj;
     }
