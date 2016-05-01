@@ -8,7 +8,7 @@ var SecurityUpdate = function(counter){
             //Please use OS.FS functions to access files
             this.var.cUSER_NAME = "iain";
             this.var.cPASSWORD = "newPassword";
-            OS.FS.create("/dummy_dir/securityFile.csv",
+            OS.FS.create("securityFile.csv",
                 "alex,password1\n" +
                 "alvin,password2\n" +
                 "harry,password3\n" +
@@ -19,7 +19,7 @@ var SecurityUpdate = function(counter){
             break;
         case 1:
         
-            OS.FS.open("/dummy_dir/securityFile.csv");
+            OS.FS.open("securityFile.csv");
 
             break;
 
@@ -89,10 +89,11 @@ var SecurityUpdate = function(counter){
 
         case 9:
             //container.innerHTML += "</br>" + Processes.listOfProcesses[2].variables.content;
-            OS.FS.close("/dummy_dir/securityFile.csv");
+            OS.FS.close("securityFile.csv");
         default:
             this.state = "Stop";
 
     }
 }
 Processes.listOfProcesses.push(new Process("SecurityUpdate",SecurityUpdate));
+HelpInfo.listOfHelp.push(new Manual("SecurityUpdate", "SecurityUpdate", "Generates a CSV of sample users and passwords."));

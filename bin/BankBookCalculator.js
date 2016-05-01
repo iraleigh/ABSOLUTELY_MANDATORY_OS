@@ -12,7 +12,7 @@ var bankBookCalculator = function (counter) {
             var container = window.document.getElementById('container');
 
             //Create data for file if it doesn't exist
-            var szFileName = "/bankBook.csv";
+            var szFileName = "bankBook.csv";
             this.var.szFileName = szFileName;
             var nBankBookSize = 25;
 
@@ -43,19 +43,19 @@ var bankBookCalculator = function (counter) {
                 console.log(aryBankBook[i, 1]);
 
             }
-
+            //OS.display("Total: " + nFormattedResult);
             //Create file
-            var szFileContents;
+            var szFileContents = "";
             for (k = 0; k < nBankBookSize; k++) {
                 console.log(k);
                 console.log(aryBankBook[k, 0]);
                 console.log(aryBankBook[k, 1]);
-                szFileContents = szFileContents + aryBankBook[k, 0] + ",";
-                szFileContents = szFileContents + aryBankBook[k, 1] + "\n";
+                szFileContents += aryBankBook[k, 0] + ",";
+                szFileContents += aryBankBook[k, 1] + "\n";
 
             }
-            OS.FS.create(szFileName, szFileContents);
 
+            OS.FS.create(szFileName, bankBookCSV);
             break;
         case 1:
 
@@ -157,6 +157,7 @@ var bankBookCalculator = function (counter) {
             szTransactionName = "Debit";
 
         OS.display(szTransactionName);
+        bankBookCSV += szTransactionName + "\n";
 
         return szTransactionName;
     }
@@ -175,8 +176,7 @@ var bankBookCalculator = function (counter) {
 
         nFormattedResult = Number(nTransactionAmount).toFixed(2);
         OS.display(nFormattedResult);
-        OS.display("Total: " + nFormattedResult);
-
+        bankBookCSV += nFormattedResult + "\n";
         return nFormattedResult;
     }
 }

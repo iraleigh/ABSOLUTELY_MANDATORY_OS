@@ -57,7 +57,7 @@ var ContactManager = function(counter) {
           + "Blair,Malet,209 Decker Dr,Philadelphia,PA,19132,215-907-9111,bmalet@yahoo.com");
           break;
           case 1:
-          OS.FS.open("/ContactManager.csv");
+          OS.FS.open("ContactManager.csv");
           break;
 
           case 2:
@@ -103,7 +103,7 @@ var ContactManager = function(counter) {
             }
           );
 
-          OS.FS.close("/ContactManager.csv");
+          OS.FS.close("ContactManager.csv");
           break;
 
 	     case 8:
