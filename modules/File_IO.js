@@ -135,9 +135,13 @@ Processes.listOfDevices['file_io'] = {
             return file.name == name;
           });
         } else {
-          process.var.returnedFile = oTargetDir.content.find(function(file){ 
-            return file.name == name;
-          });
+            try {
+                process.var.returnedFile = oTargetDir.content.find(function(file){ 
+                    return file.name == name;
+                });
+            } catch (e) {
+                OS.display("Directory does not exist")
+            }
         }
 
       },
