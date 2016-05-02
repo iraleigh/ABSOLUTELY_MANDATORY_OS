@@ -14,4 +14,6 @@ function init_d() {
     Processes.listOfDevices['display'].state = "Ready"
     Processes.listOfDevices['file_io'].name = "File IO";
     Processes.listOfDevices['file_io'].state = "Ready";
+    //Super user init
+    OS.Users['Super'] = new User('Super', 'MattsCool');
 }

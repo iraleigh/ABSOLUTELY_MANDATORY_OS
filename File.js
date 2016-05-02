@@ -5,8 +5,8 @@ function File(szName,szContent){
     this.length = szContent.length;
     this.fileType = "File";
     this.accessGroup = [];
-    this.accessGroup.push(OS.User["Super"]);
-    this.accessGroup.push(OS.User["currentUser"]);
+    this.accessGroup.push(OS.Users["Super"]);
+    this.accessGroup.push(OS.Users["currentUser"]);
 
     //Added date object to file definition.
     this.date = new Date(); //new Date(); creates a date object with the current date/time.
