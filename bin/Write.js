@@ -14,6 +14,7 @@ var Write = function(counter)
             var oTargetFile;
 
             //stop everything if the user does not have read/write access rights to the file.
+            //oTargetFile may not be initialized
             directories.Files.forEach(function(file, index, array)
             {
                 if(file.name == this.var.szFileName)

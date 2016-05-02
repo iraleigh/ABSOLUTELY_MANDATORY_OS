@@ -1,6 +1,10 @@
 function init_d() {
     //OS
     Processes.generateListOfProcesses();
+
+    //Initialize the current user
+    currentUserSingleton.getInstance();
+
     addDummyFiles();
     //CLI
     CLI.oldInput = "<b>AMOS</b>\nFor help getting started, type 'help'\n\n ";
@@ -13,9 +17,4 @@ function init_d() {
     Processes.listOfDevices['display'].state = "Ready";
     Processes.listOfDevices['file_io'].name = "File IO";
     Processes.listOfDevices['file_io'].state = "Ready";
-
-
-    //var guestUser = new User("Guest", "password");
-    //currentUserSingleton(guestUser).getInstance();
-    currentUserSingleton.getInstance();
 }

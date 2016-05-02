@@ -34,7 +34,7 @@ var currentUserSingleton =
     //So only one instance of current user is available at any time.
     getInstance: function ()
     {
-        if(this.currentUser != undefined)
+        if(this.currentUser == undefined)
         {
             this.currentUser = this.createInstance();
         }
