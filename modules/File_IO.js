@@ -22,7 +22,12 @@ Processes.listOfDevices['file_io'] = {
           process.state = "Stop";
           OS.display("Hard Drive Capacity Reached! Process: " + process.name + " terminated.");
         
-        } else {
+        }
+        else if(szContent.length + Directory.Files.reduce(flatten_callback, Directory.Files[0].accessLength()) > CAPACITY)
+        {
+          OS.display("Cannot create file, not enough hard drive space! Process: " + process.name + " terminated.");
+        }
+        else {
 
           var path = szFileName.split("/");
           var file = path.pop();
