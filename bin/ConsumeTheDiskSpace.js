@@ -3,7 +3,7 @@ var ConsumeTheDiskSpace = function(counter)
     switch(counter)
     {
         case 0:
-            OS.FS.create("wasteHD.csv",
+            OS.FS.create("wasteHD.txt",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur posuere sapien id aliquet posuere. Maecenas tincidunt, massa ac tempor consectetur, urna felis dignissim odio, eu imperdiet metus arcu ac eros. Nullam et tortor ligula. Aliquam erat volutpat. Pellentesque iaculis elit a laoreet suscipit. Curabitur diam mi, maximus non dolor et, pharetra dapibus ligula. Nam vel tortor sollicitudin, posuere justo sed, tempor arcu. Cras suscipit magna lacus, et fringilla lacus ultrices ut. Praesent eget ante a ex accumsan consectetur. Quisque non orci fringilla odio tincidunt luctus. Pellentesque vehicula tempor libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam volutpat tempor erat vitae pellentesque.\n"
                 + "Pellentesque egestas ipsum purus, in feugiat magna blandit quis. Praesent egestas suscipit neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus a accumsan odio. Nulla eu ornare nisi, viverra mollis sem. Pellentesque viverra malesuada eleifend. Mauris malesuada id ipsum vitae efficitur. Aliquam sed volutpat est. Etiam non blandit sem. Maecenas egestas, augue nec aliquam commodo, odio eros tincidunt ligula, non hendrerit massa libero at nibh. Nunc a nunc quis magna consequat aliquet eu id erat. Duis vitae tempor eros, at facilisis erat.\n"
                 + "Cras hendrerit vestibulum lectus, id lobortis dui feugiat non. Ut enim magna, tempor vitae urna quis, facilisis accumsan sem. Aliquam mollis dui sit amet suscipit tincidunt. Proin ultrices aliquet luctus. Integer placerat sapien id lobortis eleifend. Maecenas consequat suscipit nibh vel pulvinar. Sed tempus quis tellus eu mattis. Pellentesque accumsan et nisi at imperdiet. Curabitur facilisis mattis efficitur. Fusce luctus auctor odio at fringilla. Morbi laoreet tempor sem at tristique. Duis vitae enim ac magna ornare faucibus.\n"
@@ -94,4 +94,5 @@ var ConsumeTheDiskSpace = function(counter)
             this.program_counter = 0;
     }
 }
-Processes.listOfProcesses.push(new Process("ConsumeHD",ConsumeTheDiskSpace));
+Processes.listOfProcesses.push(new Process("ConsumeHD", ConsumeTheDiskSpace));
+HelpInfo.listOfHelp.push(new Manual("ConsumeHD", "ConsumeHD", "Fills most of the available storage space."));

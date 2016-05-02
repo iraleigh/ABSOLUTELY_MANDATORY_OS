@@ -21,3 +21,4 @@ var RemainingHDSpace = function(counter)
 };
 
 Processes.listOfProcesses.push(new Process("HDSpace",RemainingHDSpace));
+HelpInfo.listOfHelp.push(new Manual("HDSpace", "HDSpace", "Displays how much storage is available."));
