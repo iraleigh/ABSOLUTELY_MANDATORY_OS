@@ -1,17 +1,41 @@
 var cat = function (counter) {
     switch (counter) {
-      case 0:
-          var args = this.args;
-          this.var.returnedFile = null;
-          OS.FS.open(args[0]);
-          if (args[0] == null) {
-              OS.display("No file specified");
+        case 0:
+          var hasAccess = false;
+          //I'm not sure getting the file like this is okay?
+          //I'm like 90% sure you cannot open a file like this.
+          var file = this.var.returnedFile;
+          //Check to see if the current user has permission to read from the file.
+
+          file.accessGroup.forEach(function(userObject,index,array)
+          {
+              if(currentUserSingleton.getInstance().getUserName() == userObject.getUserName())
+              {
+                  hasAccess = true;
+              }
+          });
+
+          //Written this way to try to maintain logic of the cat process.
+          //If the current user does not have permission to read from the file, error out.
+          if(hasAccess != true)
+          {
+              OS.display("You do not have permission to read from " + file.accessName());
               this.state = "Stop";
               this.program_counter = 0;
-              break;
+          }
+          else
+          {
+              var args = this.args;
+              this.var.returnedFile = null;
+              OS.FS.open(args[0]);
+              if (args[0] == null) {
+                  OS.display("No file specified");
+                  this.state = "Stop";
+                  this.program_counter = 0;
+                  break;
+              }
           }
           break;
-
 
         case 1:
             this.var.filePointer = this.var.returnedFile;
