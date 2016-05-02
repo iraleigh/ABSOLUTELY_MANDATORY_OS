@@ -28,8 +28,9 @@ var save = function (counter) {
                 this.program_counter = 0;
                 break;
             }
-            Directory.Files.push(new File(args[0], saveWork));
-            OS.display("Saved to " + args[0]);
+                OS.FS.create(args[0], saveWork);
+
+
 
             this.program_counter++;
         default:

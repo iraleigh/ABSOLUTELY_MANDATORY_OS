@@ -19,20 +19,8 @@ var CLI = {
 var container;
 window.onload = function () {
     init_d();
-    Processes.generateListOfProcesses();
-    container = window.document.getElementById('container');
-
-    OS.FS.setPwd(Directory.Files);
-    //addDummyFiles();
-    //ABSOLUTELY MANDATORY OS -- AMOS
     setInterval(cursor, 500);
-    CLI.commandHistory = new Array();
-    CLI.commandHistory.push("");
-    container.innerHTML = CLI.oldInput;
-    CLI.textHeight = document.getElementById('container').offsetHeight;
-    console.log(CLI.textHeight);
-    CLI.oldInput += "<br />\\> ";
-    container.innerHTML = CLI.oldInput + CLI.cursor;
+    container = window.document.getElementById('container');
 }
 
 document.onkeypress = function (evt) {
@@ -58,10 +46,10 @@ document.onkeypress = function (evt) {
         CLI.STDIn = "";
         CLI.STDOut = "";
         if(OS.FS.getPwd() == Directory.Files){
-          CLI.currentInput += "<br />\\> ";
+          CLI.currentInput += "\n\n/> ";
         }
         else{
-          CLI.currentInput += "<br />" + OS.FS.getPwdTopLevel() + "\\> ";
+          CLI.currentInput += "\n\n" + OS.FS.getPwdTopLevel() + "/> ";
         }
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 

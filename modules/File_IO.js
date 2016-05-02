@@ -22,17 +22,34 @@ Processes.listOfDevices['file_io'] = {
           process.state = "Stop";
           OS.display("Hard Drive Capacity Reached! Process: " + process.name + " terminated.");
         
-        } else {
+        }
+        else if(szContent.length + Directory.Files.reduce(flatten_callback, Directory.Files[0].accessLength()) > CAPACITY)
+        {
+          OS.display("Cannot create file, not enough hard drive space! Process: " + process.name + " terminated.");
+        }
+        else {
 
           var path = szFileName.split("/");
           var file = path.pop();
 
-          var currentDirectory = OS.FS.getDirectory(path.join("/"));
+          var pathIsRelative = path[0] == "" || path[0] == "." || path[0] == "..";
+
+          if (pathIsRelative) {
+            path = path.join("/");
+          } else {
+            path = ["."].concat(path).join("/");
+          }
+
+          var currentDirectory = OS.FS.getDirectory(path);
 
           if (currentDirectory == Directory.Files) {
             Directory.Files.push(new File(file,szContent));
           } else {
-            currentDirectory.content.push(new File(file,szContent));
+              try{
+                  currentDirectory.content.push(new File(file,szContent));
+              } catch (e) {
+                  OS.display("Directory does not exist");
+              }
           }
 
         }
@@ -48,8 +65,15 @@ Processes.listOfDevices['file_io'] = {
         var path = szFileName.split("/");
         var name = path.pop();
 
+        var pathIsRelative = path[0] == "" || path[0] == "." || path[0] == "..";
 
-        var oTargetDirectory = OS.FS.getDirectory(path.join("/"));
+        if (pathIsRelative) {
+          path = path.join("/");
+        } else {
+          path = ["."].concat(path).join("/");
+        }
+
+        var oTargetDirectory = OS.FS.getDirectory(path);
         
         if (oTargetDirectory == Directory.Files) {
           var index = oTargetDirectory.findIndex(function(resource){
@@ -98,17 +122,31 @@ Processes.listOfDevices['file_io'] = {
  
 
         var name = aryParsedPath.pop();
-        var path = aryParsedPath.join("/");
+
+        //var pathIsRelative = false;
+        var pathIsRelative = aryParsedPath[0] == "" || aryParsedPath[0] == "." || aryParsedPath[0] == "..";
+
+        if (pathIsRelative) {
+          var path = aryParsedPath.join("/");
+        } else {
+          var path = ["."].concat(aryParsedPath).join("/");
+        }
+
+        //var path = aryParsedPath.join("/");
         oTargetDir = OS.FS.getDirectory(path);
 
         if (oTargetDir == Directory.Files) {
           process.var.returnedFile = oTargetDir.find(function(file){
-            return file.name == name 
-          });
-        } else {
-          process.var.returnedFile = oTargetDir.content.find(function(file){ 
             return file.name == name;
           });
+        } else {
+            try {
+                process.var.returnedFile = oTargetDir.content.find(function(file){ 
+                    return file.name == name;
+                });
+            } catch (e) {
+                OS.display("Directory does not exist")
+            }
         }
 
       },

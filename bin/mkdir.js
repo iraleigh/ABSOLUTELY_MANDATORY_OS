@@ -1,7 +1,12 @@
 var mkdir = function(counter){
   switch(counter){
     case 0:
-
+    if (this.args[0] == null) {
+        OS.display("No directory specified");
+        this.state = "Stop";
+        this.program_counter = 0;
+        return;
+    }
     //Declare variables
     var szPath = this.args[0];
     szPath = szPath.trim();
@@ -61,3 +66,4 @@ var mkdir = function(counter){
     this.program_counter = 0;
   }
   Processes.listOfProcesses.push(new Process("mkdir",mkdir));
+  HelpInfo.listOfHelp.push(new Manual("mkdir", "mkdir [new_directory]", "Creates a new directory inside of the current directory."));
