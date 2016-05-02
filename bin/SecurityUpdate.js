@@ -18,7 +18,9 @@ var SecurityUpdate = function(counter){
             );
             break;
         case 1:
-            this.var.oSecurityFile = OS.FS.open("securityFile.csv");
+        
+            OS.FS.open("securityFile.csv");
+
             break;
 
         case 2:
@@ -94,3 +96,4 @@ var SecurityUpdate = function(counter){
     }
 }
 Processes.listOfProcesses.push(new Process("SecurityUpdate",SecurityUpdate));
+HelpInfo.listOfHelp.push(new Manual("SecurityUpdate", "SecurityUpdate", "Generates a CSV of sample users and passwords."));

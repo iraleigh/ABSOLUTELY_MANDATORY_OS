@@ -3,7 +3,8 @@ function File(szName,szContent){
     this.content = szContent;
     this.position = 0;
     this.length = szContent.length;
-
+    this.fileType = "File";
+    
     //Added date object to file definition.
     this.date = new Date(); //new Date(); creates a date object with the current date/time.
     this.setDate = function (ObjDate){
@@ -33,5 +34,8 @@ function File(szName,szContent){
     }
     this.mutateContent = function(szNewContent){
       this.content = szNewContent;
+    }
+    this.getKind = function(){
+      return this.fileType;
     }
 }

@@ -47,4 +47,5 @@ var Touch = function(counter){
     //updates time stamps of the most recent access and modification.
 };
 
-Processes.listOfProcesses.push(new Process("touch",Touch));
+Processes.listOfProcesses.push(new Process("touch", Touch));
+HelpInfo.listOfHelp.push(new Manual("touch", "touch [file_name]", "Sets the date of a file to the current date. If the file does exist, the file is created."));

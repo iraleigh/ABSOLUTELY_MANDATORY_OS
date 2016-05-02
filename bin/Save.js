@@ -28,8 +28,9 @@ var save = function (counter) {
                 this.program_counter = 0;
                 break;
             }
-            Directory.Files.push(new File(args[0], saveWork));
-            OS.display("Saved to " + args[0]);
+                OS.FS.create(args[0], saveWork);
+
+
 
             this.program_counter++;
         default:
@@ -38,3 +39,4 @@ var save = function (counter) {
     }
 }
 Processes.listOfProcesses.push(new Process("save", save));
+HelpInfo.listOfHelp.push(new Manual("save", "[previous_command] | save [file_destination]", "Piping command: Saves the output of the previous command to the given file destination."));

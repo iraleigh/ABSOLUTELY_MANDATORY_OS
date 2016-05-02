@@ -90,4 +90,4 @@ var VectorCalculator = function (counter){
 }
 
 Processes.listOfProcesses.push(new Process("CalculateVectors", VectorCalculator));
-
+HelpInfo.listOfHelp.push(new Manual("CalculateVectors", "CalculateVectors", "Generates some vectors, and calculates their sum. Outputs to some CSV files."));

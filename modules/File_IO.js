@@ -1,6 +1,7 @@
+var CAPACITY = 100000000;
+
+
 Processes.listOfDevices['file_io'] = {
-      name: "File IO",
-      state: "Ready",
       main: function(){
         console.log(OS.ProcessQueue.queue.length);
         if (OS.ProcessQueue.queue.length > 0){
@@ -15,10 +16,80 @@ Processes.listOfDevices['file_io'] = {
         process.state = "Ready";
 
         process.program_counter++;
+        
+        if (Processes.listOfDevices['file_io'].capacityReached()) {
+         
+          process.state = "Stop";
+          OS.display("Hard Drive Capacity Reached! Process: " + process.name + " terminated.");
+        
+        }
+        else if(szContent.length + Directory.Files.reduce(flatten_callback, Directory.Files[0].accessLength()) > CAPACITY)
+        {
+          OS.display("Cannot create file, not enough hard drive space! Process: " + process.name + " terminated.");
+        }
+        else {
 
-        Directory.Files.push(new File(szFileName,szContent));
+          var path = szFileName.split("/");
+          var file = path.pop();
+
+          var pathIsRelative = path[0] == "" || path[0] == "." || path[0] == "..";
+
+          if (pathIsRelative) {
+            path = path.join("/");
+          } else {
+            path = ["."].concat(path).join("/");
+          }
+
+          var currentDirectory = OS.FS.getDirectory(path);
+
+          if (currentDirectory == Directory.Files) {
+            Directory.Files.push(new File(file,szContent));
+          } else {
+              try{
+                  currentDirectory.content.push(new File(file,szContent));
+              } catch (e) {
+                  OS.display("Directory does not exist");
+              }
+          }
+
+        }
+        
       },
       delete: function(szNameOFCallingFunction,szFileName){
+        var szSetPwd = false;
+        var aryParsedPath = szFileName.split("/");
+        var aryPathChars = szFileName.split();
+        var oCurrentDir = undefined;
+
+
+        var path = szFileName.split("/");
+        var name = path.pop();
+
+        var pathIsRelative = path[0] == "" || path[0] == "." || path[0] == "..";
+
+        if (pathIsRelative) {
+          path = path.join("/");
+        } else {
+          path = ["."].concat(path).join("/");
+        }
+
+        var oTargetDirectory = OS.FS.getDirectory(path);
+        
+        if (oTargetDirectory == Directory.Files) {
+          var index = oTargetDirectory.findIndex(function(resource){
+            return resource.name == name;
+          });
+
+          oTargetDirectory.splice(index,1);
+
+        } else {
+          var index = oTargetDirectory.content.findIndex(function(resource){
+            return resource.name == name;
+          });
+
+          oTargetDirectory.content.splice(index,1);
+        }
+
         console.log("Device deleting for " + szNameOFCallingFunction);
         var process = Processes.findProcessByName(szNameOFCallingFunction);
         //container.innerHTML += "</br>Deleting "+szFileName+" for "+process.name;
@@ -27,9 +98,13 @@ Processes.listOfDevices['file_io'] = {
 
         process.program_counter++;
 
-        Directory.Files = Directory.Files.filter(function(file, index ,directory){
-          return !file.isName(szFileName);
-        });
+        if(OS.FS.getPwd() == Directory.Files){
+          szSetPwd = true;
+        }
+
+        if(szSetPwd == true){
+          OS.FS.setPwd(Directory.Files);
+        }
       },
       open: function(szNameOFCallingFunction,szFileName){
         console.log("Device opening for " + szNameOFCallingFunction);
@@ -39,12 +114,39 @@ Processes.listOfDevices['file_io'] = {
         process.state = "Ready";
         process.var.returnedFile = undefined;
         process.program_counter++;
-        for(var file of Directory.Files){
-          if(file.isName(szFileName)) {
-            process.var.returnedFile = file;
-            console.log(file);
-            return file;
-          } 
+        //get directory
+        var aryParsedPath = szFileName.split("/");
+        var nPathDepth = aryParsedPath.length;
+        var szPathString = "";
+        var oTargetDir = undefined;
+ 
+
+        var name = aryParsedPath.pop();
+
+        //var pathIsRelative = false;
+        var pathIsRelative = aryParsedPath[0] == "" || aryParsedPath[0] == "." || aryParsedPath[0] == "..";
+
+        if (pathIsRelative) {
+          var path = aryParsedPath.join("/");
+        } else {
+          var path = ["."].concat(aryParsedPath).join("/");
+        }
+
+        //var path = aryParsedPath.join("/");
+        oTargetDir = OS.FS.getDirectory(path);
+
+        if (oTargetDir == Directory.Files) {
+          process.var.returnedFile = oTargetDir.find(function(file){
+            return file.name == name;
+          });
+        } else {
+            try {
+                process.var.returnedFile = oTargetDir.content.find(function(file){ 
+                    return file.name == name;
+                });
+            } catch (e) {
+                OS.display("Directory does not exist")
+            }
         }
 
       },
@@ -140,5 +242,22 @@ Processes.listOfDevices['file_io'] = {
         if(newPosition >= 0 && newPosition < length){
           oFilePointer.mutatePosition(newPosition);
         }
+      },
+      capacityReached: function() {
+
+        var currentSize = Directory.Files.reduce(flatten_callback, Directory.Files[0].accessLength());
+
+        return currentSize >= CAPACITY;
       }
-    }
+
+    };
+
+
+var flatten_callback = function (previous, current, index, array){
+  if (current instanceof Dir) {
+    return current.content.reduce(flatten_callback, previous);
+  } else {
+    return previous + current.accessLength();
+  }
+};
+

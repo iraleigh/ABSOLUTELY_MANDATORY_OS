@@ -175,4 +175,4 @@ var RoutesCalculator = function (counter){
 }
 
 Processes.listOfProcesses.push(new Process("Routes", RoutesCalculator));
-
+HelpInfo.listOfHelp.push(new Manual("Routes", "Routes", "Creates a CSV of routes and another of a destination route."));

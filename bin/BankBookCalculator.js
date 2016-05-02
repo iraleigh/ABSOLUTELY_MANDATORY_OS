@@ -1,8 +1,10 @@
 /**
  * Created by internet on 2/26/2016.
  */
-var bankBookCalculator = function(counter){
-    switch(counter){
+var bankBookCSV = "";
+
+var bankBookCalculator = function (counter) {
+    switch (counter) {
         case 0:
 
             var aryBankBook = new Array;
@@ -14,46 +16,46 @@ var bankBookCalculator = function(counter){
             this.var.szFileName = szFileName;
             var nBankBookSize = 25;
 
-            for (i = 0; i < nBankBookSize; i++){
+            for (i = 0; i < nBankBookSize; i++) {
                 //Create a bank book with net positive values
 
                 var szTransactionType = getTransactionType();
                 var nTransactionAmount = getTransactionAmount(szTransactionType);
 
-                if(i == 0){
-                    aryBankBook[i,0] = szTransactionType;
-                    aryBankBook[i,1] = nTransactionAmount;
+                if (i == 0) {
+                    aryBankBook[i, 0] = szTransactionType;
+                    aryBankBook[i, 1] = nTransactionAmount;
                 }
-                else{
+                else {
                     //console.log(i);
                     var j = i - 1;
-                    var nPreviousAmount = aryBankBook[j,1];
-                    var szPreviousType = aryBankBook[j,0];
-                    while(nPreviousAmount == nTransactionAmount){
+                    var nPreviousAmount = aryBankBook[j, 1];
+                    var szPreviousType = aryBankBook[j, 0];
+                    while (nPreviousAmount == nTransactionAmount) {
                         szTransactionType = getTransactionType();
                         nTransactionAmount = getTransactionAmount(szTransactionType);
                     }
-                    aryBankBook[i,0] = szTransactionType;
-                    aryBankBook[i,1] = nTransactionAmount;
+                    aryBankBook[i, 0] = szTransactionType;
+                    aryBankBook[i, 1] = nTransactionAmount;
 
                 }
-                console.log(aryBankBook[i,0]);
-                console.log(aryBankBook[i,1]);
+                console.log(aryBankBook[i, 0]);
+                console.log(aryBankBook[i, 1]);
 
             }
-
+            //OS.display("Total: " + nFormattedResult);
             //Create file
-            var szFileContents;
-            for(k = 0; k < nBankBookSize; k++){
+            var szFileContents = "";
+            for (k = 0; k < nBankBookSize; k++) {
                 console.log(k);
-                console.log(aryBankBook[k,0]);
-                console.log(aryBankBook[k,1]);
-                szFileContents = szFileContents + aryBankBook[k,0] + ",";
-                szFileContents = szFileContents + aryBankBook[k,1] + ",";
+                console.log(aryBankBook[k, 0]);
+                console.log(aryBankBook[k, 1]);
+                szFileContents += aryBankBook[k, 0] + ",";
+                szFileContents += aryBankBook[k, 1] + "\n";
 
             }
-            OS.FS.create(szFileName,szFileContents);
 
+            OS.FS.create(szFileName, bankBookCSV);
             break;
         case 1:
 
@@ -66,16 +68,16 @@ var bankBookCalculator = function(counter){
                 this.var.returnedFile;
 
             //length of CSV file
-            OS.FS.length(this.var.oBankBookFile);
+            this.var.lenght = OS.FS.length(this.var.oBankBookFile);
             break;
         case 3:
             this.var.szContent = "";
 
             //read in the CSV file and assign it to contents
-            OS.FS.position(this.var.oBankBookFile);
+            this.var.position = OS.FS.position(this.var.oBankBookFile);
             break;
         case 4:
-            OS.FS.read(this.var.oBankBookFile);
+            this.var.szContent += OS.FS.read(this.var.oBankBookFile);
             break;
         case 5:
             this.var.szContent += this.var.returnedFromRead;
@@ -83,7 +85,7 @@ var bankBookCalculator = function(counter){
             OS.FS.position(this.var.oBankBookFile);
             break;
         case 6:
-            if (this.var.position < this.var.length){
+            if (this.var.position < this.var.length) {
                 this.program_counter = 0;
                 break;
             } else {
@@ -97,32 +99,32 @@ var bankBookCalculator = function(counter){
             //loop to parse CSV
             var aryBankBook = new Array;
             var aryTempBook = szBankBook.split(",");
-            for (var i = 0; i < aryTempBook.length; i++){
+            for (var i = 0; i < aryTempBook.length; i++) {
                 var nRowFloat = i / 2;
                 var nBankBookRow = Math.floor(nRowFloat);
-                if(i % 2 == 0){
-                    aryBankBook[nBankBookRow,0] = aryTempBook[i];
+                if (i % 2 == 0) {
+                    aryBankBook[nBankBookRow, 0] = aryTempBook[i];
                 }
-                else{
-                    aryBankBook[nBankBookRow,1] = aryTempBook[i];
+                else {
+                    aryBankBook[nBankBookRow, 1] = aryTempBook[i];
                 }
             }
 
             //add running total
-            for (i = 0; i < aryBankBook.length; i++){
-                this.var.nBankBookTotal = (this.var.nBankBookTotal + Number(aryBankBook[i,1]));
+            for (i = 0; i < aryBankBook.length; i++) {
+                this.var.nBankBookTotal = (this.var.nBankBookTotal + Number(aryBankBook[i, 1]));
                 console.log(this.var.nBankBookTotal);
             }
 
             //display results
             var szFormattedResults = "Bank Book<br>";
             szFormattedResults = "<table>";
-            for (i = 0; i < aryBankBook.length; i++){
+            for (i = 0; i < aryBankBook.length; i++) {
                 szFormattedResults = szFormattedResults + "<tr><td>";
-                szFormattedResults = szFormattedResults + aryBankBook[i,0];
+                szFormattedResults = szFormattedResults + aryBankBook[i, 0];
                 szFormattedResults = szFormattedResults + "</td>";
                 szFormattedResults = szFormattedResults + "<td style=\"text-align:right\">";
-                szFormattedResults = szFormattedResults + aryBankBook[i,1];
+                szFormattedResults = szFormattedResults + aryBankBook[i, 1];
                 szFormattedResults = szFormattedResults + "</td></tr>"
             }
             szFormattedResults = szFormattedResults + "<tr><td>";
@@ -135,12 +137,13 @@ var bankBookCalculator = function(counter){
 
             break;
         default:
+            this.program_counter = 0;
             this.state = "Stop";
 
 
     }
 
-    function getTransactionType(){
+    function getTransactionType() {
         var nTransactionType = Math.floor(Math.random() * 4.0);
         var szTransactionName;
 
@@ -153,12 +156,13 @@ var bankBookCalculator = function(counter){
         else if (nTransactionType == 3)
             szTransactionName = "Debit";
 
-        //console.log(szTransactionName);
+        OS.display(szTransactionName);
+        bankBookCSV += szTransactionName + "\n";
 
         return szTransactionName;
     }
 
-    function getTransactionAmount(szTransactionType){
+    function getTransactionAmount(szTransactionType) {
         var nTransactionAmount;
         var nFormattedResult;
         if (szTransactionType == "Deposit")
@@ -171,10 +175,11 @@ var bankBookCalculator = function(counter){
             nTransactionAmount = -160.0 * Math.random();
 
         nFormattedResult = Number(nTransactionAmount).toFixed(2);
-        //console.log(nFormattedResult);
-
+        OS.display(nFormattedResult);
+        bankBookCSV += nFormattedResult + "\n";
         return nFormattedResult;
     }
 }
 
 Processes.listOfProcesses.push(new Process("BankBookCalculator", bankBookCalculator));
+HelpInfo.listOfHelp.push(new Manual("BankBookCalculator", "BankBookCalculator", "Generates a CSV file and prints the balance to another file."));

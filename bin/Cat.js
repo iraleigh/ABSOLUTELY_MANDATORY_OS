@@ -1,16 +1,17 @@
 var cat = function (counter) {
     switch (counter) {
-        case 0:
-            var args = this.args;
-            this.var.returnedFile = null;
-            OS.FS.open(args[0]);
-            if (args[0] == null) {
-                OS.display("No file specified");
-                this.state = "Stop";
-                this.program_counter = 0;
-                break;
-            }
-            break;
+      case 0:
+          var args = this.args;
+          this.var.returnedFile = null;
+          if (args[0] == null) {
+              OS.display("No file specified");
+              this.state = "Stop";
+              this.program_counter = 0;
+              break;
+          }
+          OS.FS.open(args[0]);
+          break;
+
 
         case 1:
             this.var.filePointer = this.var.returnedFile;
@@ -63,3 +64,4 @@ var cat = function (counter) {
     }
 }
 Processes.listOfProcesses.push(new Process("cat", cat));
+HelpInfo.listOfHelp.push(new Manual("cat", "cat [file_name]", "Displays the contents of a file."));
