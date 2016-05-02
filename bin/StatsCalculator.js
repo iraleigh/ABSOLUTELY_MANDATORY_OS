@@ -1,59 +1,97 @@
 /**
  * Created by internet on 2/26/2016.
  */
-var StatsCalculator =  function(counter){
+var StatsCalculator = function (counter) {
     switch(counter){
         case 0:
             console.log("Calculating Stats.");
-            OS.FS.create("/statsFile.csv",
+            OS.FS.create("statsFile.csv",
                 "1.10\n" + "5.09\n" + "0.97\n" + "1.59\n" + "4.60\n" + "0.32\n" +
                 "0.55\n" + "1.45\n" + "0.14\n" + "4.47\n" + "1.20\n" + "3.50\n" +
                 "5.02\n" + "4.67\n" + "5.22\n" + "2.69\n" + "3.98\n" + "3.17\n" +
                 "3.03\n" + "2.21\n" + "0.69\n" + "4.47\n" + "3.31\n" + "1.17\n" +
                 "0.76\n" + "1.17\n" + "1.57\n" + "2.62\n" + "1.66\n" + "2.05\n");
             break;
+
         case 1:
-
-            this.var.oStatsFile = OS.FS.open("/statsFile.csv");
-
+            var args = this.args;
+            this.var.returnedFile = null;
+            OS.FS.open("statsFile.csv");
             break;
+
         case 2:
-
-            OS.FS.length(this.var.oStatsFile);
-
+            this.var.filePointer = this.var.returnedFile;
+            this.var.filePointer.position = 0;
+            OS.FS.length(this.var.filePointer);
             break;
         case 3:
+            this.var.content = "";
 
-            this.var.szContent = "";
-            OS.FS.position(this.var.oStatsFile);
-
+            OS.FS.position(this.var.filePointer);
             break;
         case 4:
 
-            OS.FS.read(this.var.oStatsFile);
-
+            OS.FS.read(this.var.filePointer);
             break;
+
         case 5:
-
-            this.var.szContent += this.var.returnedFromRead;
-
-            OS.FS.position(this.var.oStatsFile);
-
+            this.var.content += this.var.returnedFromRead;
+            OS.FS.position(this.var.filePointer);
             break;
+
         case 6:
-            if( this.var.position < this.var.length) {
-
-                this.program_counter = 4;
+            if (this.var.position < this.var.length) {
+                this.program_counter = 3;
                 break;
-
             } else {
-
                 this.program_counter++;
-                break;
-
             }
+            break;
         case 7:
+            this.var.szContent = this.var.content;
+            OS.FS.close(this.var.filePointer.accessName());
+            break;
+        //case 1:
 
+        //    this.var.oStatsFile = OS.FS.open("/statsFile.csv");
+
+        //    break;
+        //case 2:
+
+        //    OS.FS.length(this.var.oStatsFile);
+
+        //    break;
+        //case 3:
+
+        //    this.var.szContent = "";
+        //    OS.FS.position(this.var.oStatsFile);
+
+        //    break;
+        //case 4:
+
+        //    OS.FS.read(this.var.oStatsFile);
+
+        //    break;
+        //case 5:
+
+        //    this.var.szContent += this.var.returnedFromRead;
+
+        //    OS.FS.position(this.var.oStatsFile);
+
+        //    break;
+        //case 6:
+        //    if( this.var.position < this.var.length) {
+
+        //        this.program_counter = 4;
+        //        break;
+
+        //    } else {
+
+        //        this.program_counter++;
+        //        break;
+
+        //    }
+        case 8:
             var rows =
                 this.var.szContent.split("\n").map(function (row) {
                     return row.split(",");
@@ -153,15 +191,15 @@ var StatsCalculator =  function(counter){
             };
             standardDeviation(rows);
 
-            OS.FS.create("/statsResult.csv", result);
+            OS.FS.create("statsResult.csv", result);
 
             break;
         case 8:
-            OS.FS.close("/statsFile.csv");
+            OS.FS.close("statsFile.csv");
 
             break;
         case 9:
-            OS.FS.close("/statsResult.csv");
+            OS.FS.close("statsResult.csv");
 
         default:
             this.state = "Stop";
@@ -169,3 +207,4 @@ var StatsCalculator =  function(counter){
 }
 
 Processes.listOfProcesses.push(new Process("CalculateStats", StatsCalculator));
+HelpInfo.listOfHelp.push(new Manual("CalculateStats", "CalculateStats", "Creatse a CSV of statistical information, and outputs its stats to another CSV."));

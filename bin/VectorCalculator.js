@@ -8,7 +8,7 @@ var VectorCalculator = function (counter){
             var iFileLength;
 
             // Format for the CSV file is ( i-component,j-component )
-            OS.FS.create("/vectorData.csv", "4,2,\n" +
+            OS.FS.create("vectorData.csv", "4,2,\n" +
                 "1,7,\n" +
                 "-3,2,\n" +
                 "6,9,\n" +
@@ -21,7 +21,7 @@ var VectorCalculator = function (counter){
             break;
         case 1:
             //pointer to CSV file
-            OS.FS.open("/vectorData.csv");
+            OS.FS.open("vectorData.csv");
             break;
         case 2:
             this.var.oVectorDataPointer = this.var.returnedFile;
@@ -80,14 +80,14 @@ var VectorCalculator = function (counter){
             var szResults = (iOutputDataI.toString() + "i, ") + iOutputDataJ.toString() + "j";
 
 
-            OS.FS.create("/Results.csv", szResults);
+            OS.FS.create("Results.csv", szResults);
             break;
         case 8:
-            OS.FS.close("/vectorData");
+            OS.FS.close("vectorData");
         default:
             this.state = "Stop";
     }
 }
 
 Processes.listOfProcesses.push(new Process("CalculateVectors", VectorCalculator));
-
+HelpInfo.listOfHelp.push(new Manual("CalculateVectors", "CalculateVectors", "Generates some vectors, and calculates their sum. Outputs to some CSV files."));

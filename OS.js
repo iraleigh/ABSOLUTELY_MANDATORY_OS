@@ -410,6 +410,6 @@ semaphores: {
     // call the next in the queue and remember to shift back and push itself to the end of the queue
   }
 },
-  Users: []
+Users: [],
   
-};
+}
