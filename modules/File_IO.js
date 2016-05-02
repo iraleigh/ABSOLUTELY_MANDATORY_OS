@@ -73,7 +73,7 @@ Processes.listOfDevices['file_io'] = {
           path = ["."].concat(path).join("/");
         }
 
-        var currentDirectory = OS.FS.getDirectory(path);
+        var oTargetDirectory = OS.FS.getDirectory(path);
         
         if (oTargetDirectory == Directory.Files) {
           var index = oTargetDirectory.findIndex(function(resource){
