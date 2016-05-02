@@ -426,11 +426,11 @@ semaphores: {
   }
 },
   //Maybe I don't need the newUserName and password I just use the userObject they are passed in.
-  UserSwap: function(newUserName, password, userObject)
+  UserSwap: function(userObject)
   {
     var userNameFlag = false;
     var passwordFlag = false;
-    var flag = false;
+    var access = false;
 
     //This check may not be necessary since we do it in the switch user process, but it's safe to keep it here I guess.
     //check if the user name is in the OS.Users array on the OS.
@@ -449,12 +449,12 @@ semaphores: {
 
     if(userNameFlag == true && passwordFlag == true)
     {
-      flag = true;
+      access = true;
     }
 
     //if the userName is different than what is already in the singleton, and the username exists on the OS
     //replace the
-    if(currentUserSingleton.getInstance().getUserName() != newUserName && flag == true)
+    if(currentUserSingleton.getInstance().getUserName() != userObject.getUserName() && access == true)
     {
       currentUserSingleton.setInstance(userObject);
     }
