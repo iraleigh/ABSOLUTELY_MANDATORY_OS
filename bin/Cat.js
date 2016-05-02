@@ -2,12 +2,21 @@ var cat = function (counter) {
     switch (counter) {
         case 0:
           var hasAccess = false;
-          //I'm not sure getting the file like this is okay?
-          //I'm like 90% sure you cannot open a file like this.
-          var file = this.var.returnedFile;
-          //Check to see if the current user has permission to read from the file.
+          var oTargetFile;
 
-          file.accessGroup.forEach(function(userObject,index,array)
+          //Hard coded cannot cat multiple files and check at the same time.
+          this.var.szFileName = this.args[1];
+
+          //Check to see if the current user has permission to read from the file.
+          directories.Files.forEach(function(file, index, array)
+          {
+              if(file.name == this.var.szFileName)
+              {
+                  oTargetFile = file;
+              }
+          });
+
+          oTargetFile.accessGroup.forEach(function(userObject,index,array)
           {
               if(currentUserSingleton.getInstance().getUserName() == userObject.getUserName())
               {
@@ -19,7 +28,7 @@ var cat = function (counter) {
           //If the current user does not have permission to read from the file, error out.
           if(hasAccess != true)
           {
-              OS.display("You do not have permission to read from " + file.accessName());
+              OS.display("You do not have permission to read from " + oTargetFile.accessName());
               this.state = "Stop";
               this.program_counter = 0;
           }
