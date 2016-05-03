@@ -232,7 +232,11 @@ var OS = {
                 case ".":
                     if (directories_in_path.length > 1) {
                         try{
-                            current_position_in_fs.forEach(recursive_directory_search);
+                            if (current_position_in_fs == Directory.Files) {
+                              current_position_in_fs.forEach(recursive_directory_search);
+                            } else {
+                              current_position_in_fs.content.forEach(recursive_directory_search);
+                            }
                             return oCurrentDir;
                         } catch (e) {
                             return;
