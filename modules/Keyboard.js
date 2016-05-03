@@ -20,8 +20,8 @@ Processes.listOfDevices['keyboard'] = {
 
             //console.log(CurrentUserSingleton.getInstance().getUserName());
 
-            console.log("Before");
-            console.log(process.execAccess[0]);
+            console.log("BEFORE");
+            //console.log(process.execAccess[0]);
             //process.execAccess.forEach(function(element, index, array)
             //{
             //    console.log("In foreach");
@@ -36,10 +36,16 @@ Processes.listOfDevices['keyboard'] = {
             //        }
             //    }
             //});
+            if(process == undefined)
+            {
+                return CLI.status.BAD_COMMAND;
+            }
+
             for(var i = 0; i <= process.execAccess.length - 1; i++)
             {
-                console.log(process.execAccess[i]);
+                console.log(process.execAccess[i].getUserName());
                 console.log(i);
+                console.log(CurrentUserSingleton.getInstance().getUserName());
                 if(process.execAccess[i].getUserName() == CurrentUserSingleton.getInstance().getUserName())
                 {
                     hasAccess = true;

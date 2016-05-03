@@ -23,7 +23,7 @@ var SwitchUser = function(counter)
                 //userObject.getPassword();
                 if(userObject.getUserName() == args[0] && userObject.getPassword() == args[1])
                 {
-                    console.log(userObject);
+                    //console.log(userObject);
                     OS.UserSwap(userObject);
                 }
             });

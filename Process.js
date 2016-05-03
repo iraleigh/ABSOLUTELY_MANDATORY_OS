@@ -17,9 +17,27 @@ function Process (name,main) {
 
 	this.setLastAccess = function (ObjDate){
         this.last_access = ObjDate;
-    }
+    };
 
 	this.newThread = function(name, callback) {
 		this.threads[name] = new Thread(this.name, name, this.var,callback);
 	};
+
+	this.addExecAccess = function(userObject)
+	{
+		this.execAccess.push(userObject);
+	};
+
+	this.removeExecAccess = function(userObject)
+	{
+		var aGroup = this.execAccess;
+		this.execAccess.forEach(function(element,index,array)
+		{
+			if(element.getUserName == userObject.getUserName)
+			{
+				aGroup.splice(index, 1);
+			}
+		});
+		return aGroup;
+	}
 }

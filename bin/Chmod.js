@@ -9,7 +9,8 @@ var Chmod = function(counter)
     //if user is the file owner allow this person to add or remove from access group.
     //Example of Chmod usage:
     //Chmod rm userName fileName
-    //chmod add userName fileName
+    //Chmod add userName fileName
+    //Chmod (add/rm) userName process name.
     switch(counter)
     {
         case 0:
@@ -18,6 +19,8 @@ var Chmod = function(counter)
             var addFlag = false;
             var user = null;
             var oTargetFile = null;
+            var oTargetProcess = null;
+            var completed = false;
 
             //the rm, and add is necessary, so is the userName and fileName that you want to adjust.
             //so we for sure need 3 arguments in exactly that order.
@@ -52,31 +55,75 @@ var Chmod = function(counter)
                    oTargetFile = file;
                }
             });
-
             console.log(oTargetFile);
 
+            Processes.listOfProcesses.forEach(function(element,index,array)
+            {
+                if(element.name == args[2])
+                {
+                    oTargetProcess = element;
+                }
+            });
+
             //If this person who is currently logged in owns the file let him/her modify permissions.
-            console.log(oTargetFile.fileOwner);
             console.log(CurrentUserSingleton.getInstance().getUserName());
 
-            if(CurrentUserSingleton.getInstance().getUserName() == oTargetFile.fileOwner.getUserName())
+            if(oTargetProcess == null)
             {
-                if(removeFlag == true)
+                if(CurrentUserSingleton.getInstance().getUserName() == oTargetFile.fileOwner.getUserName())
                 {
-                    oTargetFile.removeFromAccessGroup(user)
+                    if(removeFlag == true)
+                    {
+                        oTargetFile.removeFromAccessGroup(user)
+                    }
+                    if(addFlag == true)
+                    {
+                        console.log("IN PUSH USER TO ACCESS GROUP");
+                        oTargetFile.addToAccessGroup(user);
+                    }
                 }
-                if(addFlag == true)
+                else
                 {
-                    console.log("IN PUSH USER TO ACCESS GROUP");
-                    oTargetFile.addToAccessGroup(user);
+                    OS.display("You do not have the rights to give or remove access to this file.");
                 }
-            }
-            else
-            {
-                OS.display("You don't have access to add or remove people biatch!");
             }
 
-            console.log(oTargetFile.accessGroup);
+            //Adds an undefined?! what?
+            if(oTargetFile == null)
+            {
+                oTargetProcess.execAccess.forEach(function(element,index,array)
+                {
+                    if(element.userName == CurrentUserSingleton.getInstance().getUserName() && removeFlag == true)
+                    {
+                        console.log("in remove");
+                        oTargetProcess.removeExecAccess(user);
+                        completed = true;
+                    }
+                    else if(element.userName == CurrentUserSingleton.getInstance().getUserName() && addFlag == true)
+                    {
+                        console.log("in add");
+                        oTargetProcess.addExecAccess(user);
+                        completed = true;
+                    }
+                });
+                //if(CurrentUserSingleton.getInstance().getUserName() == oTargetProcess.)
+                //{
+                //    if(removeFlag == true)
+                //    {
+                //
+                //    }
+                //    if(addFlag == true)
+                //    {
+                //
+                //    }
+                //}
+                if(completed == false)
+                {
+                    OS.display("You do not have the rights to give or remove access to this process.");
+                }
+            }
+            console.log(oTargetProcess.execAccess);
+
             //this.var.args.forEach(function(element,index,array)
             //{
             //   if(element == "rm")
