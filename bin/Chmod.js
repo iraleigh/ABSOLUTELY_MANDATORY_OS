@@ -42,7 +42,7 @@ var Chmod = function(counter)
             });
 
             //I'm not sure if this is the correct way to get a file object...
-            directories.Files.forEach(function(File,index,array)
+            Directory.Files.forEach(function(File,index,array)
             {
                if(File == args[2])
                {
@@ -51,7 +51,7 @@ var Chmod = function(counter)
             });
 
             //If this person who is currently logged in owns the file let him/her modify permissions.
-            if(currentUserSingleton.getInstance().getUserName() == file.getOwner())
+            if(CurrentUserSingleton.getInstance().getUserName() == file.getOwner())
             {
                 if(removeFlag)
                 {
