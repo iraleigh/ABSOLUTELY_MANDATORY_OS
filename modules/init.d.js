@@ -1,17 +1,18 @@
 function init_d() {
-    //OS
-    Processes.generateListOfProcesses();
-
     //Initialize the current user
     CurrentUserSingleton.getInstance();
+
     //initialize users on the OS.
     OS.Users.push(new User("Guest", "Password"));
     OS.Users.push(new User("matt", "cool"));
 
     //Set the current user to Matt so all the files upon start up will belong to me.
     CurrentUserSingleton.setInstance(OS.Users[1]);
-    //OS.Users.push(["Super"])
 
+    //OS
+    Processes.generateListOfProcesses();
+
+    //OS.Users.push(["Super"])
 
     console.log("before dummy");
     addDummyFiles();
@@ -31,5 +32,6 @@ function init_d() {
     //Super user init
     OS.Users['Super'] = new User('Super', 'MattsCool');
     //Set the current user back to the guest user.
-    CurrentUserSingleton.setInstance(OS.Users[0]);
+    //CurrentUserSingleton.setInstance(OS.Users[0]);
+    console.log(CurrentUserSingleton.getInstance());
 }

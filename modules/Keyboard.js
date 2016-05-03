@@ -2,6 +2,7 @@ Processes.listOfDevices['keyboard'] = {
     main: function (input) {
         var nameOfProcess;
         var process;
+        var hasAccess = false;
         pipes = input.split('|');
         for (var pipe_iterator = 0; pipe_iterator < pipes.length; pipe_iterator++) {
             CLI.STDIn = CLI.STDOut;
@@ -16,14 +17,34 @@ Processes.listOfDevices['keyboard'] = {
                 }
             nameOfProcess = input.shift();
             process = Processes.findProcessByName(nameOfProcess);
-            if (process) {
-                process.args = input;
-                process.state = "Ready";
-                while (Processes.findProcessByName(nameOfProcess).state != "Stop")
-                    OS.Scheduler.runNextProcess();
-            } else {
-                return CLI.status.BAD_COMMAND;
+
+            console.log(CurrentUserSingleton.getInstance());
+            process.execAccess.forEach(function(element, index, array)
+            {
+                console.log(element);
+                if(element.getUserName() == CurrentUserSingleton.getInstance().getUserName())
+                {
+                    hasAccess = true;
+                }
+            });
+
+            console.log(hasAccess);
+            if(hasAccess == true)
+            {
+                if (process) {
+                    process.args = input;
+                    process.state = "Ready";
+                    while (Processes.findProcessByName(nameOfProcess).state != "Stop")
+                        OS.Scheduler.runNextProcess();
+                } else {
+                    return CLI.status.BAD_COMMAND;
+                }
             }
+            else
+            {
+                OS.display("You do not have access to use this command!");
+            }
+
         }
         OS.outputToConsole();
     }

@@ -49,14 +49,16 @@ function File(szName,szContent){
         this.fileOwner = newOwner;
     }
     //I have a feeling this function will not work, becuase of the bad usage of this?>
-    this.removeFromAcessGroup = function(userObject){
+    this.removeFromAccessGroup = function(userObject){
+        var aGroup = this.accessGroup;
         this.accessGroup.forEach(function(element,index,array)
         {
             if(element.getUserName == userObject.getUserName)
             {
-                this.accessGroup.splice(index, 1);
+                aGroup.splice(index, 1);
             }
         });
+        return aGroup;
     }
     this.addToAccessGroup = function (userObject){
         this.accessGroup.push(userObject);

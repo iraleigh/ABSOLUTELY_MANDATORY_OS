@@ -6,6 +6,8 @@ function Process (name,main) {
 	this.main = main;
 	this.threads = [];
 	this.main.displayName = this.name;
+	this.execAccess = [];
+	this.execAccess.push(CurrentUserSingleton.getInstance());
 	this.last_access = Date.now();
 
 	this.setLastAccess = function (ObjDate){

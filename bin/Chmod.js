@@ -17,7 +17,7 @@ var Chmod = function(counter)
             var removeFlag = false;
             var addFlag = false;
             var user = null;
-            var file = null;
+            var oTargetFile = null;
 
             //the rm, and add is necessary, so is the userName and fileName that you want to adjust.
             //so we for sure need 3 arguments in exactly that order.
@@ -29,40 +29,54 @@ var Chmod = function(counter)
             }
             else if(args[0] == "add")
             {
+                console.log("addFlag = true;");
                 addFlag = true;
             }
 
             //Check who the user is that you want to remove or add from the access group.
             OS.Users.forEach(function(userObject,index,array)
             {
-                if(userObject.getUserName == args[1])
+                if(userObject.getUserName() == args[1])
                 {
                     user = userObject;
                 }
             });
+            console.log(user);
 
+            console.log(args[2]);
             //I'm not sure if this is the correct way to get a file object...
-            Directory.Files.forEach(function(File,index,array)
+            Directory.Files.forEach(function(file,index,array)
             {
-               if(File == args[2])
+               if(file.name == args[2])
                {
-                   file = File;
+                   oTargetFile = file;
                }
             });
 
+            console.log(oTargetFile);
+
             //If this person who is currently logged in owns the file let him/her modify permissions.
-            if(CurrentUserSingleton.getInstance().getUserName() == file.getOwner())
+            console.log(oTargetFile.fileOwner);
+            console.log(CurrentUserSingleton.getInstance().getUserName());
+
+            if(CurrentUserSingleton.getInstance().getUserName() == oTargetFile.fileOwner.getUserName())
             {
-                if(removeFlag)
+                if(removeFlag == true)
                 {
-                    file.removeFromAcessGroup(user)
+                    oTargetFile.removeFromAccessGroup(user)
                 }
-                if(addFlag)
+                if(addFlag == true)
                 {
-                    file.addToAccessGroup(user);
+                    console.log("IN PUSH USER TO ACCESS GROUP");
+                    oTargetFile.addToAccessGroup(user);
                 }
             }
+            else
+            {
+                OS.display("You don't have access to add or remove people biatch!");
+            }
 
+            console.log(oTargetFile.accessGroup);
             //this.var.args.forEach(function(element,index,array)
             //{
             //   if(element == "rm")
@@ -90,6 +104,7 @@ var Chmod = function(counter)
             //        }
             //    });
             //});
+            this.program_counter++;
             break;
 
         default:
