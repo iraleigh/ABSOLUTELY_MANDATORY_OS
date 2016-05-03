@@ -23,6 +23,14 @@ var cat = function (counter) {
                 this.program_counter = 0;
                 break;
             }
+
+            if (this.var.filePointer.fileType == "Directory") {
+                OS.display("Cannot display the contents of a directory");
+                this.state = "Stop";
+                this.program_counter = 0;
+                break;
+            }
+
             this.var.filePointer.position = 0;
             OS.FS.length(this.var.filePointer);
             break;
