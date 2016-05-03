@@ -3,9 +3,19 @@ function init_d() {
     Processes.generateListOfProcesses();
 
     //Initialize the current user
-    currentUserSingleton.getInstance();
+    CurrentUserSingleton.getInstance();
+    //initialize users on the OS.
+    OS.Users.push(new User("Guest", "Password"));
+    OS.Users.push(new User("matt", "cool"));
 
+    //Set the current user to Matt so all the files upon start up will belong to me.
+    CurrentUserSingleton.setInstance(OS.Users[1]);
+    //OS.Users.push(["Super"])
+
+
+    console.log("before dummy");
     addDummyFiles();
+    console.log("after dummy");
     //CLI
     CLI.oldInput = "<b>AMOS</b>\nFor help getting started, type 'help'\n\n/> ";
     CLI.commandHistory.push("");
@@ -20,4 +30,6 @@ function init_d() {
     Processes.listOfDevices['file_io'].state = "Ready";
     //Super user init
     OS.Users['Super'] = new User('Super', 'MattsCool');
+    //Set the current user back to the guest user.
+    CurrentUserSingleton.setInstance(OS.Users[0]);
 }

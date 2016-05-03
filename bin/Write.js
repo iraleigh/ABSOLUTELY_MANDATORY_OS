@@ -10,14 +10,18 @@ var Write = function(counter)
         case 0:
             this.var.args = this.args;
             this.var.szFileName = this.var.args[0];
+            var fileName = this.var.szFileName;
+            console.log(this.var.args[0]);
+
             var hasAccess = false;
             var oTargetFile;
 
             //stop everything if the user does not have read/write access rights to the file.
             //oTargetFile may not be initialized
-            directories.Files.forEach(function(file, index, array)
+            //Needs to grab all the files in every directory not just the top most one...
+            Directory.Files.forEach(function(file, index, array)
             {
-                if(file.name == this.var.szFileName)
+                if(file.name == fileName)
                 {
                     oTargetFile = file;
                 }
@@ -25,16 +29,16 @@ var Write = function(counter)
 
             oTargetFile.accessGroup.forEach(function(userObject, index, array)
             {
-                if(currentUserSingleton.getInstance().getUserName() == userObject.getUserName())
+                if(CurrentUserSingleton.getInstance().getUserName() == userObject.getUserName())
                 {
                     hasAccess = true;
                 }
             });
 
             //If the current user does not have access to the file stop the process. And error out.
-            if(hasAccess != true)
+            if(hasAccess == false)
             {
-                OS.display("You do not have permission to write to " + file.accessName());
+                OS.display("You do not have permission to write to " + oTargetFile.accessName());
                 this.state = "Stop";
                 this.program_counter = 0;
             }
@@ -47,8 +51,9 @@ var Write = function(counter)
             break;
 
         case 1:
-            this.var.oFilePointer = this.returnedFile;
-            this.var.fileLength = OS.FS.length(oFilePointer);
+            this.var.oFilePointer = this.var.returnedFile;
+            this.var.fileLength = OS.FS.length(this.var.oFilePointer);
+
             break;
 
         case 2:
@@ -57,6 +62,10 @@ var Write = function(counter)
             break;
 
         case 3:
+            OS.FS.position(this.var.oFilePointer);
+            break;
+
+        case 4:
 
             this.var.szNewContent = "";
 
@@ -71,9 +80,9 @@ var Write = function(counter)
             OS.FS.write(this.var.oFilePointer, this.var.szNewContent);
             break;
 
-        case 4:
+        case 5:
             //Possibly may need a slash in the file name? Not sure exactly what is in the initial arg.
-            OS.FS.close(this.var.szFileName);
+            OS.FS.close("/" + this.var.szFileName);
             break;
 
         default:

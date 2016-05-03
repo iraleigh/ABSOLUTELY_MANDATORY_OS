@@ -9,14 +9,19 @@ var SwitchUser = function(counter)
     switch(counter)
     {
         case 0:
-            this.var.args = this.args;
-
+            var args = this.args;
+            console.log(args[0]);
+            console.log(args[1]);
             //just find the userObject that equals the username and password provided?
 
             OS.Users.forEach(function(userObject,index,array)
             {
-                if(userObject.getUserName == this.var.args[0] && userObject.getPassword == this.var.args[1])
+                //console.log(userObject);
+                userObject.getUserName();
+                userObject.getPassword();
+                if(userObject.getUserName() == args[0] && userObject.getPassword() == args[1])
                 {
+                    console.log(userObject);
                     OS.UserSwap(userObject);
                 }
             });

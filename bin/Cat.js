@@ -5,20 +5,24 @@ var cat = function (counter) {
           var oTargetFile;
 
           //Hard coded cannot cat multiple files and check at the same time.
-          this.var.szFileName = this.args[1];
+          var szFileName = this.args[0];
+            console.log(this.args[0]);
 
           //Check to see if the current user has permission to read from the file.
-          directories.Files.forEach(function(file, index, array)
+            //Reading like this does not give files deeper in directories. Just the top directory.
+          Directory.Files.forEach(function(file, index, array)
           {
-              if(file.name == this.var.szFileName)
+              if(file.name == szFileName)
               {
                   oTargetFile = file;
               }
           });
-
+            console.log(oTargetFile);
+            var currentUser = CurrentUserSingleton.getInstance();
+            console.log(currentUser);
           oTargetFile.accessGroup.forEach(function(userObject,index,array)
           {
-              if(currentUserSingleton.getInstance().getUserName() == userObject.getUserName())
+              if(currentUser.userName == userObject.userName)
               {
                   hasAccess = true;
               }
@@ -26,7 +30,7 @@ var cat = function (counter) {
 
           //Written this way to try to maintain logic of the cat process.
           //If the current user does not have permission to read from the file, error out.
-          if(hasAccess != true)
+          if(hasAccess == false)
           {
               OS.display("You do not have permission to read from " + oTargetFile.accessName());
               this.state = "Stop";
@@ -43,8 +47,8 @@ var cat = function (counter) {
                   this.program_counter = 0;
                   break;
               }
+              //OS.FS.open(szFileName);
           }
-          OS.FS.open(args[0]);
           break;
 
         case 1:
