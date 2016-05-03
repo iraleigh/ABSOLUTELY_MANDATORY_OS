@@ -3,14 +3,16 @@ function init_d() {
     CurrentUserSingleton.getInstance();
 
     //initialize users on the OS.
-    OS.Users.push(new User("Guest", "Password"));
-    OS.Users.push(new User("matt", "cool"));
+    OS.Users.push(new User("Guest", "Pass")); //acts as Guest user upon start up, has limited access.
+    OS.Users.push(new User("matt", "cool")); //acts as super user.
 
     //Set the current user to Matt so all the files upon start up will belong to me.
     CurrentUserSingleton.setInstance(OS.Users[1]);
 
     //OS
     Processes.generateListOfProcesses();
+
+
 
     //OS.Users.push(["Super"])
 
@@ -29,8 +31,7 @@ function init_d() {
     Processes.listOfDevices['display'].state = "Ready";
     Processes.listOfDevices['file_io'].name = "File IO";
     Processes.listOfDevices['file_io'].state = "Ready";
-    //Super user init
-    OS.Users['Super'] = new User('Super', 'MattsCool');
+
     //Set the current user back to the guest user.
     //CurrentUserSingleton.setInstance(OS.Users[0]);
     console.log(CurrentUserSingleton.getInstance());

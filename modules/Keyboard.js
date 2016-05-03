@@ -18,17 +18,40 @@ Processes.listOfDevices['keyboard'] = {
             nameOfProcess = input.shift();
             process = Processes.findProcessByName(nameOfProcess);
 
-            console.log(CurrentUserSingleton.getInstance());
-            process.execAccess.forEach(function(element, index, array)
+            //console.log(CurrentUserSingleton.getInstance().getUserName());
+
+            console.log("Before");
+            console.log(process.execAccess[0]);
+            //process.execAccess.forEach(function(element, index, array)
+            //{
+            //    console.log("In foreach");
+            //    console.log(element);
+            //    console.log(element.userName);
+            //    console.log(CurrentUserSingleton.getInstance().getUserName());
+            //    if(element.userName == null || element.userName == undefined || element.userName == CurrentUserSingleton.getInstance().getUserName())
+            //    {
+            //        if(element != undefined)
+            //        {
+            //            hasAccess = true;
+            //        }
+            //    }
+            //});
+            for(var i = 0; i <= process.execAccess.length - 1; i++)
             {
-                console.log(element);
-                if(element.getUserName() == CurrentUserSingleton.getInstance().getUserName())
+                console.log(process.execAccess[i]);
+                console.log(i);
+                if(process.execAccess[i].getUserName() == CurrentUserSingleton.getInstance().getUserName())
                 {
                     hasAccess = true;
                 }
-            });
+                if(hasAccess == true)
+                {
+                    i = 10000000000000000000;
+                }
+            }
+            console.log("AFTER");
 
-            console.log(hasAccess);
+            //console.log(hasAccess);
             if(hasAccess == true)
             {
                 if (process) {
