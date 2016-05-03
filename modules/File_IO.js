@@ -175,7 +175,7 @@ Processes.listOfDevices['file_io'] = {
         var length = oFilePointer.accessLength();
         var endIndex = position + 100;
         if (position >= length){
-          return "";
+          content = "";
         } else if(endIndex <= length){
           content = oFilePointer.accessContent().substring(position, endIndex);
           oFilePointer.mutatePosition(endIndex);
