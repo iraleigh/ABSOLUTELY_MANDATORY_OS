@@ -44,6 +44,7 @@ var cat = function (counter) {
                   break;
               }
           }
+          OS.FS.open(args[0]);
           break;
 
         case 1:

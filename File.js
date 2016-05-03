@@ -4,6 +4,9 @@ function File(szName,szContent){
     this.position = 0;
     this.length = szContent.length;
     this.fileType = "File";
+    this.accessGroup = [];
+    this.accessGroup.push(OS.Users["Super"]);
+    this.accessGroup.push(OS.Users["currentUser"]);
     this.fileOwner = currentUserSingleton.getInstance().getUserName(); //The person who is currently logged in gets to be the file owner.
 
     //Added date object to file definition.

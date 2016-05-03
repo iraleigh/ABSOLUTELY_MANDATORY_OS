@@ -1,10 +1,10 @@
 var ContactManager = function(counter) {
 	 switch (counter){
-          case 0:
-          console.log("Contact Manger called.")
+	     case 0:
+	         OS.display("Generating ContactManager.csv");
           //Sorry for this:
           //Contacts from https://www.briandunning.com/sample-data/
-          OS.FS.create("/ContactManager.csv",
+          OS.FS.create("ContactManager.csv",
           "James,Butt,6649 N Blue Gum St,New Orleans,LA,70116,504-621-8927,jbutt@gmail.com\n"
           + "Josephine,Darakjy,4 B Blue Ridge Blvd,Brighton,MI,48116,810-292-9388,josephine_darakjy@darakjy.org\n"
           + "Art,Venere,8 W Cerritos Ave #54,Bridgeport,NJ,8014,856-636-8749,art@venere.org\n"
@@ -57,7 +57,7 @@ var ContactManager = function(counter) {
           + "Blair,Malet,209 Decker Dr,Philadelphia,PA,19132,215-907-9111,bmalet@yahoo.com");
           break;
           case 1:
-          OS.FS.open("/ContactManager.csv");
+          OS.FS.open("ContactManager.csv");
           break;
 
           case 2:
@@ -103,52 +103,37 @@ var ContactManager = function(counter) {
             }
           );
 
-          OS.FS.close("/ContactManager.csv");
+          OS.FS.close("ContactManager.csv");
           break;
 
-          case 8:
-          //Hardcoded search person
-          console.log("Searching info for Fletcher,Flosi");
-          var searchFirstName = "Fletcher";
-          var searchLastName = "Flosi";
-          var output = "";
-          var rows = this.var.rows;
-          //Search through all the entries
-          for (i = 0; i < rows.length; i++) {
-            if (rows[i][0] == searchFirstName && rows[i][1] == searchLastName) {
-              //Write the entry to output variable
-              for (j = 0; j < rows[i].length; j++) {
-                output += rows[i][j];
-                //Add a comma except for at the end
-                if (j < (rows[i].length - 1))
-                output += ",";
-              }
-              output += "\n";
-            }
-          }
-          console.log("To be written: " + output);
-          this.var.output = output;
-          //Open and write to the resultant file
-          OS.FS.create("/ContactManager_Results.csv", "");
-          break;
+	     case 8:
+	         //Hardcoded search person
+	         OS.display("Searching info for Fletcher,Flosi");
+	         var searchFirstName = "Fletcher";
+	         var searchLastName = "Flosi";
+	         var output = "";
+	         var rows = this.var.rows;
+	         //Search through all the entries
+	         for (i = 0; i < rows.length; i++) {
+	             if (rows[i][0] == searchFirstName && rows[i][1] == searchLastName) {
+	                 //Write the entry to output variable
+	                 for (j = 0; j < rows[i].length; j++) {
+	                     output += rows[i][j];
+	                     //Add a comma except for at the end
+	                     if (j < (rows[i].length - 1))
+	                         output += ",";
+	                 }
+	                 output += "\n";
+	             }
+	         }
+	         OS.display("To be written: " + output);
+	         OS.FS.create("ContactManager_Results.csv", output);
+	         break;
 
-          case 9:
-          var oContactManagerResultFile = OS.FS.open("/ContactManager_Results.csv");
-          break;
-
-          case 10:
-          this.var.oContactManagerResultFile =
-          this.var.returnedFile;
-          var output = this.var.output;
-
-          OS.FS.write(this.var.oContactManagerResultFile, output);
-          break;
-
-          case 11:
-          OS.FS.close("/ContactManager_Results.csv");
 
           default:
           this.state = "Stop";
 }
 }
 Processes.listOfProcesses.push(new Process("ContactManager", ContactManager));
+HelpInfo.listOfHelp.push(new Manual("ContactManager", "ContactManager", "Generates a CSV file of contacts, and selects a specific contact to output to another file."));

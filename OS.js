@@ -425,6 +425,9 @@ semaphores: {
     // call the next in the queue and remember to shift back and push itself to the end of the queue
   }
 },
+Users: [],
+
+},
   //Maybe I don't need the newUserName and password I just use the userObject they are passed in.
   UserSwap: function(userObject)
   {

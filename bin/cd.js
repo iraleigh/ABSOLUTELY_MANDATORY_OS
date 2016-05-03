@@ -1,10 +1,17 @@
 var cd = function(counter){
-  //Define variables
-  this.oCurrentDir = undefined;
-  var szArgs = this.args[0];
-  var aryArgsCharArr = szArgs.split();
-  var aryParsedPath = szArgs.split("/");
+    //Error out if no args are passed
+  if (this.args[0] == null) {
+      OS.display("No directory specified");
+      this.state = "Stop";
+      this.program_counter = 0;
+      return;
+  }
 
+    //Define variables
+   this.oCurrentDir = undefined;
+   var szArgs = this.args[0];
+   var aryArgsCharArr = szArgs.split();
+   var aryParsedPath = szArgs.split("/");
 
   if (aryArgsCharArr[0] == "/"){
     //change to root directory
@@ -74,3 +81,4 @@ var cd = function(counter){
   this.program_counter = 0;
 }
 Processes.listOfProcesses.push(new Process("cd",cd));
+HelpInfo.listOfHelp.push(new Manual("cd", "cd [directory_name]", "Changes current working directory to the one specified."));
