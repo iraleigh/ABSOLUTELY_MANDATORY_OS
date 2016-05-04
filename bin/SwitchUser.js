@@ -34,6 +34,10 @@ var SwitchUser = function(counter)
             {
                 OS.display("You entered the incorrect password or user name.");
             }
+            else
+            {
+                OS.display("You logged in as " + CurrentUserSingleton.getInstance().getUserName());
+            }
 
             this.program_counter++;
             break;
