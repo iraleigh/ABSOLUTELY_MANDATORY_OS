@@ -50,10 +50,23 @@ var Chmod = function(counter)
             //I'm not sure if this is the correct way to get a file object...
             Directory.Files.forEach(function(file,index,array)
             {
-               if(file.name == args[2])
-               {
-                   oTargetFile = file;
-               }
+                if(file instanceof Dir)
+                {
+                file.content.forEach(function(element, index, array)
+                {
+                    if(element.name == args[2])
+                    {
+                        console.log("in first if statement");
+                        oTargetFile = element;
+                    }
+                });
+                }
+                if(file.name == args[2])
+                {
+                    console.log("in 2nd if statement");
+                    oTargetFile = file;
+                }
+
             });
             console.log(oTargetFile);
 
@@ -80,6 +93,7 @@ var Chmod = function(counter)
                     {
                         console.log("IN PUSH USER TO ACCESS GROUP");
                         oTargetFile.addToAccessGroup(user);
+                        console.log(oTargetFile.accessGroup);
                     }
                 }
                 else
@@ -106,23 +120,12 @@ var Chmod = function(counter)
                         completed = true;
                     }
                 });
-                //if(CurrentUserSingleton.getInstance().getUserName() == oTargetProcess.)
-                //{
-                //    if(removeFlag == true)
-                //    {
-                //
-                //    }
-                //    if(addFlag == true)
-                //    {
-                //
-                //    }
-                //}
                 if(completed == false)
                 {
                     OS.display("You do not have the rights to give or remove access to this process.");
                 }
             }
-            console.log(oTargetProcess.execAccess);
+            //console.log(oTargetProcess.execAccess);
 
             //this.var.args.forEach(function(element,index,array)
             //{

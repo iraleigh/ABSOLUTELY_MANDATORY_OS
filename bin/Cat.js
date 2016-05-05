@@ -10,13 +10,29 @@ var cat = function (counter) {
 
           //Check to see if the current user has permission to read from the file.
             //Reading like this does not give files deeper in directories. Just the top directory.
+          //Directory.Files.reduce(flatten_directories, Directory.Files[0]);
+          //Directory.Files.reduce(flatten_directories, Directory.Files[0]);
+
           Directory.Files.forEach(function(file, index, array)
           {
+              //console.log(file);
+              if(file instanceof Dir)
+              {
+                  file.content.forEach(function(element, index, array)
+                  {
+                     if(element.name == szFileName)
+                     {
+                         oTargetFile = element;
+                     }
+                  });
+              }
               if(file.name == szFileName)
               {
                   oTargetFile = file;
               }
           });
+
+
             console.log(oTargetFile);
             var currentUser = CurrentUserSingleton.getInstance();
             console.log(currentUser);

@@ -21,6 +21,16 @@ var Write = function(counter)
             //Needs to grab all the files in every directory not just the top most one...
             Directory.Files.forEach(function(file, index, array)
             {
+                if(file instanceof Dir)
+                {
+                    file.content.forEach(function(element, index, array)
+                    {
+                        if(element.name == fileName)
+                        {
+                            oTargetFile = element;
+                        }
+                    });
+                }
                 if(file.name == fileName)
                 {
                     oTargetFile = file;
@@ -29,6 +39,9 @@ var Write = function(counter)
 
             oTargetFile.accessGroup.forEach(function(userObject, index, array)
             {
+                console.log("This is the access group of the file");
+                console.log(oTargetFile.accessGroup);
+                console.log(oTargetFile);
                 if(CurrentUserSingleton.getInstance().getUserName() == userObject.getUserName())
                 {
                     hasAccess = true;
@@ -38,7 +51,7 @@ var Write = function(counter)
             //If the current user does not have access to the file stop the process. And error out.
             if(hasAccess == false)
             {
-                OS.display("You do not have permission to write to " + oTargetFile.accessName());
+                OS.display("You do not have permission to write to this file");
                 this.state = "Stop";
                 this.program_counter = 0;
             }
