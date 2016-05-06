@@ -1,4 +1,4 @@
-var whoami = function (couter) {
+var whoami = function (counter) {
 	OS.display(CurrentUserSingleton.getInstance().getUserName());
 	this.state = "Stop";
 }
