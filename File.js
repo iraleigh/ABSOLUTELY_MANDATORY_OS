@@ -5,8 +5,9 @@ function File(szName,szContent){
     this.length = szContent.length;
     this.fileType = "File";
     this.accessGroup = [];
-    this.accessGroup.push(OS.Users["Super"]);
-    this.accessGroup.push(OS.Users["currentUser"]);
+    //this.accessGroup.push(OS.Users["Super"]);
+    this.accessGroup.push(CurrentUserSingleton.getInstance());
+    this.fileOwner =  CurrentUserSingleton.getInstance(); //The person who is currently logged in gets to be the file owner.
 
     //Added date object to file definition.
     this.date = new Date(); //new Date(); creates a date object with the current date/time.
@@ -40,5 +41,26 @@ function File(szName,szContent){
     }
     this.getKind = function(){
       return this.fileType;
+    }
+    this.getOwner = function(){
+        return this.fileOwner;
+    }
+    this.setOwner = function(newOwner){
+        this.fileOwner = newOwner;
+    }
+    //I have a feeling this function will not work, becuase of the bad usage of this?>
+    this.removeFromAccessGroup = function(userObject){
+        var aGroup = this.accessGroup;
+        this.accessGroup.forEach(function(element,index,array)
+        {
+            if(element.getUserName == userObject.getUserName)
+            {
+                aGroup.splice(index, 1);
+            }
+        });
+        return aGroup;
+    }
+    this.addToAccessGroup = function (userObject){
+        this.accessGroup.push(userObject);
     }
 }

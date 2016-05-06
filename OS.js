@@ -215,7 +215,7 @@ var OS = {
 
       var current_position_in_fs = this.getPwd();
       var directories_in_path = szPath.split("/");
-      
+
       var recursive_directory_search = function (fs_element, index, directory_tree) {
         if (fs_element.fileType == "Directory"){
           if (fs_element.name == name){
@@ -243,7 +243,7 @@ var OS = {
           } else {
             return this.getPwd();
           }
-        case "..": 
+        case "..":
           if (directories_in_path.length > 1) {
             current_position_in_fs.forEach(recursive_directory_search);
             return oCurrentDir;
@@ -279,137 +279,126 @@ var OS = {
       return OS.ProcessQueue.queue.shift()();
     }
   },
+  checkAccess: function(currUser, file)
+  {
+    //returns true if the userObj is in the access group of the file.
+    //returns false if the userOb is not in the access group of the file.
+
+    //Check the currentUser.name against the access group names.
+    var flag = false;
+    file.accessGroup.forEach(function(element,index,array){
+      if(element == currUser.getUserName())
+      {
+        flag = true;
+      }
+    });
+    return flag;
+  },
   mutexLock: {
-    //Mutexlock and semaphores almost same thing
-    //Semaphores only require a key to access the file.
-    //read, write, close, open
-    //These methods should take a mutex object?
-
-
     //basically locking it
     acquire: function(mutex) {
 
-      /*
-      var available;
-      //I think we need to add something here
-      if(arrayOfMutexes.indexOf(mutex) >= 0) //checks if its already locked, if so, it is not available
-      //because it was not available, it is thrown to the Waiting array
-      {
-      available = false;
-      arrayOfWaiting.push(mutex);
-      console.log("sent to waiting");
-    }
-    else //because the mutex is not locked, since its not in the array, it pushes it to the array and it is
-    //stated as locked
-    {
-    available = true;
-    arrayOfMutexes.push(mutex);
-    mutex.setAvailable(false);
-    console.log("locked " + mutex);
-  }
-  */
+      var find = true;
+      while (find == true) {
+        if (arrayOfMutexes.length > 0) { //only run if there's something in the array
+          arrayOfMutexes.forEach(function (element, index, array) {
+            if (mutex.accessFileName() == arrayOfMutexes[index].accessFileName()) { //checks if it's already locked
+              //console.log("they're the same");
+              console.log("2 gets sent to the abyss");
+              arrayOfWaiting.push(mutex);
+              find = false;
+            }
+          });
 
-  var find = true;
-  while (find == true) {
-    if(arrayOfMutexes.length > 0 ){ //only run if there's something in the array
-    arrayOfMutexes.forEach(function (element, index, array) {
-      if(mutex.accessFileName() == arrayOfMutexes[index].accessFileName()){ //checks if it's already locked
-      //console.log("they're the same");
-      console.log("2 gets sent to the abyss");
-      arrayOfWaiting.push(mutex);
-      find = false;
-    }
-  });
-
-  if(find == true) {  //only runs if none were found to be locked
-    //it only arrives here if it wasn't found in the array
-    console.log("3");
-    arrayOfMutexes.push(mutex);
-    mutex.setAvailable(false);
-    find = false;
-  }
-}
-else{
-  console.log("1");
-  arrayOfMutexes.push(mutex);
-  mutex.setAvailable(false);
-  find = false;
-}
-
-}
-
-/*
-while(!available)
-{
-//Wait for resource to become available.
-}
-arrayOfMutexes.push(mutex);
-mutex.setAvailable(false);
-*/
-},
-
-//obviously unlocking it
-release: function(mutex) {
-  /*
-  arrayOfMutexes.forEach(function (element, index, array)
-  {
-  if(arrayOfMutexes[index] == mutex) {
-  arrayOfMutexes.pop();//basically saying it's not a locked object anymore
-}
-});
-mutex.setAvailable(true);
-console.log("unlocked" + mutex);
-var find = true;
-while(find == true){
-arrayOfWaiting.forEach(function (element, index, array){
-if(arrayOfMutexes[index].accessFileName() == mutex.accessFileName()){
-mutex.setAvailable(false);
-console.log("locked" + mutex);
-arrayOfWaiting.splice(index, 1);
-find = false;
-}
-});
-};
-*/
-
-arrayOfMutexes.forEach(function (element, index, array){
-  if(arrayOfMutexes[index] == mutex){
-    arrayOfMutexes.splice(index, 1);
-    mutex.setAvailable(true);
-
-    //checks if it needs to be relocked
-    arrayOfWaiting.forEach(function (element, index, array){
-      if(arrayOfWaiting[index].accessFileName() == mutex.accessFileName()){
-        arrayOfMutexes.push(arrayOfWaiting[index]); //it relocks it
-        arrayOfWaiting.splice(index, 1); //removes it from waiting to be locked
+          if (find == true) {  //only runs if none were found to be locked
+            //it only arrives here if it wasn't found in the array
+            console.log("3");
+            arrayOfMutexes.push(mutex);
+            mutex.setAvailable(false);
+            find = false;
+          }
+        }
+        else {
+          console.log("1");
+          arrayOfMutexes.push(mutex);
+          mutex.setAvailable(false);
+          find = false;
+        }
       }
-    });
+    },
 
-  }
-});
+    //obviously unlocking it
+    release: function(mutex) {
+      arrayOfMutexes.forEach(function (element, index, array) {
+        if (arrayOfMutexes[index] == mutex) {
+          arrayOfMutexes.splice(index, 1);
+          mutex.setAvailable(true);
 
+          //checks if it needs to be relocked
+          arrayOfWaiting.forEach(function (element, index, array) {
+            if (arrayOfWaiting[index].accessFileName() == mutex.accessFileName()) {
+              arrayOfMutexes.push(arrayOfWaiting[index]); //it relocks it
+              arrayOfWaiting.splice(index, 1); //removes it from waiting to be locked
+            }
+          });
 
-
-
-
-}
-},
-semaphores: {
-  wait: function(sema) {
-    if(sema.accessSynchNum() != 0){
-      var tempSynch = sema.accessSynchNum();
-      sema.setSynchNum(--tempSynch);
+        }
+      });
     }
   },
 
-  signal: function(sema) {
+  semaphores: {
+    wait: function(sema) {
+      if(sema.accessSynchNum() != 0){
+        var tempSynch = sema.accessSynchNum();
+        sema.setSynchNum(--tempSynch);
+      }
+    },
 
-    var tempSynch = sema.accessSynchNum();
-    sema.setSynchNum(++tempSynch);
+    signal: function(sema) {
 
-    // call the next in the queue and remember to shift back and push itself to the end of the queue
+      var tempSynch = sema.accessSynchNum();
+      sema.setSynchNum(++tempSynch);
+
+      // call the next in the queue and remember to shift back and push itself to the end of the queue
+    }
+  },
+
+  //******** the error is with users? that bracket?
+  Users: [],
+
+  //Maybe I don't need the newUserName and password I just use the userObject they are passed in.
+  UserSwap: function(userObject)
+  {
+    var userNameFlag = false;
+    var passwordFlag = false;
+    var access = false;
+
+    //This check may not be necessary since we do it in the switch user process, but it's safe to keep it here I guess.
+    //check if the user name is in the OS.Users array on the OS.
+    //check if the password is correct.
+    OS.Users.forEach(function(element,index,array){
+        if(element.getUserName() == userObject.getUserName())
+        {
+          userNameFlag = true;
+        }
+
+        if(element.getPassword() == userObject.getPassword())
+        {
+          passwordFlag = true;
+        }
+    });
+
+    if(userNameFlag == true && passwordFlag == true)
+    {
+      access = true;
+    }
+
+    //if the userName is different than what is already in the singleton, and the username exists on the OS
+    //replace the
+    if(CurrentUserSingleton.getInstance().getUserName() != userObject.getUserName() && access == true)
+    {
+      CurrentUserSingleton.setInstance(userObject);
+    }
   }
-},
-Users: [],
-  
 }
