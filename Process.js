@@ -9,11 +9,6 @@ function Process (name,main) {
 	this.execAccess = [];
 	this.execAccess.push(new User("matt", "cool"));
 	this.execAccess.push(new User("admin", "amos"));
-	//These are the commands the Guest user has access to.
-	if(this.name == "ls" || this.name == "cat" || this.name == "Write" || this.name == "su" || this.name == "man" || this.name == "help")
-	{
-		this.execAccess.push(new User("Guest", "Pass"));
-	}
 	this.last_access = Date.now();
 
 	this.setLastAccess = function (ObjDate){

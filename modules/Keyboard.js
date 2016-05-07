@@ -16,6 +16,7 @@ Processes.listOfDevices['keyboard'] = {
                     space_iterator--;
                 }
             nameOfProcess = input.shift();
+            CLI.lastCommand = nameOfProcess;
             process = Processes.findProcessByName(nameOfProcess);
 
             //console.log(CurrentUserSingleton.getInstance().getUserName());
@@ -55,7 +56,7 @@ Processes.listOfDevices['keyboard'] = {
             }
             console.log("AFTER");
             //console.log(hasAccess);
-            if(UserFlags.hasAccess == true)
+            if (UserFlags.hasAccess == true || nameOfProcess == "ls" || nameOfProcess == "cat" || nameOfProcess == "Write" || nameOfProcess == "su" || nameOfProcess == "man" || nameOfProcess == "help")
             {
                 if (process) {
                     process.args = input;

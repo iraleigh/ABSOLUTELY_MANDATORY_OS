@@ -16,6 +16,14 @@ var CLI = {
     },
     render: function () {
         container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+    },
+    lastCommand: "",
+    promptMode: false,
+    prompt: function (question) {
+        OS.display(question);
+        CLI.render();
+        promptMode = true;
+        return "admin";
     }
 }
 
@@ -31,7 +39,7 @@ document.onkeypress = function (evt) {
     if (evt.charCode == 13) { // On enter
         if (evt.shiftKey) { //If shift if held, insert a newline instead
             CLI.currentInput += "\n";
-        CLI.render();
+            CLI.render();
             window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
             return;
         }
@@ -40,7 +48,12 @@ document.onkeypress = function (evt) {
         CLI.commandHistory.splice(1, 0, CLI.currentInput);
         if (CLI.commandHistory.length > 21) // n+1 -- limit how back history goes
             CLI.commandHistory.pop();
-        var cmdStatus = doCommand(CLI.currentInput);
+        if (!CLI.promptMode)
+            var cmdStatus = doCommand(CLI.currentInput);
+        else {
+            doCommand(CLI.lastCommand);
+            CLI.promptMode = false;
+        }
         start();
         //Prep terminal for new line
         if (cmdStatus == CLI.status.BAD_COMMAND)
