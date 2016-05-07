@@ -7,13 +7,12 @@
 //Workaround; I was having trouble keeping their values
 var suglobal = {
     args: [],
-    instance: 0
+    instance: 0,
+    questionMode: false
 }
 
-var SwitchUser = function(counter)
-{
-    switch(counter)
-    {
+var SwitchUser = function (counter) {
+    switch (counter) {
 
         case 0:
             this.program_counter++;
@@ -23,22 +22,30 @@ var SwitchUser = function(counter)
             //just find the userObject that equals the username and password provided?
             suglobal.instance = CurrentUserSingleton.getInstance();
             if (suglobal.args[0] == null) {
-                suglobal.args[1] = "amos";
+                suglobal.questionMode = true;
                 CLI.prompt("Username: ");
                 this.state = "Stop";
-                break;
-
             }
+
             break;
         case 1:
-            suglobal.args[0] = CLI.promptResult;
-            OS.Users.forEach(function(userObject,index,array)
-            {
+            if (suglobal.questionMode == true)
+                suglobal.args[0] = CLI.promptResult;
+            this.program_counter++;
+            if (suglobal.questionMode == true) {
+                CLI.prompt("Password: ");
+                this.state = "Stop";
+            }
+            break;
+
+        case 2:
+            if (suglobal.questionMode == true)
+                suglobal.args[1] = CLI.promptResult;
+            OS.Users.forEach(function (userObject, index, array) {
                 ////console.log(userObject);
                 //userObject.getUserName();
                 //userObject.getPassword();
-                if (userObject.getUserName() == suglobal.args[0] && userObject.getPassword() == suglobal.args[1])
-                {
+                if (userObject.getUserName() == suglobal.args[0] && userObject.getPassword() == suglobal.args[1]) {
                     //console.log(userObject);
                     OS.UserSwap(userObject);
                     UserFlags.hasAccess = false;
@@ -48,12 +55,10 @@ var SwitchUser = function(counter)
 
             var check = CurrentUserSingleton.getInstance();
 
-            if (suglobal.instance.getUserName() == check.getUserName())
-            {
+            if (suglobal.instance.getUserName() == check.getUserName()) {
                 OS.display("You entered the incorrect password or user name");
             }
-            else
-            {
+            else {
                 OS.display("You logged in as " + CurrentUserSingleton.getInstance().getUserName());
             }
 
@@ -66,5 +71,5 @@ var SwitchUser = function(counter)
     }
 };
 
-Processes.listOfProcesses.push(new Process("su",SwitchUser));
+Processes.listOfProcesses.push(new Process("su", SwitchUser));
 HelpInfo.listOfHelp.push(new Manual("su", "su\nOptional: su [username] [password]", "Changes the current user."));

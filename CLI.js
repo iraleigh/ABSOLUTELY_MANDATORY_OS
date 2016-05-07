@@ -43,17 +43,17 @@ document.onkeypress = function (evt) {
             window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
             return;
         }
-        //Grab the function here
-        CLI.commandPosition = 0;
-        CLI.commandHistory.splice(1, 0, CLI.currentInput);
-        if (CLI.commandHistory.length > 21) // n+1 -- limit how back history goes
-            CLI.commandHistory.pop();
         if (CLI.promptMode == false) {
+            //Grab the function here
+            CLI.commandPosition = 0;
+            CLI.commandHistory.splice(1, 0, CLI.currentInput);
+            if (CLI.commandHistory.length > 21) // n+1 -- limit how back history goes
+                CLI.commandHistory.pop();
             var cmdStatus = doCommand(CLI.currentInput);
         } else {
             CLI.promptResult = CLI.currentInput;
-            doCommand(CLI.lastCommand);
             CLI.promptMode = false;
+            doCommand(CLI.lastCommand);
         }
         start();
         //Prep terminal for new line
