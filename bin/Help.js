@@ -17,10 +17,11 @@ var help = function (counter) {
             commands.push("exit");
             commands.push("echo");
             commands.push("mkdir");
+            commands.push("su");
             
             commands.sort();
             for (help_i = 0 ; help_i < commands.length; help_i++)
-                OS.display("<b>" + commands[help_i] + "</b>");
+                OS.display("<b><i>" + commands[help_i] + "</i></b>");
             this.program_counter++;
             break;
 

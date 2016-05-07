@@ -13,7 +13,20 @@ var CLI = {
     commandPosition: 0,
     getSTDIn: function () {
         return this.STDIn.trim();
-    }
+    },
+    render: function () {
+        container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+    },
+    lastCommand: "",
+    promptMode: false,
+    passwordMode: false,
+    passwordBuffer: "",
+    prompt: function (question) {
+        OS.display(question);
+        CLI.render();
+        CLI.promptMode = true;
+    },
+    promptResult: ""
 }
 
 var container;
@@ -26,18 +39,28 @@ window.onload = function () {
 document.onkeypress = function (evt) {
     evt = evt || window.event;
     if (evt.charCode == 13) { // On enter
-        if (evt.shiftKey) { //If shift if held, insert a newline instead
+        if (evt.shiftKey && CLI.promptMode == false) { //If shift if held, insert a newline instead
             CLI.currentInput += "\n";
-            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+            CLI.render();
             window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
             return;
         }
-        //Grab the function here
-        CLI.commandPosition = 0;
-        CLI.commandHistory.splice(1, 0, CLI.currentInput);
-        if (CLI.commandHistory.length > 21) // n+1 -- limit how back history goes
-            CLI.commandHistory.pop();
-        var cmdStatus = doCommand(CLI.currentInput);
+        if (CLI.promptMode == false) {
+            //Grab the function here
+            CLI.commandPosition = 0;
+            CLI.commandHistory.splice(1, 0, CLI.currentInput);
+            if (CLI.commandHistory.length > 21) // n+1 -- limit how back history goes
+                CLI.commandHistory.pop();
+            var cmdStatus = doCommand(CLI.currentInput);
+        } else {
+            if (CLI.passwordMode == false)
+                CLI.promptResult = CLI.currentInput;
+            else
+                CLI.promptResult = CLI.passwordBuffer;
+            CLI.passwordBuffer = "";
+            CLI.promptMode = false;
+            doCommand(CLI.lastCommand);
+        }
         start();
         //Prep terminal for new line
         if (cmdStatus == CLI.status.BAD_COMMAND)
@@ -45,11 +68,13 @@ document.onkeypress = function (evt) {
 
         CLI.STDIn = "";
         CLI.STDOut = "";
-        if(OS.FS.getPwd() == Directory.Files){
-          CLI.currentInput += "\n\n/> ";
-        }
-        else{
-          CLI.currentInput += "\n\n" + OS.FS.getPwdTopLevel() + "/> ";
+        if (CLI.promptMode == false) {
+            if (OS.FS.getPwd() == Directory.Files) {
+                CLI.currentInput += "\n\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>/</b>> ";
+            }
+            else {
+                CLI.currentInput += "\n\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>" + OS.FS.getPwdTopLevel() + "/</b>> ";
+            }
         }
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
@@ -57,7 +82,12 @@ document.onkeypress = function (evt) {
         CLI.currentInput = "";
 
     } else if (evt.charCode != 60 && evt.charCode != 62) { // A character is typed (Not '<' or '>' for HTML reasons)
-        CLI.currentInput += String.fromCharCode(evt.charCode);
+        if (CLI.passwordMode == false) {
+            CLI.currentInput += String.fromCharCode(evt.charCode);
+        } else {
+            CLI.currentInput += "*";
+            CLI.passwordBuffer += String.fromCharCode(evt.charCode);
+        }
         container.innerHTML = CLI.oldInput + CLI.currentInput;
     }
     window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
@@ -71,29 +101,33 @@ document.onkeydown = function (evt) {
         evt.preventDefault(); //Don't go the previous webpage!!
         if (CLI.currentInput.length > 0) { //To be safe
             CLI.currentInput = CLI.currentInput.slice(0, CLI.currentInput.length - 1); //Remove a character
-            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+            if (CLI.passwordMode == true) {
+                if (CLI.passwordBuffer.length > 0)
+                    CLI.passwordBuffer = CLI.passwordBuffer.slice(0, CLI.passwordBuffer.length - 1);
+            }
+        CLI.render();
 
         }
-    } else if (evt.keyCode == 38) { //Up key history
+    } else if (evt.keyCode == 38 && CLI.promptMode == false) { //Up key history
         evt.preventDefault();
         if (CLI.commandPosition + 1 < CLI.commandHistory.length) {
             CLI.commandPosition++;
             CLI.currentInput = CLI.commandHistory[CLI.commandPosition];
-            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+        CLI.render();
         }
-    } else if (evt.keyCode == 40) { //Down key history
+    } else if (evt.keyCode == 40 && CLI.promptMode == false) { //Down key history
         evt.preventDefault();
         if (CLI.commandPosition - 1 > -1) {
             CLI.commandPosition--;
             CLI.currentInput = CLI.commandHistory[CLI.commandPosition];
-            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+        CLI.render();
         }
     }
     window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
 }
 
 function doCommand(input) {  //Commands are sent here to be parsed
-    return Processes.listOfDevices['keyboard'].main(CLI.currentInput);
+    return Processes.listOfDevices['keyboard'].main(input);
 }
 
 function cursor() {
