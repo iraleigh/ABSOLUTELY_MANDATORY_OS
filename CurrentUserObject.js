@@ -87,7 +87,7 @@ var CurrentUserSingleton = (function()
         createInstance: function()
         {
             console.log("User signed in as guest IS CREATED");
-            currentUser = new User("Guest", "Password");
+            currentUser = new User("Guest", "Pass");
             console.log(currentUser);
             return currentUser;
         }

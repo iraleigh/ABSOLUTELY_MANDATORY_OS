@@ -21,11 +21,13 @@ var SwitchUser = function (counter) {
             //console.log(args[1]);
             //just find the userObject that equals the username and password provided?
             suglobal.instance = CurrentUserSingleton.getInstance();
-            if (suglobal.args[0] == null) {
-                suglobal.questionMode = true;
+
+
+          //  if (suglobal.args[0] == null) {                //Uncomment conditional if you want one-line login back
+                suglobal.questionMode = true;                //Turned off so the password would be hidden in **** stars
                 CLI.prompt("Username: ");
                 this.state = "Stop";
-            }
+          //  }
 
             break;
         case 1:
@@ -33,12 +35,14 @@ var SwitchUser = function (counter) {
                 suglobal.args[0] = CLI.promptResult;
             this.program_counter++;
             if (suglobal.questionMode == true) {
+                CLI.passwordMode = true;
                 CLI.prompt("Password: ");
                 this.state = "Stop";
             }
             break;
 
         case 2:
+            CLI.passwordMode = false;
             if (suglobal.questionMode == true)
                 suglobal.args[1] = CLI.promptResult;
             OS.Users.forEach(function (userObject, index, array) {
@@ -72,4 +76,4 @@ var SwitchUser = function (counter) {
 };
 
 Processes.listOfProcesses.push(new Process("su", SwitchUser));
-HelpInfo.listOfHelp.push(new Manual("su", "su\nOptional: su [username] [password]", "Changes the current user."));
+HelpInfo.listOfHelp.push(new Manual("su", "su", "Changes the current user."));
