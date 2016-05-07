@@ -22,9 +22,9 @@ var CLI = {
     prompt: function (question) {
         OS.display(question);
         CLI.render();
-        promptMode = true;
-        return "admin";
-    }
+        CLI.promptMode = true;
+    },
+    promptResult: ""
 }
 
 var container;
@@ -48,9 +48,10 @@ document.onkeypress = function (evt) {
         CLI.commandHistory.splice(1, 0, CLI.currentInput);
         if (CLI.commandHistory.length > 21) // n+1 -- limit how back history goes
             CLI.commandHistory.pop();
-        if (!CLI.promptMode)
+        if (CLI.promptMode == false) {
             var cmdStatus = doCommand(CLI.currentInput);
-        else {
+        } else {
+            CLI.promptResult = CLI.currentInput;
             doCommand(CLI.lastCommand);
             CLI.promptMode = false;
         }
@@ -61,11 +62,13 @@ document.onkeypress = function (evt) {
 
         CLI.STDIn = "";
         CLI.STDOut = "";
-        if(OS.FS.getPwd() == Directory.Files){
-            CLI.currentInput += "\n\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>/</b>> ";
-        }
-        else{
-            CLI.currentInput += "\n\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>" + OS.FS.getPwdTopLevel() + "/</b>> ";
+        if (CLI.promptMode == false) {
+            if (OS.FS.getPwd() == Directory.Files) {
+                CLI.currentInput += "\n\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>/</b>> ";
+            }
+            else {
+                CLI.currentInput += "\n\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>" + OS.FS.getPwdTopLevel() + "/</b>> ";
+            }
         }
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
@@ -109,7 +112,7 @@ document.onkeydown = function (evt) {
 }
 
 function doCommand(input) {  //Commands are sent here to be parsed
-    return Processes.listOfDevices['keyboard'].main(CLI.currentInput);
+    return Processes.listOfDevices['keyboard'].main(input);
 }
 
 function cursor() {
