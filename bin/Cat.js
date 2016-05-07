@@ -59,13 +59,13 @@ var cat = function (counter) {
           {
               if(currentUser.userName == userObject.userName)
               {
-                  hasAccess = true;
+                  UserFlags.hasAccess = true;
               }
           });
 
           //Written this way to try to maintain logic of the cat process.
           //If the current user does not have permission to read from the file, error out.
-          if(hasAccess == false)
+          if(UserFlags.hasAccess == false)
           {
               OS.display("You do not have permission to read from " + oTargetFile.accessName());
               this.state = "Stop";

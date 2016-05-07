@@ -13,6 +13,9 @@ var CLI = {
     commandPosition: 0,
     getSTDIn: function () {
         return this.STDIn.trim();
+    },
+    render: function () {
+        container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
     }
 }
 
@@ -28,7 +31,7 @@ document.onkeypress = function (evt) {
     if (evt.charCode == 13) { // On enter
         if (evt.shiftKey) { //If shift if held, insert a newline instead
             CLI.currentInput += "\n";
-            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+        CLI.render();
             window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down
             return;
         }
@@ -46,10 +49,10 @@ document.onkeypress = function (evt) {
         CLI.STDIn = "";
         CLI.STDOut = "";
         if(OS.FS.getPwd() == Directory.Files){
-          CLI.currentInput += "\n\n/> ";
+            CLI.currentInput += "\n\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>/</b>> ";
         }
         else{
-          CLI.currentInput += "\n\n" + OS.FS.getPwdTopLevel() + "/> ";
+            CLI.currentInput += "\n\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>" + OS.FS.getPwdTopLevel() + "/</b>> ";
         }
         container.innerHTML = CLI.oldInput + CLI.currentInput;
 
@@ -71,7 +74,7 @@ document.onkeydown = function (evt) {
         evt.preventDefault(); //Don't go the previous webpage!!
         if (CLI.currentInput.length > 0) { //To be safe
             CLI.currentInput = CLI.currentInput.slice(0, CLI.currentInput.length - 1); //Remove a character
-            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+        CLI.render();
 
         }
     } else if (evt.keyCode == 38) { //Up key history
@@ -79,14 +82,14 @@ document.onkeydown = function (evt) {
         if (CLI.commandPosition + 1 < CLI.commandHistory.length) {
             CLI.commandPosition++;
             CLI.currentInput = CLI.commandHistory[CLI.commandPosition];
-            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+        CLI.render();
         }
     } else if (evt.keyCode == 40) { //Down key history
         evt.preventDefault();
         if (CLI.commandPosition - 1 > -1) {
             CLI.commandPosition--;
             CLI.currentInput = CLI.commandHistory[CLI.commandPosition];
-            container.innerHTML = CLI.oldInput + CLI.currentInput + CLI.cursor;
+        CLI.render();
         }
     }
     window.scrollTo(0, document.body.scrollHeight); //Keep scrolling down

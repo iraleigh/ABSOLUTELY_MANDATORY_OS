@@ -25,6 +25,8 @@ var SwitchUser = function(counter)
                 {
                     //console.log(userObject);
                     OS.UserSwap(userObject);
+                    UserFlags.hasAccess = false;
+                    UserFlags.recentSwitch = true;
                 }
             });
 
