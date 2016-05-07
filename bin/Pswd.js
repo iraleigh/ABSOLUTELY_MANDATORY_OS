@@ -16,6 +16,13 @@ var Pswd = function(counter){
             OS.display("This is not the current password of this user, please try again with the correct password");
             this.state = "Stop";
         }
+
+        if(userObject.getUserName() == args[0] && userObject.getPassword() == args[1] && args[2] == null)
+        {
+            userExists = true;
+            OS.display("New password must not be empty");
+            this.state = "Stop";
+        }
         if(userObject.getUserName() == args[0] && userObject.getPassword() == args[1])
         {
             userExists = true;
