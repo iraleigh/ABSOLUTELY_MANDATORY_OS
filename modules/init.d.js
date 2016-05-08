@@ -8,7 +8,7 @@ function init_d() {
     OS.Users.push(new User("admin", "amos"));
 
     //Set the current user to Matt so all the files upon start up will belong to me.
-    CurrentUserSingleton.setInstance(OS.Users[0]);
+    CurrentUserSingleton.setInstance(OS.Users[1]);
 
     //OS
     Processes.generateListOfProcesses();
@@ -20,11 +20,7 @@ function init_d() {
     console.log("before dummy");
     addDummyFiles();
     console.log("after dummy");
-    //CLI
-    CLI.oldInput = "<b>AMOS</b>\nFor help getting started, type 'help'\nType 'su' to elevate to a user with more permissions\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>/</b>> ";
-    CLI.commandHistory.push("");
-    OS.FS.setPwd(Directory.Files);
-    window.document.getElementById('container').innerHTML = CLI.oldInput + CLI.cursor;
+
     //Device init
     Processes.listOfDevices['keyboard'].name = "Keyboard";
     Processes.listOfDevices['keyboard'].state = "Ready";
@@ -34,6 +30,12 @@ function init_d() {
     Processes.listOfDevices['file_io'].state = "Ready";
 
     //Set the current user back to the guest user.
-    //CurrentUserSingleton.setInstance(OS.Users[0]);
+    CurrentUserSingleton.setInstance(OS.Users[0]);
     console.log(CurrentUserSingleton.getInstance());
+
+    //CLI
+    CLI.oldInput = "<b>AMOS</b>\nFor help getting started, type 'help'\nType 'su' to elevate to a user with more permissions\n" + CurrentUserSingleton.getInstance().getUserName() + ": <b>/</b>> ";
+    CLI.commandHistory.push("");
+    OS.FS.setPwd(Directory.Files);
+    window.document.getElementById('container').innerHTML = CLI.oldInput + CLI.cursor;
 }
