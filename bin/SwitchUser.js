@@ -49,11 +49,9 @@ var SwitchUser = function (counter) {
                 ////console.log(userObject);
                 //userObject.getUserName();
                 //userObject.getPassword();
-                if (userObject.getUserName() == suglobal.args[0] && userObject.getPassword() == suglobal.args[1]) {
+                if (userObject.getUserName().toUpperCase() == suglobal.args[0].toUpperCase() && userObject.getPassword() == suglobal.args[1]) {
                     //console.log(userObject);
                     OS.UserSwap(userObject);
-                    UserFlags.hasAccess = false;
-                    UserFlags.recentSwitch = true;
                 }
             });
 

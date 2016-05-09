@@ -37,21 +37,20 @@ var cat = function (counter) {
               }
           });
 
-              try {
-                  oTargetFile.accessName();
-              } catch (e) {
-                  OS.display("File not found");
-                  this.state = "Stop";
-                  this.program_counter = 0;
-                  break;
-              }
-
-          if (oTargetFile.fileType == "Directory") {
-              OS.display("Cannot display the contents of a directory");
-              this.state = "Stop";
-              this.program_counter = 0;
-              break;
-          }
+            try {
+                oTargetFile.accessName();
+            } catch (e) {
+                OS.display("File not found");
+                this.state = "Stop";
+                this.program_counter = 0;
+                break;
+            }
+            if (oTargetFile.fileType == "Directory") {
+                OS.display("Cannot display the contents of a directory");
+                this.state = "Stop";
+                this.program_counter = 0;
+                break;
+            }
             console.log(oTargetFile);
             var currentUser = CurrentUserSingleton.getInstance();
             console.log(currentUser);
@@ -65,7 +64,7 @@ var cat = function (counter) {
 
           //Written this way to try to maintain logic of the cat process.
           //If the current user does not have permission to read from the file, error out.
-          if (hasAccess == false)
+          if(hasAccess == false)
           {
               OS.display("You do not have permission to read from " + oTargetFile.accessName());
               this.state = "Stop";
@@ -76,7 +75,6 @@ var cat = function (counter) {
               var args = this.args;
               this.var.returnedFile = null;
               OS.FS.open(args[0]);
-
               //OS.FS.open(szFileName);
           }
           break;

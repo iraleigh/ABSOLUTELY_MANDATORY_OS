@@ -7,8 +7,12 @@ function Process (name,main) {
 	this.threads = [];
 	this.main.displayName = this.name;
 	this.execAccess = [];
-	this.execAccess.push(new User("matt", "cool"));
-	this.execAccess.push(new User("admin", "amos"));
+	this.execAccess.push(new User("Admin", "amos"));
+	//These are the commands the Guest user has access to.
+	if(this.name == "ls" || this.name == "cat" || this.name == "Write" || this.name == "su" || this.name == "exit" || this.name == "help" || this.name == "man" || this.name == "whoami")
+	{
+		this.execAccess.push(new User("Guest", "Pass"));
+	}
 	this.last_access = Date.now();
 
 	this.setLastAccess = function (ObjDate){

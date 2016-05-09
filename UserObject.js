@@ -1,10 +1,6 @@
 /**
  * Created by Matt on 4/30/2016.
  */
-var UserFlags = {
-    hasAccess: false,
-    recentSwitch: true
-}
 
 function User(name, pw)
 {

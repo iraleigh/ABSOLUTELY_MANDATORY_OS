@@ -41,22 +41,25 @@ Processes.listOfDevices['keyboard'] = {
             {
                 return CLI.status.BAD_COMMAND;
             }
-            if (UserFlags.recentSwitch){
-                for (var i_access = 0; i_access <= process.execAccess.length - 1; i_access++)
+
+            for(var i = 0; i <= process.execAccess.length - 1; i++)
+            {
+                console.log(process.execAccess[i].getUserName());
+                console.log(i);
+                console.log(CurrentUserSingleton.getInstance().getUserName());
+                if(process.execAccess[i].getUserName() == CurrentUserSingleton.getInstance().getUserName())
                 {
-                    console.log(process.execAccess[i_access].getUserName());
-                    console.log(i_access);
-                    console.log(CurrentUserSingleton.getInstance().getUserName());
-                    if (process.execAccess[i_access].getUserName() == CurrentUserSingleton.getInstance().getUserName())
-                    {
-                        UserFlags.hasAccess = true;
-                        UserFlags.recentSwitch = false;
-                    }
+                    hasAccess = true;
+                }
+                if(hasAccess == true)
+                {
+                    i = 10000000000000000000;
                 }
             }
             console.log("AFTER");
+
             //console.log(hasAccess);
-            if (UserFlags.hasAccess == true || nameOfProcess == "ls" || nameOfProcess == "cat" || nameOfProcess == "Write" || nameOfProcess == "su" || nameOfProcess == "man" || nameOfProcess == "help")
+            if(hasAccess == true)
             {
                 if (process) {
                     process.args = input;
