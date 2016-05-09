@@ -23,11 +23,11 @@ var SwitchUser = function (counter) {
             suglobal.instance = CurrentUserSingleton.getInstance();
 
 
-          //  if (suglobal.args[0] == null) {                //Uncomment conditional if you want one-line login back
+            if (suglobal.args[0] == null) {                //Uncomment conditional if you want one-line login back
                 suglobal.questionMode = true;                //Turned off so the password would be hidden in **** stars
                 CLI.prompt("Username: ");
                 this.state = "Stop";
-          //  }
+            }
 
             break;
         case 1:
@@ -74,4 +74,4 @@ var SwitchUser = function (counter) {
 };
 
 Processes.listOfProcesses.push(new Process("su", SwitchUser));
-HelpInfo.listOfHelp.push(new Manual("su", "su", "Changes the current user."));
+HelpInfo.listOfHelp.push(new Manual("su", "su\nOptional: su [username] [password]", "Changes the current user."));
