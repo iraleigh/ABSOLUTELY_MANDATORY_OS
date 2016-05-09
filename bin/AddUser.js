@@ -36,6 +36,8 @@ var AddUser = function(counter){
         Processes.findProcessByName("Write").addExecAccess(new User(args[0], args[1]));
         Processes.findProcessByName("cat").addExecAccess(new User(args[0], args[1]));
         Processes.findProcessByName("su").addExecAccess(new User(args[0], args[1]));
+        Processes.findProcessByName("exit").addExecAccess(new User(args[0], args[1]));
+
     }
     
     this.state = "Stop";
