@@ -3,6 +3,10 @@ Because coming up with a name for our group was **ABSOLUTELY MANDATORY**.
 
 (Browser target: Google Chrome)
 
+Default Admin user:
+Username: Admin
+Password: amos
+
 #### Usage ####
 **(program name)** - runs that program
 
