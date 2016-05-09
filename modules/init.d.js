@@ -19,6 +19,7 @@ function init_d() {
     console.log("before dummy");
     addDummyFiles();
     console.log("after dummy");
+    groupsFile();
     //CLI
     CLI.oldInput = "<b>AMOS</b>\nFor help getting started, type 'help'\n\n/> ";
     CLI.commandHistory.push("");
