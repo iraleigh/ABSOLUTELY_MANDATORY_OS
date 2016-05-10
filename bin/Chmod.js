@@ -87,7 +87,7 @@ var chmod = function(counter)
                 {
                     if(removeFlag == true)
                     {
-                        oTargetFile.removeFromAccessGroup(user)
+                        oTargetFile.removeFromAccessGroup(user);
                     }
                     if(addFlag == true)
                     {
@@ -125,6 +125,15 @@ var chmod = function(counter)
                     OS.display("You do not have the rights to give or remove access to this process.");
                 }
             }
+
+            /*
+              In order to implement full ACL support, you can do the following:
+              call methods such as oTargetFile.acl.setGroupExecute(true);
+              Since ACLs are more granular than the above permissions system,
+              implementation will require more evaluation of the arguments.
+
+            */
+
             //console.log(oTargetProcess.execAccess);
 
             //this.var.args.forEach(function(element,index,array)

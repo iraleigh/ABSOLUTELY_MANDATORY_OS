@@ -5,6 +5,16 @@ function File(szName,szContent){
     this.length = szContent.length;
     this.fileType = "File";
     this.accessGroup = [];
+    this.acl = new acl();
+
+    //Set default permissions for a new file.
+    this.acl.setUserRead(true);
+    this.acl.setUserWrite(true);
+    this.acl.setUserExecute(true);
+    this.acl.setGroupRead(true);
+    this.acl.setGroupWrite(true);
+    this.acl.setOtherRead(true);
+
     //this.accessGroup.push(OS.Users["Super"]);
     this.accessGroup.push(CurrentUserSingleton.getInstance());
     this.fileOwner =  CurrentUserSingleton.getInstance(); //The person who is currently logged in gets to be the file owner.
