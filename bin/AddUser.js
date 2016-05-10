@@ -20,10 +20,6 @@ var AddUser = function(counter){
         }
     });
 
-    if(args[1] == null){
-        OS.display("Needs a password to create a user");
-        this.state = "Stop";
-    }
 
     if(!userExists){
         OS.Users.push(new User(args[0], args[1]));
