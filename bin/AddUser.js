@@ -33,6 +33,7 @@ var AddUser = function(counter){
         Processes.findProcessByName("cat").addExecAccess(new User(args[0], args[1]));
         Processes.findProcessByName("su").addExecAccess(new User(args[0], args[1]));
         Processes.findProcessByName("exit").addExecAccess(new User(args[0], args[1]));
+        Processes.findProcessByName("pswd").addExecAccess(new User(args[0], args[1]));
 
     }
     
