@@ -16,6 +16,7 @@ Processes.listOfDevices['keyboard'] = {
                     space_iterator--;
                 }
             nameOfProcess = input.shift();
+            CLI.lastCommand = nameOfProcess;
             process = Processes.findProcessByName(nameOfProcess);
 
             //console.log(CurrentUserSingleton.getInstance().getUserName());

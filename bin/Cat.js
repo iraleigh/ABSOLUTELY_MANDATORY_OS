@@ -3,7 +3,12 @@ var cat = function (counter) {
         case 0:
           var hasAccess = false;
           var oTargetFile;
-
+          if (this.args[0] == null) {
+              OS.display("No file specified");
+              this.state = "Stop";
+              this.program_counter = 0;
+              break;
+          }
           //Hard coded cannot cat multiple files and check at the same time.
           var szFileName = this.args[0];
             console.log(this.args[0]);
@@ -32,7 +37,20 @@ var cat = function (counter) {
               }
           });
 
-
+            try {
+                oTargetFile.accessName();
+            } catch (e) {
+                OS.display("File not found");
+                this.state = "Stop";
+                this.program_counter = 0;
+                break;
+            }
+            if (oTargetFile.fileType == "Directory") {
+                OS.display("Cannot display the contents of a directory");
+                this.state = "Stop";
+                this.program_counter = 0;
+                break;
+            }
             console.log(oTargetFile);
             var currentUser = CurrentUserSingleton.getInstance();
             console.log(currentUser);
@@ -57,26 +75,12 @@ var cat = function (counter) {
               var args = this.args;
               this.var.returnedFile = null;
               OS.FS.open(args[0]);
-              if (args[0] == null) {
-                  OS.display("No file specified");
-                  this.state = "Stop";
-                  this.program_counter = 0;
-                  break;
-              }
               //OS.FS.open(szFileName);
           }
           break;
 
         case 1:
             this.var.filePointer = this.var.returnedFile;
-            try {
-                this.var.filePointer.accessName();
-            } catch (e) {
-                OS.display("File not found");
-                this.state = "Stop";
-                this.program_counter = 0;
-                break;
-            }
             this.var.filePointer.position = 0;
             OS.FS.length(this.var.filePointer);
             break;
