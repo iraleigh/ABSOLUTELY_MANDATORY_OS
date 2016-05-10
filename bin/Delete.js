@@ -44,7 +44,7 @@ var rm = function(counter) {
 			return resource.name == name;
 		});
 		    try{
-		        this.oTargetFile.fileType
+		        this.oTargetFile.fileType;
 		    } catch (e) {
 		            OS.display("File or directory not found");
 		            this.program_counter = 0;

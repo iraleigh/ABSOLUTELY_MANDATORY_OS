@@ -171,11 +171,16 @@ Processes.listOfDevices['file_io'] = {
         process.program_counter++;
 
         var content;
-        var position = oFilePointer.accessPosition();
-        var length = oFilePointer.accessLength();
+          try{
+              var position = oFilePointer.accessPosition();
+              var length = oFilePointer.accessLength();
+          } catch (e) {
+              var position = 0;
+              var length = 0;
+          }
         var endIndex = position + 100;
         if (position >= length){
-          return "";
+          content = "";
         } else if(endIndex <= length){
           content = oFilePointer.accessContent().substring(position, endIndex);
           oFilePointer.mutatePosition(endIndex);
@@ -211,7 +216,11 @@ Processes.listOfDevices['file_io'] = {
         process.state = "Ready";
 
         process.program_counter++;
-        process.var.position =  oFilePointer.accessPosition();
+          try{
+              process.var.position =  oFilePointer.accessPosition();
+          } catch (e) {
+              process.var.position = 0;
+          }
 
       },
       lengthOfFile: function(szNameOFCallingFunction,oFilePointer){
@@ -223,7 +232,11 @@ Processes.listOfDevices['file_io'] = {
 
         process.program_counter++;
         console.log(oFilePointer);
-        process.var.length = oFilePointer.accessLength();
+          try{
+              process.var.length = oFilePointer.accessLength();
+          } catch (e) {
+              process.var.length = 0;
+          }
 
       },
       seek: function(szNameOFCallingFunction,oFilePointer,nOffset){
