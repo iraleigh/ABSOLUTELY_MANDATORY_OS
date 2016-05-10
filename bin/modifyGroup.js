@@ -28,6 +28,15 @@ var modifyGroup = function(counter)
             this.var.addFlag = false;
             this.var.rmFlag = false;
             this.var.returnedfile = this.var.returnedFile;
+            console.log(this.var.returnedfile);
+
+            if(this.var.returnedfile == undefined)
+            {
+                OS.display("Cannot open file. . . Try switching directories to where it is located.")
+                this.state = "Stop";
+                this.program_counter = 0;
+            }
+
             console.log(this.var.returnedfile.name);
             this.var.length = OS.FS.length(this.var.returnedfile);
             break;
