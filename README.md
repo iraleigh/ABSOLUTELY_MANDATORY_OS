@@ -5,6 +5,13 @@ Because coming up with a name for our group was **ABSOLUTELY MANDATORY**.
 
 Type 'help' for instructions on how to use AMOS.
 
+####Default Admin user####
+
+Username: Admin
+
+Password: amos
+
+
 ##Assignment 1:
 
 Please see release v1.0 for the Assignment 1 source code 

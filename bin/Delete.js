@@ -12,34 +12,33 @@ var rm = function(counter) {
 		this.forceRemoval = false;
 		this.nameOfResource = "";
 
-		this.aryArgChars = args[0].split();
-		console.log(this.aryArgChars[0]);
+			this.aryArgChars = args[0].split();
+			console.log(this.aryArgChars[0]);
 
-		//-r
-		for (var n = 0; n < this.args.length; n++){
-			if(this.args[n] == "-r"){
-				this.isDirectory = true;
+			//-r
+			for (var n = 0; n < this.args.length; n++){
+				if(this.args[n] == "-r"){
+					this.isDirectory = true;
+				}
 			}
-		}
 
-		//-f
-		for (var n = 0; n < this.args.length; n++){
-			if(this.args[n] == "-f"){
-				this.forceRemoval = true;
+			//-f
+			for (var n = 0; n < this.args.length; n++){
+				if(this.args[n] == "-f"){
+					this.forceRemoval = true;
+				}
 			}
-		}
 
-		this.nameOfResource = this.args[this.args.length - 1];
+			this.nameOfResource = this.args[this.args.length - 1];
 
-		var path = this.nameOfResource.split("/");
-		var name = path.pop();
+			var path = this.nameOfResource.split("/");
+			var name = path.pop();
 
+			this.oTargetDirectory = OS.FS.getDirectory(path.join("/"));
 
-		this.oTargetDirectory = OS.FS.getDirectory(path.join("/"));
+			var isRoot = this.oTargetDirectory == Directory.Files;
 
-		var isRoot = this.oTargetDirectory == Directory.Files;
-
-		var directory = isRoot ? Directory.Files : this.oTargetDirectory.content;
+			var directory = isRoot ? Directory.Files : this.oTargetDirectory.content;
 
 		this.oTargetFile = directory.find(function(resource){
 			return resource.name == name;
@@ -75,9 +74,9 @@ var rm = function(counter) {
 
 		break;
 		default:
-		this.state = "Stop";
-		this.program_counter = 0;
-		console.log(Directory.Files);
+			this.state = "Stop";
+			this.program_counter = 0;
+			console.log(Directory.Files);
 	}
 }
 
