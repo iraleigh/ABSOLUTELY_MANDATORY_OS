@@ -11,6 +11,9 @@ function acl(){
     this.otherWrite = false;
     this.otherExecute = false;
 
+    this.owner = [];
+    this.group = [];
+
     this.setUserRead = function(szPermission){
       this.userRead = szPermission;
     }
@@ -47,6 +50,14 @@ function acl(){
       this.otherExecute = szPermission;
     }
 
+    this.setOwner = function(oUser){
+      this.owner = oUser;
+    }
+
+    this.setGroup = function(oGroup){
+      this.group = oGroup;
+    }
+
     this.getUserRead = function(){
       return this.userRead;
     }
@@ -81,6 +92,14 @@ function acl(){
 
     this.getOtherExecute = function(){
       return this.otherExecute;
+    }
+
+    this.getOwner = function(){
+      return this.owner;
+    }
+
+    this.getGroup = function(){
+      return this.group;
     }
 
 }
