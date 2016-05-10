@@ -4,7 +4,7 @@
 
 //Mostly done still need to test, and error out if incorrect input is given.
 
-var Chmod = function(counter)
+var chmod = function(counter)
 {
     //if user is the file owner allow this person to add or remove from access group.
     //Example of Chmod usage:
@@ -163,4 +163,5 @@ var Chmod = function(counter)
     }
 };
 
-Processes.listOfProcesses.push(new Process("Chmod",Chmod));
+Processes.listOfProcesses.push(new Process("chmod",chmod));
+HelpInfo.listOfHelp.push(new Manual("chmod", "chmod [add/rm] [user] [filename]", "Adds or removes access to the specified file for the specified user."));
