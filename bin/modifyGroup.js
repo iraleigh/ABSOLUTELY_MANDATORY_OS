@@ -72,7 +72,10 @@ var modifyGroup = function(counter)
                             if(groupFile.name == szFileName)
                             {
                                 console.log("in first if statement");
-                                OS.FS.write(returnedF, szUserName + "\n");
+                                var oldContent = groupFile.content;
+                                var newContent = oldContent + szUserName + "\n";
+                                groupFile.content = newContent;
+                                //OS.FS.write(returnedF, szUserName + "\n");
                                 //oTargetFile = element;
                             }
                         });
@@ -88,37 +91,68 @@ var modifyGroup = function(counter)
                     {
                         file.content.forEach(function(groupFile, index, array)
                         {
-                            if(groupFile == szFileName)
+                            console.log("ajl;sdfjals;fj;");
+                            if(groupFile.name == szFileName)
                             {
                                 gFile = groupFile;
                                 console.log("in first if statement");
-                                contentFromRead = OS.FS.read(returnedF);
+                                //contentFromRead = OS.FS.read(returnedF);
                             }
                         });
                     }
                 });
 
                 //indexOF returns true if the userName is found in the group file.
-                if(contentFromRead.indexOf(szUserName))
+                //if(contentFromRead.indexOf(szUserName))
+                //{
+                //    readUserArray = contentFromRead.split("\n");
+                //
+                //    readUserArray.forEach(function(element, index, array)
+                //    {
+                //       if(element == szUserName)
+                //       {
+                //           readUserArray.splice(index, 1);
+                //       }
+                //    });
+                //}
+                //
+                //readUserArray.forEach(function(element, index, array)
+                //{
+                //   console.log(element);
+                //   newContent = element + "\n";
+                //});
+                var gFileNewContent = " ";
+                if(gFile.content.indexOf(szUserName))
                 {
-                    readUserArray = contentFromRead.split("\n");
-
-                    readUserArray.forEach(function(element, index, array)
+                    var gFileContent = gFile.content.split("\n");
+                    gFileContent.forEach(function(element, index, array)
                     {
                        if(element == szUserName)
                        {
-                           readUserArray.splice(index, 1);
+                           console.log("in splice");
+                           console.log(element);
+                           gFileContent.splice(index, 1);
                        }
                     });
+
+                    for(var i = 0; i <= gFileContent.length - 2; i++)
+                    {
+                        if(gFileContent[i] != undefined || gFileContent[i] != "" || gFileContent[i] == "\n")
+                        console.log("in assignment of new content");
+                        console.log(gFileContent[i]);
+                        gFileNewContent = gFileContent[i] + "\n";
+                    }
+
+                    //gFileContent.forEach(function(element, index, array)
+                    //{
+                    //    console.log("in assignment of new content");
+                    //    console.log(element);
+                    //    gFileNewContent = element + "\n";
+                    //});
                 }
 
-                readUserArray.forEach(function(element, index, array)
-                {
-                   newContent = element + "\n";
-                });
-
-                gFile.content = " ";
-                OS.FS.write(returnedFile, newContent);
+                gFile.content = gFileNewContent;
+                //OS.FS.write(returnedFile, newContent);
             }
 
             this.program_counter++;
