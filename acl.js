@@ -51,11 +51,11 @@ function acl(){
     }
 
     this.setOwner = function(oUser){
-      this.owner = oUser;
+      this.owner.push(oUser);
     }
 
     this.setGroup = function(oGroup){
-      this.group = oGroup;
+      this.group.push(oGroup);
     }
 
     this.getUserRead = function(){
