@@ -35,3 +35,9 @@ A working demo of Assignment 4 can be found [here](http://iraleigh.github.io/ABS
 Please see release v5.0 for the Assignment 5 source code 
 
 A working demo of Assignment 5 can be found [here](http://iraleigh.github.io/ABSOLUTELY_MANDATORY_OS/assignment-five/)
+
+##Assignment 6:
+
+Please see release v6.0 for the Assignment 6 source code 
+
+A working demo of Assignment 6 can be found [here](http://iraleigh.github.io/ABSOLUTELY_MANDATORY_OS/assignment-six/)
