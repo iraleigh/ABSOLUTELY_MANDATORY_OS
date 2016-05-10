@@ -10,6 +10,20 @@ function Dir(szName,oParentDir){
     this.date = new Date(); //new Date(); creates a date object with the current date/time.
     this.parentDir = oParentDir;
     this.name = szName;
+    this.accessGroup = [];
+    this.acl = new acl();
+
+    //Set default permissions for a new directory.
+    this.acl.setUserRead(true);
+    this.acl.setUserWrite(true);
+    this.acl.setUserExecute(true);
+    this.acl.setGroupRead(true);
+    this.acl.setGroupWrite(true);
+
+
+    this.accessGroup.push(CurrentUserSingleton.getInstance());
+    this.fileOwner =  CurrentUserSingleton.getInstance(); 
+
     this.setDate = function (ObjDate){
         this.date = ObjDate;
     }
@@ -45,16 +59,38 @@ function Dir(szName,oParentDir){
     this.setParent = function(oParent){
       this.parentDir = oParent;
     }
-    /*this.accessPosition = function(){
-      return this.position;
-    }*/
-    /*this.accessLength = function(){
-      return this.length;
-    }*/
-    /*this.mutatePosition = function(nPosition) {
-      this.position = nPosition;
-    }*/
-    /*this.mutateContent = function(szNewContent){
-      this.content = szNewContent;
-    }*/
+
+    this.toString = function(){
+      szDirContents = "\nDirectory: "
+      szDirContents += this.name + '\n';
+      var nFiles = 0;
+      var nDirectories = 0;
+      for(var n = 0; n < this.content.length; n++){
+        if(this.content[n].fileType == "File"){
+          nFiles++;
+        }
+        if(this.content[n].fileType == "Directory"){
+          nDirectories++;
+        }
+      }
+      szDirContents += nFiles + " Files, and " + nDirectories + " subdirectories."
+
+      return szDirContents;
+    }
+
+    this.removeFromAccessGroup = function(userObject){
+        var aGroup = this.accessGroup;
+        this.accessGroup.forEach(function(element,index,array)
+        {
+            if(element.getUserName == userObject.getUserName)
+            {
+                aGroup.splice(index, 1);
+            }
+        });
+        return aGroup;
+    }
+    this.addToAccessGroup = function (userObject){
+        this.accessGroup.push(userObject);
+    }
+
 }
